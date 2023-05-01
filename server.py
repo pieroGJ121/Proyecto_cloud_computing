@@ -54,3 +54,32 @@ class platform(db.Model):
             'created_at': self.created_at,
             'modified_at': self.modified_at,
         }
+
+
+class game(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    game_name = db.Column(db.String(200), unique=True, nullable=False)
+    year = db.Column(db.Integer, nullable=False)
+    synopsis = db.Column(db.String(1000), nullable=False)
+    genre_id = db.Column(db.Integer, db.ForeignKey('genre.id'), nullable=False)
+    image = db.Column(db.String(500), nullable=True)
+    created_at = db.Column(db.DateTime(timezone=True), nullable=False, server_default=db.text("now()"))
+    modified_at = db.Column(db.DateTime(timezone=True), nullable=True, server_default=db.text("now()"))
+
+    def __init__(self, id, name, genre_id):
+        self.id = id
+        self.game_name = name
+        self.genre_id = genre_id
+        self.created_at = datetime.utcnow()
+
+    def __repr__(self):
+        return '<Game %r>' % (self.game_name)
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'game_name': self.game_name,
+            'genre_id': self.genre_id,
+            'created_at': self.created_at,
+            'modified_at': self.modified_at,
+        }
