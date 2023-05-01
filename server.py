@@ -32,3 +32,25 @@ class genre(db.Model):
             'created_at': self.created_at,
             'modified_at': self.modified_at,
         }
+
+class platform(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    platform_name = db.Column(db.String(10), unique=True, nullable=False)
+    created_at = db.Column(db.DateTime(timezone=True), nullable=False, server_default=db.text("now()"))
+    modified_at = db.Column(db.DateTime(timezone=True), nullable=True, server_default=db.text("now()"))
+
+    def __init__(self, id, name):
+        self.id = id
+        self.platform_name = name
+        self.created_at = datetime.utcnow()
+
+    def __repr__(self):
+        return '<Platform %r>' % (self.platform_name)
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'platform_name': self.platform_name,
+            'created_at': self.created_at,
+            'modified_at': self.modified_at,
+        }
