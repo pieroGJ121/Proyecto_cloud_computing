@@ -195,7 +195,38 @@ class Game_publisher(db.Model):
             'created_at': self.created_at,
             'modified_at': self.modified_at,    
         } 
+
+class Game_platform (db.Model):
+    __tablename__ = 'game_platforms'
+    id = db.Column(db.Integer, primary_key=True)
+    game_publisher_id = db.Column(db.Integer, db.ForeignKey('game_publishers.id'), nullable=True)
+    platform_id = db.Column(db.Integer, db.ForeignKey('platform.id'), nullable=True)
+    realese_year = db.Column(db.Integer, nullable=False)
+    created_at = db.Column(db.DateTime(timezone=True), nullable=False, server_default=db.text("now()"))
+    modified_at = db.Column(db.DateTime(timezone=True), nullable=True, server_default=db.text("now()"))
+
+    def __init__(self, id ,game_publisher_id , platform_id ,realese_year ):
+        self.id = id
+        self.game_publisher_id = game_publisher_id  
+        self.platform_id = platform_id 
+        self.realese_year = realese_year
+        self.created_at = datetime.utcnow()
+
+    def __repr__(self):
+        return '<Game_platform %r>' % (self.id)
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'game_publisher_id': self.game_publisher_id,
+            'platform_id': self.platform_id,
+            'realese_year': self.realese_year,
+            'created_at': self.created_at,
+            'modified_at': self.modified_at,    
+        } 
     
+     
+
 # Creates models
 with app.app_context():
     db.create_all()
