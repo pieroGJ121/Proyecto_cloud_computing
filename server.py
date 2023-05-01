@@ -83,3 +83,15 @@ class game(db.Model):
             'created_at': self.created_at,
             'modified_at': self.modified_at,
         }
+
+
+# Creates models
+with app.app_context():
+    db.create_all()
+
+
+# Start the server
+if __name__ == '__main__':
+    app.run(debug=True)
+else:
+    print('another way to run this app')
