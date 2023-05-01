@@ -122,6 +122,30 @@ class Usuario(db.Model):
             'modified_at': self.modified_at,
         } 
 
+class Compra(db.Model):
+    __tablename__ = 'compras'
+    id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()), server_default=db.text("uuid_generate_v4()"))
+    usuario_id = db.Column(db.String(36), db.ForeignKey('usuarios.id'), nullable=True)
+    game_id = db.Column(db.Integer, db.ForeignKey('game.id'), nullable=True)
+    created_at = db.Column(db.DateTime(timezone=True), nullable=False, server_default=db.text("now()"))
+    modified_at = db.Column(db.DateTime(timezone=True), nullable=True, server_default=db.text("now()"))
+
+    def __init__(self ,usuario_id , game_id ):
+        self.usuario_id
+        self.game_id
+        self.created_at = datetime.utcnow()
+
+    def __repr__(self):
+        return '<Compra %r>' % ()
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'usuario_id': self.usuario_id,
+            'game_id': self.game_id,
+            'created_at': self.created_at,
+            'modified_at': self.modified_at,    
+        }      
 
 # Creates models
 with app.app_context():
