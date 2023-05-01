@@ -146,7 +146,30 @@ class Compra(db.Model):
             'created_at': self.created_at,
             'modified_at': self.modified_at,    
         }      
+class Publisher(db.Model):
+    __tablename__ = 'publishers'
+    id = db.Column(db.Integer, primary_key=True)
+    publisher_name = db.Column(db.String(200), unique=True , nullable=False)
+    gamepublishers = db.relationship('Game_publisher', backref='pgame_publisher', lazy=True)
+    created_at = db.Column(db.DateTime(timezone=True), nullable=False, server_default=db.text("now()"))
+    modified_at = db.Column(db.DateTime(timezone=True), nullable=True, server_default=db.text("now()"))
 
+    def __init__(self, id, publisher_name ):
+        self.id = id
+        self.publisher_name = publisher_name
+        self.created_at = datetime.utcnow()
+
+    def __repr__(self):
+        return '<Publisher %r>' % (self.publisher_name)
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'publisher_name': self.publisher_name,
+            'created_at': self.created_at,
+            'modified_at': self.modified_at,    
+        } 
+    
 # Creates models
 with app.app_context():
     db.create_all()
