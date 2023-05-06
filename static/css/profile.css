@@ -2,26 +2,12 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+
+    padding: 8px;
+    background-color: lightblue;
 }
 
 #information {
-    background-color: lightblue;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    margin: 4px;
-    padding: 10px;
-}
-
-.image_portrait {
-    flex-grow: 1;
-    flex-shrink: 1;
-    flex-basis: 40%;
-    background-color: darkred;
-    padding: 8px;
-}
-
-#right {
     background-color: darkgreen;
     display: flex;
     flex-direction: column;
