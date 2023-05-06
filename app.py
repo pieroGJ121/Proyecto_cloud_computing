@@ -108,6 +108,7 @@ class Usuario(db.Model):
     firstname = db.Column(db.String(80), nullable=False)
     lastname = db.Column(db.String(120), unique=False, nullable=False)
     email = db.Column(db.String(300), unique=True, nullable=False)
+    password = db.Column(db.String(300), unique= False, nullable=False)
     bio = db.Column(db.String(500), nullable=False)
     image = db.Column(db.String(500), nullable=True)
     compras = db.relationship('Compra', backref='usuario', lazy=True)
