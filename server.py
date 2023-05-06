@@ -61,18 +61,21 @@ class platform(db.Model):
 class game(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     game_name = db.Column(db.String(200), unique=True, nullable=False)
-    year = db.Column(db.Integer, nullable=False)
-    synopsis = db.Column(db.String(1000), nullable=False)
     genre_id = db.Column(db.Integer, db.ForeignKey('genre.id'), nullable=False)
+    synopsis = db.Column(db.String(1000), nullable=True)
+    image = db.Column(db.String(500), nullable=True)
     compras = db.relationship('Compra', backref='game', lazy=True)
     gamepublishers = db.relationship('Game_publisher', backref='ggame_publisher', lazy=True)
-    image = db.Column(db.String(500), nullable=True)
-    created_at = db.Column(db.DateTime(timezone=True), nullable=False, server_default=db.text("now()"))
-    modified_at = db.Column(db.DateTime(timezone=True), nullable=True, server_default=db.text("now()"))
+    created_at = db.Column(db.DateTime(timezone=True), nullable=False,
+                           server_default=db.text("now()"))
+    modified_at = db.Column(db.DateTime(timezone=True), nullable=True,
+                            server_default=db.text("now()"))
 
     def __init__(self, id, name, genre_id):
         self.id = id
         self.game_name = name
+        self.synopsis = ""
+        self.image = ""
         self.genre_id = genre_id
         self.created_at = datetime.utcnow()
 
@@ -83,6 +86,8 @@ class game(db.Model):
         return {
             'id': self.id,
             'game_name': self.game_name,
+            'synopsis': self.synopsis,
+            'image': self.image,
             'genre_id': self.genre_id,
             'created_at': self.created_at,
             'modified_at': self.modified_at,
