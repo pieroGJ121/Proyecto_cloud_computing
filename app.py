@@ -41,6 +41,10 @@ class genre(db.Model):
 class platform(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     platform_name = db.Column(db.String(10), unique=True, nullable=False)
+
+    games_of_platforms = db.relationship('Game_platform', backref='platform',
+                                         lazy=True)
+
     created_at = db.Column(db.DateTime(timezone=True), nullable=False,
                            server_default=db.text("now()"))
     modified_at = db.Column(db.DateTime(timezone=True), nullable=True,
@@ -69,9 +73,11 @@ class game(db.Model):
     genre_id = db.Column(db.Integer, db.ForeignKey('genre.id'), nullable=False)
     synopsis = db.Column(db.String(1000), nullable=True)
     image = db.Column(db.String(500), nullable=True)
+
     compras = db.relationship('Compra', backref='game', lazy=True)
-    gamepublishers = db.relationship('Game_publisher',
-                                     backref='ggame_publisher', lazy=True)
+    game_publisher = db.relationship('Game_publisher',
+                                     backref='game', lazy=True, uselist=False)
+
     created_at = db.Column(db.DateTime(timezone=True), nullable=False,
                            server_default=db.text("now()"))
     modified_at = db.Column(db.DateTime(timezone=True), nullable=True,
@@ -174,8 +180,10 @@ class Publisher(db.Model):
     __tablename__ = 'publishers'
     id = db.Column(db.Integer, primary_key=True)
     publisher_name = db.Column(db.String(200), unique=True, nullable=False)
-    gamepublishers = db.relationship('Game_publisher',
-                                     backref='pgame_publisher', lazy=True)
+
+    games_published = db.relationship('Game_publisher',
+                                      backref='publisher', lazy=True)
+
     created_at = db.Column(db.DateTime(timezone=True), nullable=False,
                            server_default=db.text("now()"))
     modified_at = db.Column(db.DateTime(timezone=True), nullable=True,
@@ -204,8 +212,11 @@ class Game_publisher(db.Model):
     game_id = db.Column(db.Integer, db.ForeignKey('game.id'), nullable=True)
     publisher_id = db.Column(db.Integer, db.ForeignKey('publishers.id'),
                              nullable=True)
-    gameplatforms = db.relationship('Game_platform', backref='game_publisher',
-                                    lazy=True)
+
+    game_platform = db.relationship('Game_platform',
+                                    backref='game_publisher', lazy=True,
+                                    uselist=False)
+
     created_at = db.Column(db.DateTime(timezone=True), nullable=False,
                            server_default=db.text("now()"))
     modified_at = db.Column(db.DateTime(timezone=True), nullable=True,
