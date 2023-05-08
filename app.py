@@ -41,6 +41,10 @@ class genre(db.Model):
 class platform(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     platform_name = db.Column(db.String(10), unique=True, nullable=False)
+
+    games_of_platforms = db.relationship('Game_platform', backref='platform',
+                                         lazy=True)
+
     created_at = db.Column(db.DateTime(timezone=True), nullable=False,
                            server_default=db.text("now()"))
     modified_at = db.Column(db.DateTime(timezone=True), nullable=True,
@@ -69,9 +73,11 @@ class game(db.Model):
     genre_id = db.Column(db.Integer, db.ForeignKey('genre.id'), nullable=False)
     synopsis = db.Column(db.String(1000), nullable=True)
     image = db.Column(db.String(500), nullable=True)
+
     compras = db.relationship('Compra', backref='game', lazy=True)
-    gamepublishers = db.relationship('Game_publisher',
-                                     backref='ggame_publisher', lazy=True)
+    game_publisher = db.relationship('Game_publisher',
+                                     backref='game', lazy=True, uselist=False)
+
     created_at = db.Column(db.DateTime(timezone=True), nullable=False,
                            server_default=db.text("now()"))
     modified_at = db.Column(db.DateTime(timezone=True), nullable=True,
@@ -81,7 +87,7 @@ class game(db.Model):
         self.id = id
         self.game_name = name
         self.synopsis = ""
-        self.image = ""
+        self.image = "static/images/videogames/default.png"
         self.genre_id = genre_id
         self.created_at = datetime.utcnow()
 
@@ -94,7 +100,7 @@ class game(db.Model):
             'game_name': self.game_name,
             'synopsis': self.synopsis,
             'image': self.image,
-            'genre_id': self.genre_id,
+            'genre': self.genre.serialize(),
             'created_at': self.created_at,
             'modified_at': self.modified_at,
         }
@@ -108,9 +114,11 @@ class Usuario(db.Model):
     firstname = db.Column(db.String(80), nullable=False)
     lastname = db.Column(db.String(120), unique=False, nullable=False)
     email = db.Column(db.String(300), unique=True, nullable=False)
-    password = db.Column(db.String(300), unique= False, nullable=False)
+    password = db.Column(db.String(300), unique=False, nullable=False)
     bio = db.Column(db.String(500), nullable=False)
+
     compras = db.relationship('Compra', backref='usuario', lazy=True)
+
     created_at = db.Column(db.DateTime(timezone=True), nullable=False,
                            server_default=db.text("now()"))
     modified_at = db.Column(db.DateTime(timezone=True), nullable=True,
@@ -136,6 +144,8 @@ class Usuario(db.Model):
             'image': self.image,
             'created_at': self.created_at,
             'modified_at': self.modified_at,
+            'games_bought': [compra.serialize().game for compra in
+                             self.compras]
         }
 
 
@@ -147,6 +157,7 @@ class Compra(db.Model):
     usuario_id = db.Column(db.String(36), db.ForeignKey('usuarios.id'),
                            nullable=True)
     game_id = db.Column(db.Integer, db.ForeignKey('game.id'), nullable=True)
+
     created_at = db.Column(db.DateTime(timezone=True), nullable=False,
                            server_default=db.text("now()"))
     modified_at = db.Column(db.DateTime(timezone=True), nullable=True,
@@ -163,8 +174,8 @@ class Compra(db.Model):
     def serialize(self):
         return {
             'id': self.id,
-            'usuario_id': self.usuario_id,
-            'game_id': self.game_id,
+            'usuario': self.usuario.serialize(),
+            'game': self.game.serialize(),
             'created_at': self.created_at,
             'modified_at': self.modified_at,
         }
@@ -174,8 +185,10 @@ class Publisher(db.Model):
     __tablename__ = 'publishers'
     id = db.Column(db.Integer, primary_key=True)
     publisher_name = db.Column(db.String(200), unique=True, nullable=False)
-    gamepublishers = db.relationship('Game_publisher',
-                                     backref='pgame_publisher', lazy=True)
+
+    games_published = db.relationship('Game_publisher',
+                                      backref='publisher', lazy=True)
+
     created_at = db.Column(db.DateTime(timezone=True), nullable=False,
                            server_default=db.text("now()"))
     modified_at = db.Column(db.DateTime(timezone=True), nullable=True,
@@ -204,8 +217,11 @@ class Game_publisher(db.Model):
     game_id = db.Column(db.Integer, db.ForeignKey('game.id'), nullable=True)
     publisher_id = db.Column(db.Integer, db.ForeignKey('publishers.id'),
                              nullable=True)
-    gameplatforms = db.relationship('Game_platform', backref='game_publisher',
-                                    lazy=True)
+
+    game_platform = db.relationship('Game_platform',
+                                    backref='game_publisher', lazy=True,
+                                    uselist=False)
+
     created_at = db.Column(db.DateTime(timezone=True), nullable=False,
                            server_default=db.text("now()"))
     modified_at = db.Column(db.DateTime(timezone=True), nullable=True,
@@ -223,8 +239,8 @@ class Game_publisher(db.Model):
     def serialize(self):
         return {
             'id': self.id,
-            'game_id': self.game_id,
-            'publisher_id': self.publisher_id,
+            'game': self.game.serialize(),
+            'publisher': self.publisher.serialize(),
             'created_at': self.created_at,
             'modified_at': self.modified_at,
         }
@@ -238,17 +254,17 @@ class Game_platform (db.Model):
                                   nullable=True)
     platform_id = db.Column(db.Integer, db.ForeignKey('platform.id'),
                             nullable=True)
-    realese_year = db.Column(db.Integer, nullable=False)
+    release_year = db.Column(db.Integer, nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), nullable=False,
                            server_default=db.text("now()"))
     modified_at = db.Column(db.DateTime(timezone=True), nullable=True,
                             server_default=db.text("now()"))
 
-    def __init__(self, id, game_publisher_id, platform_id, realese_year):
+    def __init__(self, id, game_publisher_id, platform_id, release_year):
         self.id = id
         self.game_publisher_id = game_publisher_id
         self.platform_id = platform_id
-        self.realese_year = realese_year
+        self.release_year = release_year
         self.created_at = datetime.utcnow()
 
     def __repr__(self):
@@ -257,9 +273,9 @@ class Game_platform (db.Model):
     def serialize(self):
         return {
             'id': self.id,
-            'game_publisher_id': self.game_publisher_id,
-            'platform_id': self.platform_id,
-            'realese_year': self.realese_year,
+            'game_publisher': self.game_publisher.serialize(),
+            'platform': self.platform.serialize(),
+            'release_year': self.release_year,
             'created_at': self.created_at,
             'modified_at': self.modified_at,
         }
