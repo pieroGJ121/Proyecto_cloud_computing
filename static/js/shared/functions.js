@@ -6,6 +6,7 @@ function list_games(games) {
         list_games.innerHTML = ""
         games.forEach((game) => {
             const block = document.createElement("div")
+            classs.add("individual_game")
 
             block.innerHTML = `
                     <div class="image_wide">
@@ -64,7 +65,7 @@ function change_videogame() {
         year.innerHTML = `Año de lanzamiento: ${game_platform.release_year}`
 
         const genre = document.getElementById("genre")
-        genre.innerHTML = `Sinopsis: ${game.genre.genre_name}`
+        genre.innerHTML = `Sinopsis: ${genre.genre_name}`
 
         const publisher = document.getElementById("publisher")
         publisher.innerHTML = `Editor: ${publisher.publisher_name}`
