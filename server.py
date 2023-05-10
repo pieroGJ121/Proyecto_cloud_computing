@@ -1,8 +1,27 @@
-from flask import Flask, render_template, jsonify, request, redirect, url_for
+from flask import (
+    Flask,
+    render_template,
+    jsonify,
+    request,
+    redirect,
+    url_for
+)
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from functionalities.validate_email import validar_correo
-from app import Usuario,db
+from app import (
+    app,
+    db,
+    Usuario,
+    genre,
+    platform,
+    Publisher,
+    game,
+    Compra,
+    Publisher,
+    Game_publisher,
+    Game_platform
+)
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1234@localhost:5432/project_dbp'
