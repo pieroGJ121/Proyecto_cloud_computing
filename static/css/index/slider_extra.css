@@ -40,3 +40,40 @@
     bottom:12px;
     right:12px;
 }
+.i{
+    width:16px;
+    height:16px;
+}
+.vbox{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+}
+.jssora051{
+    width:55px;
+    height:55px;
+    top:0px;
+    left:25px;
+}
+.vbox2{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+}
+#jssora22{
+    width:55px;
+    height:55px;
+    top:0px;
+    right:25px;
+}
+.vbox3{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+}
