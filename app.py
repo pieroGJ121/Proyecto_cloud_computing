@@ -124,24 +124,25 @@ class Usuario(db.Model):
     modified_at = db.Column(db.DateTime(timezone=True), nullable=True,
                             server_default=db.text("now()"))
 
-    def __init__(self, firstname, lastname, email, bio):
-        self.firstname = firstname
+    def __init__(self, name,lastname ,email, bio , password):
+        self.name = name
         self.lastname = lastname
         self.email = email
         self.bio = bio
+        self.password = password
         self.created_at = datetime.utcnow()
 
     def __repr__(self):
-        return '<Usuario %r %r>' % (self.firstname, self.lastname)
+        return '<Usuario %r %r>' % (self.firstname)
 
     def serialize(self):
         return {
             'id': self.id,
-            'firstname': self.firstname,
+            'name': self.name,
             'lastname': self.lastname,
             'email': self.email,
             'bio': self.bio,
-            'image': self.image,
+            'password' : self.password ,
             'created_at': self.created_at,
             'modified_at': self.modified_at,
             'games_bought': [compra.serialize().game for compra in
