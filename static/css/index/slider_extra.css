@@ -6,7 +6,7 @@
     position: relative; 
     margin: 0 auto;
     top: 0px; 
-    left: 0px;
+    left: 0px; 
     width: 1300px; 
     height: 500px; 
     overflow: hidden;
@@ -20,14 +20,14 @@
     text-align:center;
     background-color:rgba(0,0,0,0.7);
 }
-.load_img{
+.load-ico{
     margin-top:-19px;
     position:relative;
     top:50%;
     width:38px;
     height:38px;
 }
-.slides_wrapper{
+.slides-i{
     position: absolute; 
     left: 0px; 
     top: 0px; 
@@ -40,37 +40,19 @@
     bottom:12px;
     right:12px;
 }
-.i{
-    width:16px;
-    height:16px;
-}
-.vbox{
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-}
-.jssora051{
+#arrow1{
     width:55px;
     height:55px;
     top:0px;
     left:25px;
 }
-.vbox2{
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-}
-#jssora22{
+#arrow2{
     width:55px;
     height:55px;
     top:0px;
     right:25px;
 }
-.vbox3{
+.arrow-i1{
     position:absolute;
     top:0;
     left:0;
