@@ -94,7 +94,10 @@ def data_recover():
     email = request.form['email']
     name = request.form['name']
 
-    if email == 'fabrizzio785@gmail.com' and name == 'Fabrizzio':
+    # Buscar el usuario en la base de datos
+    user = Usuario.query.filter_by(email=email).first()
+
+    if email == user.email and name == user.firstname:
         return jsonify({'success': True, 'message': 'El usuario y nombre coinciden'}), 200
     else:
         return jsonify({'success': False, 'message': 'Datos de acceso incorrectos. Intente nuevamente &#128577;'}), 400
@@ -151,14 +154,56 @@ def create_user():
 
 @app.route('/profile', methods=['GET'])
 def profile():
+    global nombre,apellido,bio,email,password,login_val
+    if login_val:
+        return render_template('user.html',nm = nombre, ap=apellido, biog=bio, e_mail=email, passwrd=password)
+    else:
+        return redirect(url_for('principal'))
+
+# Todo referente a la pagina de "delete-user" va aqui
+
+@app.route('/delete_user', methods=['POST'])
+def delete_user():
+    global nombre,apellido,bio,email,password,login_val
+    fila_a_eliminar = Usuario.query.filter_by(email=email).first()
+    
+    if fila_a_eliminar:
+        db.session.delete(fila_a_eliminar)
+        db.session.commit()
+        login_val = False
+        nombre = ''
+        apellido = ''
+        bio = ''
+        email = ''
+        password = ''
+        return jsonify({'success': True, 'message': 'El usuario se ha eliminado correctamete.'}), 200
+    else:
+        return jsonify({'success': False, 'message': 'El usuario no se ha podido eliminar. Intentalo nuevamente'}), 400
+    
+# Todo referente a la pagina de "actualizar_datos" va aqui
+
+@app.route('/update_data', methods=['POST'])
+def update_data():
+
     global nombre,apellido,bio,email,password
-    # 1. Hacer un querry para obtener el usuario. Como estamos guardando su
-    # informacion, puedes usar eso.
-    # 2. Regresar un jsonify con el usuario luego de un serialize.
-    # Como ya se verifica que exista el usuario en el login, no deberia fallar,
-    # asi que tu decide si pones un try
-    print(bio)
-    return render_template('user.html',nm = nombre, ap=apellido, biog=bio, e_mail=email, passwrd=password)
+
+    user = Usuario.query.filter_by(email=email).first()
+
+    nombre = request.form['username']
+    apellido = request.form['lastname']
+    bio = request.form['bio']
+    email = request.form['email']
+    password = request.form['password']
+
+    user.firstname = nombre
+    user.lastname = apellido
+    user.bio = bio
+    user.email = email
+    user.password = password
+
+    db.session.commit()
+
+    return redirect(url_for('principal'))
 
 
 # Todo referente a la pagina de "videogame" va aqui
