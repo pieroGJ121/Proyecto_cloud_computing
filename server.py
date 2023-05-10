@@ -8,16 +8,16 @@ app = Flask(__name__)
 login_val = False
 email = ''
 password = ''
-nombre = ''
+nombre = 'z'
 bio = ''
 
 
 @app.route('/', methods=['GET'])
 def principal():
-    global login_val
+    global login_val,nombre
 
     if login_val:
-        return render_template('index.html')
+        return render_template('index.html',nombre=nombre)
     else:
         return redirect(url_for('login'))
 
@@ -86,7 +86,6 @@ def reset_password():
 
 # Todo referente al "Nuevo usuario" va aqui
 
-
 @app.route('/new_user', methods=['GET'])
 def new_user():
     return render_template('register.html')
@@ -107,6 +106,21 @@ def create_user():
         return jsonify({'success': False, 'message': 'El correo ingresado no es valido &#128577;'}), 400
 
 # Todo referente al "Nuevo usuario" va aqui
+
+# Todo referente a la pagina de "usuario" va aqui
+
+@app.route('/user/<nm>', methods=['GET'])
+def user_page(nm):
+    global login_val, nombre
+    if login_val:
+        if nm != nombre:
+            return 'Error, no puede acceder a un perfil que no esta logueado'
+        return render_template('profile.html',nm=nm)
+    else:
+        return redirect(url_for('login'))
+
+# Todo referente a la pagina de "usuario" va aqui
+
 
 if __name__ == '__main__':
     app.run(debug=True)
