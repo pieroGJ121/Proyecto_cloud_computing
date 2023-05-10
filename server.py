@@ -151,12 +151,14 @@ def create_user():
 
 @app.route('/profile', methods=['GET'])
 def profile():
+    global nombre,apellido,bio,email,password
     # 1. Hacer un querry para obtener el usuario. Como estamos guardando su
     # informacion, puedes usar eso.
     # 2. Regresar un jsonify con el usuario luego de un serialize.
     # Como ya se verifica que exista el usuario en el login, no deberia fallar,
     # asi que tu decide si pones un try
-    return
+    print(bio)
+    return render_template('user.html',nm = nombre, ap=apellido, biog=bio, e_mail=email, passwrd=password)
 
 
 # Todo referente a la pagina de "videogame" va aqui

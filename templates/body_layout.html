@@ -30,7 +30,7 @@
           </div>
 
           <div class="col-md-4">
-            <form class="d-flex input-group w-auto my-auto mb-3 mb-md-0">
+            <form class="d-flex input-group w-auto my-auto mb-3 mb-md-0" >
               <input autocomplete="off" type="search" class="form-control rounded" placeholder="Busca aquí" id="SearchInput">
               <span class="input-group-text border-0 d-none d-lg-flex"><i class="fas fa-search"></i></span>
             </form>
@@ -52,8 +52,7 @@
                     loading="lazy" />
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
-                  <li><a class="dropdown-item" href="{{url_for('user_page', nm=nombre)}}">Mi perfil</a></li>
-                  <li><a class="dropdown-item" href="#">Configuraciones</a></li>
+                  <li><a class="dropdown-item" href="{{url_for('profile')}}">Mi perfil</a></li>
                   <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
                 </ul>
               </div>
