@@ -31,20 +31,23 @@ def login():
         return redirect(url_for('principal'))
     else:
         return render_template('login.html')
-
+    
 
 @app.route('/data_login', methods=['POST'])
 def data_login():
-    global login_val, email, password
+    global login_val,email,password
 
-    email = request.form['email']
-    password = request.form['password']
+    email=request.form['email']
+    password=request.form['password']
 
-    if email == 'fabrizzio785@gmail.com' and password == '1234':
+    # Buscar el usuario en la base de datos
+    user = Usuario.query.filter_by(email=email).first()
+
+    if user and user.password == password:
         login_val = True
-        return jsonify({'success': True, 'message': 'Inicio de sesion correcto'}), 200
+        return jsonify({'success': True, 'message':'Inicio de sesion correcto'}),200
     else:
-        return jsonify({'success': False, 'message': 'Correo y/o contraseña incorrectos. Intente nuevamente &#128577;'}), 400
+        return jsonify({'success': False, 'message':'Correo y/o contraseña incorrectos. Intente nuevamente &#128577;'}),400
 
 # Todo referente al login va aqui
 
