@@ -2,13 +2,17 @@ from flask import Flask, render_template, jsonify, request, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from functionalities.validate_email import validar_correo
+from app import Usuario,db
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1234@localhost:5432/project_dbp'
+db.init_app(app)
 
 login_val = False
 email = ''
 password = ''
-nombre = 'z'
+nombre = ''
+apellido = ''
 bio = ''
 
 
@@ -35,7 +39,7 @@ def login():
 
 @app.route('/data_login', methods=['POST'])
 def data_login():
-    global login_val,email,password
+    global login_val, email, password, nombre, apellido, bio
 
     email=request.form['email']
     password=request.form['password']
@@ -43,16 +47,23 @@ def data_login():
     # Buscar el usuario en la base de datos
     user = Usuario.query.filter_by(email=email).first()
 
-    if user and user.password == password:
-        login_val = True
-        return jsonify({'success': True, 'message':'Inicio de sesion correcto'}),200
+    if user:
+        if user.email == email and user.password == password:
+            login_val = True
+            email = user.email
+            password = user.password
+            nombre = user.firstname
+            apellido = user.lastname
+            bio = user.bio
+            return jsonify({'success': True, 'message':'Inicio de sesion correcto'}),200
+        else:
+            return jsonify({'success': False, 'message':'Correo y/o contraseña incorrectos. Intente nuevamente &#128577;'}),400
     else:
-        return jsonify({'success': False, 'message':'Correo y/o contraseña incorrectos. Intente nuevamente &#128577;'}),400
+        return jsonify({'success': False, 'message':'Este usuario no está registrado &#128577;'}),400
 
 # Todo referente al login va aqui
 
 # Todo referente al "recuperar contrasenia" va aqui
-
 
 @app.route('/recover_password', methods=['GET'])
 def recover_password():
@@ -95,19 +106,23 @@ def new_user():
 
 @app.route('/create_user', methods=['POST'])
 def create_user():
-    global login_val 
-    name = request.form.get('name')
-    lastname = request.form.get('lastname')
-    bio = request.form.get('bio')
-    email = request.form.get('email')
-    password = request.form.get('password')
+    global login_val, nombre, apellido, email, password, bio
+    name = request.form['name']
+    lastname = request.form['lastname']
+    biog = request.form['bio']
+    e_mail = request.form['email']
+    password1 = request.form['password']
 
-    if validar_correo(email):
+    if validar_correo(e_mail):
         login_val = True
-        new_user = Usuario(name=name ,lastname = lastname ,  email=email, bio=bio , password= password)
+        nombre = name
+        apellido = lastname
+        email = e_mail
+        password = password1
+        bio = biog
+        new_user = Usuario(firstname=name ,lastname = lastname ,  email=e_mail, bio=biog , password= password1)
         db.session.add(new_user)
         db.session.commit()
-
         return jsonify({'success': True, 'message': 'El correo ingresado es válido &#128577;'}), 200
     else:
         return jsonify({'success': False, 'message': 'El correo ingresado no es válido &#128577;'}), 400

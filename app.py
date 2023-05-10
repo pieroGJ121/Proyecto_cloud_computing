@@ -7,7 +7,7 @@ from datetime import datetime
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres@localhost:5432/project_dbp'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres1234@localhost:5432/project_dbp'
 db = SQLAlchemy(app)
 
 
@@ -124,8 +124,8 @@ class Usuario(db.Model):
     modified_at = db.Column(db.DateTime(timezone=True), nullable=True,
                             server_default=db.text("now()"))
 
-    def __init__(self, name,lastname ,email, bio , password):
-        self.name = name
+    def __init__(self, firstname,lastname ,email, bio , password):
+        self.firstname = firstname
         self.lastname = lastname
         self.email = email
         self.bio = bio
