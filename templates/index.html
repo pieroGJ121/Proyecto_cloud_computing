@@ -1,34 +1,65 @@
 {% extends "navbar_only.html" %}
 {% block title %}Compra los mejores juegos aquí{% endblock %}
+{% block styles%}
+<link rel="stylesheet" href="../static/css/index/slider_style.css">
+<link rel="stylesheet" href="../static/css/index/slider_extra.css">
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jssor-slider/27.1.0/jssor.slider.min.js'></script>
+<script src="../static/js/index/slider_script.js"></script>
+{% endblock %}
 {% block contenido %}
 
-<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum asperiores natus, maxime temporibus tempore cumque ullam. Suscipit, reprehenderit quaerat dolores nemo beatae alias odit, omnis sed delectus laudantium perspiciatis et!</p>
-<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum asperiores natus, maxime temporibus tempore cumque ullam. Suscipit, reprehenderit quaerat dolores nemo beatae alias odit, omnis sed delectus laudantium perspiciatis et!</p>
-<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum asperiores natus, maxime temporibus tempore cumque ullam. Suscipit, reprehenderit quaerat dolores nemo beatae alias odit, omnis sed delectus laudantium perspiciatis et!</p>
-<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum asperiores natus, maxime temporibus tempore cumque ullam. Suscipit, reprehenderit quaerat dolores nemo beatae alias odit, omnis sed delectus laudantium perspiciatis et!</p>
+<section class="wow fadeIn example no-padding no-transition slider-top"> 
+    <div class="slider_wrapper">
+    <!-- Jssor Slider Begin -->
+    
+    <div id="slider1_container">
+        <!-- Loading Screen -->
+        <div data-u="loading" class="jssorl-009-spin">
+            <img class="load_img" src="https://www.jssor.com/theme/svg/loading/static-svg/spin.svg" />
+        </div>
 
-<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum asperiores natus, maxime temporibus tempore cumque ullam. Suscipit, reprehenderit quaerat dolores nemo beatae alias odit, omnis sed delectus laudantium perspiciatis et!</p>
-<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum asperiores natus, maxime temporibus tempore cumque ullam. Suscipit, reprehenderit quaerat dolores nemo beatae alias odit, omnis sed delectus laudantium perspiciatis et!</p>
-<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum asperiores natus, maxime temporibus tempore cumque ullam. Suscipit, reprehenderit quaerat dolores nemo beatae alias odit, omnis sed delectus laudantium perspiciatis et!</p>
-<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum asperiores natus, maxime temporibus tempore cumque ullam. Suscipit, reprehenderit quaerat dolores nemo beatae alias odit, omnis sed delectus laudantium perspiciatis et!</p>
-<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum asperiores natus, maxime temporibus tempore cumque ullam. Suscipit, reprehenderit quaerat dolores nemo beatae alias odit, omnis sed delectus laudantium perspiciatis et!</p>
-<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum asperiores natus, maxime temporibus tempore cumque ullam. Suscipit, reprehenderit quaerat dolores nemo beatae alias odit, omnis sed delectus laudantium perspiciatis et!</p>
-<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum asperiores natus, maxime temporibus tempore cumque ullam. Suscipit, reprehenderit quaerat dolores nemo beatae alias odit, omnis sed delectus laudantium perspiciatis et!</p>
-<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum asperiores natus, maxime temporibus tempore cumque ullam. Suscipit, reprehenderit quaerat dolores nemo beatae alias odit, omnis sed delectus laudantium perspiciatis et!</p>
-<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum asperiores natus, maxime temporibus tempore cumque ullam. Suscipit, reprehenderit quaerat dolores nemo beatae alias odit, omnis sed delectus laudantium perspiciatis et!</p>
-<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum asperiores natus, maxime temporibus tempore cumque ullam. Suscipit, reprehenderit quaerat dolores nemo beatae alias odit, omnis sed delectus laudantium perspiciatis et!</p>
-<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum asperiores natus, maxime temporibus tempore cumque ullam. Suscipit, reprehenderit quaerat dolores nemo beatae alias odit, omnis sed delectus laudantium perspiciatis et!</p>
-<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum asperiores natus, maxime temporibus tempore cumque ullam. Suscipit, reprehenderit quaerat dolores nemo beatae alias odit, omnis sed delectus laudantium perspiciatis et!</p>
-<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum asperiores natus, maxime temporibus tempore cumque ullam. Suscipit, reprehenderit quaerat dolores nemo beatae alias odit, omnis sed delectus laudantium perspiciatis et!</p>
-<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum asperiores natus, maxime temporibus tempore cumque ullam. Suscipit, reprehenderit quaerat dolores nemo beatae alias odit, omnis sed delectus laudantium perspiciatis et!</p>
-<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum asperiores natus, maxime temporibus tempore cumque ullam. Suscipit, reprehenderit quaerat dolores nemo beatae alias odit, omnis sed delectus laudantium perspiciatis et!</p>
-<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum asperiores natus, maxime temporibus tempore cumque ullam. Suscipit, reprehenderit quaerat dolores nemo beatae alias odit, omnis sed delectus laudantium perspiciatis et!</p>
-<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum asperiores natus, maxime temporibus tempore cumque ullam. Suscipit, reprehenderit quaerat dolores nemo beatae alias odit, omnis sed delectus laudantium perspiciatis et!</p>
-<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum asperiores natus, maxime temporibus tempore cumque ullam. Suscipit, reprehenderit quaerat dolores nemo beatae alias odit, omnis sed delectus laudantium perspiciatis et!</p>
-<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum asperiores natus, maxime temporibus tempore cumque ullam. Suscipit, reprehenderit quaerat dolores nemo beatae alias odit, omnis sed delectus laudantium perspiciatis et!</p>
-<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum asperiores natus, maxime temporibus tempore cumque ullam. Suscipit, reprehenderit quaerat dolores nemo beatae alias odit, omnis sed delectus laudantium perspiciatis et!</p>
-<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum asperiores natus, maxime temporibus tempore cumque ullam. Suscipit, reprehenderit quaerat dolores nemo beatae alias odit, omnis sed delectus laudantium perspiciatis et!</p>
-<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum asperiores natus, maxime temporibus tempore cumque ullam. Suscipit, reprehenderit quaerat dolores nemo beatae alias odit, omnis sed delectus laudantium perspiciatis et!</p>
-<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum asperiores natus, maxime temporibus tempore cumque ullam. Suscipit, reprehenderit quaerat dolores nemo beatae alias odit, omnis sed delectus laudantium perspiciatis et!</p>
-<p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum asperiores natus, maxime temporibus tempore cumque ullam. Suscipit, reprehenderit quaerat dolores nemo beatae alias odit, omnis sed delectus laudantium perspiciatis et!</p>
+        <!-- Slides Container -->
+        <div class="slides_wrapper" data-u="slides">
+            <div>
+                <img data-u="image" src="https://images.pexels.com/photos/414191/pexels-photo-414191.jpeg"  class="slider" />
+            </div>
+            <div>
+                <img data-u="image" src="https://images.pexels.com/photos/243415/pexels-photo-243415.jpeg" class="slider" />
+            </div>
+            <div>
+                <img data-u="image" src="https://images.pexels.com/photos/350749/pexels-photo-350749.jpeg" class="slider" />
+            </div>
+            <div>
+                <img data-u="image" src="https://images.pexels.com/photos/414191/pexels-photo-414191.jpeg"  class="slider" />
+            </div>
+        </div>
+        
+        <div data-u="navigator" class="jssorb031" data-autocenter="1" data-scale="0.5" data-scale-bottom="0.75">
+            <div data-u="prototype" class="i" style="width:16px;height:16px;">
+                <svg viewBox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
+                    <circle class="b" cx="8000" cy="8000" r="5800"></circle>
+                </svg>
+            </div>
+        </div>
+        <!--#endregion Bullet Navigator Skin End -->
+    
+        <!--#region Arrow Navigator Skin Begin -->
+
+        <div data-u="arrowleft" class="jssora051" style="width:55px;height:55px;top:0px;left:25px;" data-autocenter="2" data-scale="0.75" data-scale-left="0.75">
+            <svg viewBox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
+                <polyline class="a" points="11040,1920 4960,8000 11040,14080 "></polyline>
+            </svg>
+        </div>
+        <div data-u="arrowright" class="jssora051" style="width:55px;height:55px;top:0px;right:25px;" data-autocenter="2" data-scale="0.75" data-scale-right="0.75">
+            <svg viewBox="0 0 16000 16000" style="position:absolute;top:0;left:0;width:100%;height:100%;">
+                <polyline class="a" points="4960,1920 11040,8000 4960,14080 "></polyline>
+            </svg>
+        </div>
+        <!--#endregion Arrow Navigator Skin End -->
+    </div>
+    <!-- Jssor Slider End -->
+</div>
+</section>
+
 {% endblock %}
