@@ -90,20 +90,24 @@ def reset_password():
 def new_user():
     return render_template('register.html')
 
-
 @app.route('/create_user', methods=['POST'])
 def create_user():
-    global login_val, email, password, nombre, bio
-    nombre = request.form['name']
-    bio = request.form['bio']
-    email = request.form['email']
-    password = request.form['password']
+    global login_val 
+    name = request.form.get('name')
+    lastname = request.form.get('lastname')
+    bio = request.form.get('bio')
+    email = request.form.get('email')
+    password = request.form.get('password')
 
     if validar_correo(email):
         login_val = True
-        return jsonify({'success': True, 'message': 'El correo ingresado si es valido &#128577;'}), 200
+        new_user = Usuario(name=name ,lastname = lastname ,  email=email, bio=bio , password= password)
+        db.session.add(new_user)
+        db.session.commit()
+
+        return jsonify({'success': True, 'message': 'El correo ingresado es válido &#128577;'}), 200
     else:
-        return jsonify({'success': False, 'message': 'El correo ingresado no es valido &#128577;'}), 400
+        return jsonify({'success': False, 'message': 'El correo ingresado no es válido &#128577;'}), 400
 
 # Todo referente al "Nuevo usuario" va aqui
 
