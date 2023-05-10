@@ -23,9 +23,7 @@ from app import (
     Game_platform
 )
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1234@localhost:5432/project_dbp'
-db.init_app(app)
+migrate = Migrate(app, db)
 
 login_val = False
 email = ''
