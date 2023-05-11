@@ -1,20 +1,26 @@
-window.onload = function() {
-    change_profile()
-}
-
 function change_profile() {
     fetch("/get_profile").then(function (response) {
         return response.json()
-    }).then(function (user) {
-        const name = document.getElementById("name")
-        name.innerHTML = `Nombre: ${user.firstname} ${user.lastname}`
+    }).then(function (jsonResponse) {
+        user = jsonResponse.user
 
-        const email = document.getElementById("email")
-        email.innerHTML = `Correo electrónico: ${user.email}`
+        const name = document.getElementById("name")
+        name.setAttribute("value", user.name)
+
+        const lastname = document.getElementById("lastname")
+        lastname.setAttribute("value", user.lastname)
 
         const bio = document.getElementById("bio")
-        email.innerHTML = `Bio: ${user.bio}`
+        bio.innerHTML = user.bio
 
-        list_games(user.games_bought)
+        const email = document.getElementById("email")
+        email.setAttribute("value", user.email)
+
+        const password = document.getElementById("password-field")
+        password.setAttribute("value", user.password)
     })
+}
+
+window.onload = function() {
+    change_profile()
 }

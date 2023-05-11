@@ -11,6 +11,7 @@
 {% endblock %}
 
 {% block contenido %}
+<script src="static/js/profile.js"></script>
         <section class="ftco-section">
             <div class="container">
                 <div class="row justify-content-center">
@@ -25,23 +26,23 @@
                                 </div>
                                 <form id="register_data" action="/update_data" method="post" class="signin-form">
                                     <div class="form-group mt-3">
-                                        <input type="text" value="{{nm}}" class="form-control" name="username" id="name" required >
+                                        <input type="text" value="" class="form-control" name="username" id="name" required >
                                         <label class="form-control-placeholder" for="name">Nombre(s)</label>
                                     </div>
                                     <div class="form-group mt-3">
-                                        <input type="text" value="{{ap}}" class="form-control" name="lastname" id="lastname" required>
+                                        <input type="text" value="" class="form-control" name="lastname" id="lastname" required>
                                         <label class="form-control-placeholder" for="lastname">Apellido </label>
                                     </div>
                                     <div class="form-group mt-3">
-                                        <textarea class="form-control" name="bio" id="bio" required>{{biog}}</textarea>
+                                        <textarea class="form-control" name="bio" id="bio" required></textarea>
                                         <label class="form-control-placeholder" for="bio">Biografía (Max. 50 Palabras)</label>
                                     </div>
                                     <div class="form-group mt-3">
-                                        <input type="text" value="{{e_mail}}" class="form-control" name="email" id="email"required>
+                                        <input type="text" value="" class="form-control" name="email" id="email" required>
                                         <label class="form-control-placeholder" for="email">Correo electrónico</label>
                                     </div>
                                     <div class="form-group">
-                                        <input id="password-field" value="{{passwrd}}" type="password" class="form-control" name="password" required>
+                                        <input id="password-field" value="" type="password" class="form-control" name="password" required>
                                         <label class="form-control-placeholder" for="password-field">Contraseña</label>
                                         <span toggle="#password-field"
                                             class="fa fa-fw fa-eye field-icon toggle-password"></span>

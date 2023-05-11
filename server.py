@@ -154,17 +154,16 @@ def create_user():
 
 @app.route('/profile', methods=['GET'])
 def profile():
-    global nombre,apellido,bio,email,password,login_val
     if login_val:
-        return render_template('user.html',nm = nombre, ap=apellido, biog=bio, e_mail=email, passwrd=password)
+        return render_template('user.html')
     else:
         return redirect(url_for('principal'))
 
 
 @app.route('/get_profile', methods=['GET'])
 def get_profile():
-    user = Usuario.query.filter_by(email=email)
-    return jsonify(user.serialize()), 200
+    user = Usuario.query.filter_by(email=email)[0]
+    return jsonify({"success": True, 'user': user.serialize()}), 200
 
 # Todo referente a la pagina de "delete-user" va aqui
 

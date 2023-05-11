@@ -138,7 +138,7 @@ class Usuario(db.Model):
     def serialize(self):
         return {
             'id': self.id,
-            'name': self.name,
+            'name': self.firstname,
             'lastname': self.lastname,
             'email': self.email,
             'bio': self.bio,
