@@ -42,3 +42,8 @@ function do_search(name) {
     }
     update_search_params("name", name)
 }
+
+$("#searchForm").on("submit", function(event) {
+    event.preventDefault() // Evita que el formulario se envíe de forma predeterminada
+    do_search(document.myform.SearchInput.value)
+})
