@@ -274,6 +274,17 @@ def search():
     else:
         return redirect(url_for('principal'))
 
+@app.route('/purchases', methods=['GET'])
+def purchases():
+    global login_val, nombre
+    if login_val:
+        return render_template('purchases.html', nm = nombre)
+    else:
+        return redirect(url_for('principal'))
+
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)
 else:
