@@ -35,3 +35,10 @@ function update_search_params(categoria, elemento) {
             list_games(games)
         })
 }
+
+function do_search(name) {
+    if (window.location.href != "/search") {
+        window.location.href = "/search"
+    }
+    update_search_params("name", name)
+}
