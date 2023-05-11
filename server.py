@@ -160,6 +160,12 @@ def profile():
     else:
         return redirect(url_for('principal'))
 
+
+@app.route('/get_profile', methods=['GET'])
+def get_profile():
+    user = Usuario.query.filter_by(email=email)
+    return jsonify(user.serialize()), 200
+
 # Todo referente a la pagina de "delete-user" va aqui
 
 @app.route('/delete_user', methods=['POST'])
