@@ -1,3 +1,5 @@
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
 DELETE FROM platform;
 
 INSERT INTO platform VALUES
