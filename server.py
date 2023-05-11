@@ -247,8 +247,7 @@ def search():
     # 6. Regresar un jsonify para indicar si funciono y con la lista del paso
     # 5. Seria bueno que todo este dentro de un try. Te puedes guiar del
     # get_departments del ejercicio del profesor.
-    return
-
+    return render_template('search.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
