@@ -78,6 +78,20 @@ def data_login():
     else:
         return jsonify({'success': False, 'message':'Este usuario no está registrado &#128577;'}),400
 
+@app.route('/logout', methods=['GET'])
+def logout():
+    global login_val, email, password, nombre, apellido, bio
+    if login_val:
+        login_val = False
+        email = ''
+        password = ''
+        nombre = ''
+        apellido = ''
+        bio = ''
+
+    return redirect(url_for('login'))
+
+
 # Todo referente al login va aqui
 
 # Todo referente al "recuperar contrasenia" va aqui
@@ -111,7 +125,10 @@ def reset_password():
     password2 = request.form['password2']
 
     if password1 == password2:
+        user = Usuario.query.filter_by(email=email).first()
         password = password1
+        user.password = password
+        db.session.commit()
         return jsonify({'success': True, 'message': 'Cambio de contraseña correcto'}), 200
     else:
         return jsonify({'success': False, 'message': 'Las contraseñas no coinciden &#128577;'}), 400
@@ -251,7 +268,11 @@ def do_search():
 
 @app.route('/search', methods=['GET'])
 def search():
-    return render_template('search.html')
+    global login_val
+    if login_val:
+        return render_template('search.html')
+    else:
+        return redirect(url_for('principal'))
 
 if __name__ == '__main__':
     app.run(debug=True)
