@@ -3,7 +3,7 @@ window.onload = function() {
 }
 
 function change_profile() {
-    fetch("/profile").then(function (response) {
+    fetch("/get_profile").then(function (response) {
         return response.json()
     }).then(function (user) {
         const name = document.getElementById("name")
