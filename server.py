@@ -214,8 +214,8 @@ def update_data():
 # Todo referente a la pagina de "videogame" va aqui
 
 
-@app.route('/videogame', methods=['GET'])
-def videogame():
+@app.route('/get_videogame', methods=['GET'])
+def get_videogame():
     # 1. Usar search params para obtener el titulo del game
     # 1. Hacer un querry para obtener el game
     # 2. Regresar un jsonify con el game luego de un serialize.
@@ -226,8 +226,8 @@ def videogame():
 # Todo referente a la pagina de "search" va aqui
 
 
-@app.route('/search', methods=['GET'])
-def search():
+@app.route('/do_search', methods=['GET'])
+def do_search():
     # 1. Usar search params para obtener las categorias de busqueda. Su nombre
     # estan en search.js, especificamente es: genre, platform, publisher y
     # name. Por default el valor es Todas.
@@ -246,6 +246,11 @@ def search():
     # 6. Regresar un jsonify para indicar si funciono y con la lista del paso
     # 5. Seria bueno que todo este dentro de un try. Te puedes guiar del
     # get_departments del ejercicio del profesor.
+    return
+
+
+@app.route('/search', methods=['GET'])
+def search():
     return render_template('search.html')
 
 if __name__ == '__main__':
