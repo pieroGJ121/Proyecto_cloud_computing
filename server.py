@@ -38,7 +38,7 @@ def principal():
     global login_val,nombre
 
     if login_val:
-        return render_template('index.html',nombre=nombre)
+        return render_template('index.html')
     else:
         return redirect(url_for('login'))
 
@@ -237,7 +237,7 @@ def get_videogame():
     # 1. Hacer un querry para obtener el game
     # 2. Regresar un jsonify con el game luego de un serialize.
     # No deberia fallar, ya que los videojuegos que aparecen son de la base de datos
-    return
+    return render_template('game.html')
 
 
 # Todo referente a la pagina de "search" va aqui

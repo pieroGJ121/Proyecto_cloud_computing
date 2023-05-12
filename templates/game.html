@@ -1,0 +1,34 @@
+{% extends "body_layout.html" %}
+{% block title %}Adquiere este juego con las mejores ofertas{% endblock %}
+{% block styles%}
+<link rel="stylesheet" href="../static/css/game/game.css">
+{% endblock %}
+
+{% block contenido %}
+<div id="container">
+    <div id="game_details">
+        <div id="left_column">
+        <div id="game_image">
+            <img src="https://i.blogs.es/2c9c70/gta-20v-20portada-20grande/450_1000.webp" alt="Game Image">
+        </div>
+        <div id="synopsis">
+            <h2>Sinopsis</h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus velit quis sequi maiores sed aut numquam sit vero accusantium in consequatur ipsam a repellendus esse odio deserunt corrupti, illo nam.</p>
+        </div>
+        </div>
+        <div id="right_column">
+        <div id="game_info">
+            <h1 id="game_name">GRAND THEFT AUTO V - PREMIUM EDITION</h1>
+            <div id="year">Año de lanzamiento: 2013</div>
+            <div id="genre">Género: Acción, Aventura</div>
+            <div id="publisher">Editor: ROCKSTAR GAMES</div>
+            <div id="platform">Plataforma: PC, Xbox, PlayStation</div>
+        </div>
+        <div id="buy_button">
+            <button>Comprar ahora</button>
+        </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

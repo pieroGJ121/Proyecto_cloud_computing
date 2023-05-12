@@ -6,11 +6,11 @@ function change_videogame() {
     fetch("/videogame").then(function (response) {
         return response.json()
     }).then(function (game_platform) {
-        const platform = game_platform.platform
+        const platform_1 = game_platform.platform
         const game_puplisher = game_platform.publisher
         const puplisher = game_publisher.publisher
         const game = game_publisher.game
-        const genre = game.genre
+        const genre_1 = game.genre
 
         const game_name = document.getElementById("game_name")
 
@@ -27,13 +27,13 @@ function change_videogame() {
         const year = document.getElementById("year")
         year.innerHTML = `Año de lanzamiento: ${game_platform.release_year}`
 
-        const genre = document.getElementById("genre")
-        genre.innerHTML = `Sinopsis: ${genre.genre_name}`
+        const genre_2 = document.getElementById("genre")
+        genre.innerHTML = `Sinopsis: ${genre_1.genre_name}`
 
         const publisher = document.getElementById("publisher")
         publisher.innerHTML = `Editor: ${publisher.publisher_name}`
 
-        const platform = document.getElementById("platform")
-        platform.innerHTML = `Plataforma: ${platform.platform_name}`
+        const platform_2 = document.getElementById("platform")
+        platform.innerHTML = `Plataforma: ${platform_1.platform_name}`
     })
 }

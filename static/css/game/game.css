@@ -1,0 +1,96 @@
+#container {
+    margin: 10px 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+#game_details {
+    display: flex;
+    flex-wrap: wrap;
+}
+#left_column {
+    flex: 0 0 50%;
+    padding: 20px;
+
+}
+#right_column {
+    flex: 0 0 50%;
+    padding: 20px;
+    color: white;
+
+}
+#game_image{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#game_image img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+}
+#synopsis {
+    margin-top: 30px;
+    color: whitesmoke; 
+}
+
+#synopsis h2{
+    font-size: 30px;
+    font-weight: bold;
+}
+#game_info {
+    margin-bottom: 20px;
+}
+#game_name {
+    font-weight: bold;
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+#year, #genre, #publisher, #platform {
+    margin-bottom: 10px;
+}
+#buy_button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+#buy_button button {
+    background: rgb(0, 189, 174);
+    background: linear-gradient(90deg, rgba(0, 189, 174, 1) 0%, rgba(0, 79, 196, 1) 100%);
+    background-size: 200% 200%;
+    animation: movimiento 10s ease infinite;
+    color: #fff;
+    border: none;
+    margin-top: 20px;
+    padding: 15px 25px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 10px;
+    border: #c8ffff 2px solid;
+} 
+#buy_button button:hover {
+    filter: brightness(1.1);
+} 
+@media (max-width: 768px) {
+    #game_details {
+      flex-direction: column;
+    }
+    
+    #left_column, #right_column {
+      flex: auto;
+    }
+}
+@keyframes movimiento {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+}
