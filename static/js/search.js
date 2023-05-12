@@ -1,12 +1,7 @@
-window.onload = function() {
-    set_information()
-}
-
-function set_information() {
-    update_search("genre", "Todas")
-    update_search("platform", "Todas")
-    update_search("publisher", "Todas")
-    update_search("name", "")
+function set_information(name) {
+    update_search_params("genre", "Todas")
+    update_search_params("platform", "Todas")
+    update_search_params("publisher", "Todas")
 
     set_list("genre")
     set_list("platform")
@@ -14,9 +9,11 @@ function set_information() {
 }
 
 function set_list(categoria) {
-    fetch(`/${categoria}`).then(function (response) {
+    fetch(`/get_${categoria}`).then(function (response) {
         return response.json()
-    }).then(function (elementos) {
+    }).then(function (jsonResponse) {
+        const elementos = jsonResponse.elementos
+
         const list = document.getElementById(`list_${categoria}s`)
 
         elementos.forEach((elemento) => {
