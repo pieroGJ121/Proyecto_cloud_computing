@@ -1,60 +1,23 @@
 {% extends "body_layout.html" %}
-{% block title %}Compra los mejores juegos aquí{% endblock %}
+{% block title %}Tus juegos{% endblock %}
 {% block styles%}
 <link rel="stylesheet" href="../static/css/purchases/purchases.css">
+<script src="static/js/shared.js"></script>
+<script src="static/js/purchases/purchases.js"></script>
 {% endblock %}
 
 {% block contenido %}
 
-<h2 class="search_text_p">{{nm}}, estos son los juegos que has comprado hasta ahora:</h2>
+<h2 class="search_text_p"></h2>
 <div class="main_container_games">
     <div class="container_games">
         <div class="item_game">
-        <img src="https://i.blogs.es/2c9c70/gta-20v-20portada-20grande/450_1000.webp" alt="Descripción de la imagen">
-        <h2>GTA V</h2>
-        <p>S/ 199</p>
-        <p>Fecha de compra: </p>
-        </div>
-        <div class="item_game">
             <img src="https://i.blogs.es/2c9c70/gta-20v-20portada-20grande/450_1000.webp" alt="Descripción de la imagen">
             <h2>GTA V</h2>
             <p>S/ 199</p>
             <p>Fecha de compra: </p>
         </div>
-        <div class="item_game">
-            <img src="https://i.blogs.es/2c9c70/gta-20v-20portada-20grande/450_1000.webp" alt="Descripción de la imagen">
-            <h2>GTA V.</h2>
-            <p>S/ 199</p>
-            <p>Fecha de compra: </p>
-        </div>
-        <div class="item_game">
-            <img src="https://i.blogs.es/2c9c70/gta-20v-20portada-20grande/450_1000.webp" alt="Descripción de la imagen">
-            <h2>GTA V</h2>
-            <p>S/ 199</p>
-            <p>Fecha de compra: </p>
-        </div>
-        <div class="item_game">
-            <img src="https://i.blogs.es/2c9c70/gta-20v-20portada-20grande/450_1000.webp" alt="Descripción de la imagen">
-            <h2>GTA V</h2>
-            <p>S/ 199</p>
-            <p>Fecha de compra: </p>
-        </div>
-        <div class="item_game">
-            <img src="https://i.blogs.es/2c9c70/gta-20v-20portada-20grande/450_1000.webp" alt="Descripción de la imagen">
-            <h2>GTA V</h2>
-            <p>S/ 199</p>
-            <p>Fecha de compra: </p>
-        </div>
-        <div class="item_game">
-            <img src="https://i.blogs.es/2c9c70/gta-20v-20portada-20grande/450_1000.webp" alt="Descripción de la imagen">
-            <h2>GTA V</h2>
-            <p>S/ 199</p>
-            <p>Fecha de compra: </p>
-        </div>
-        <!-- Agrega más elementos div con la clase "item" según sea necesario -->
     </div>
 </div>
-<h3 class="search_results_counter" id = "counter_games">En total has adquirido 10 juegos</h3>
-<h3 class="search_results_counter" id = "spent_games">En total has gastado: S/ 1000</h3>
-<script src="../static/js/purchases/purchases.js"></script>
+<h3 class="search_results_counter" id = "counter_games"></h3>
 {% endblock %}

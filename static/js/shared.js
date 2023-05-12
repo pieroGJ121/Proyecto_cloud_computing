@@ -10,7 +10,7 @@ function list_games(games) {
 
             block.innerHTML = `
                     <img src="${game.image}">
-                    <h2>${game.game_name}</h4>
+                    <h4>${game.game_name}</h4>
                     <p>${game.synopsis}</div>
                     `
             container_games.appendChild(block)
