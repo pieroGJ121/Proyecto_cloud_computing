@@ -3,6 +3,17 @@ window.onload = function () {
 }
 
 function get_purchases () {
-    const counter_games = document.getElementById("counter_games")
-    counter_games.innerHTML = "En total has adquirido 50 juegos"
+    fetch("/get_profile").then(function (response) {
+        return response.json()
+    }).then(function (jsonResponse) {
+        const user = jsonResponse.user
+        const games_bought = user.games_bought
+
+        const bought = document.getElementByClassName("search_text_p")
+        bought.innerHTML = `${user.name}, estos son los juegos que has comprado:`
+
+        const counter_games = document.getElementById("counter_games")
+        counter_games.innerHTML = `En total has adquirido ${games_bought.length} juegos`
+
+        list_games(games_bought)
 }
