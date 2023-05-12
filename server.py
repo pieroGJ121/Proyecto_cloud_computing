@@ -243,6 +243,24 @@ def get_videogame():
 # Todo referente a la pagina de "search" va aqui
 
 
+@app.route('/get_genre', methods=['GET'])
+def get_genre():
+    genres = [g.serialize for g in genre.query.all()]
+    return jsonify({"success": True, 'elementos': genres}), 200
+
+
+@app.route('/get_platform', methods=['GET'])
+def get_platform():
+    platforms = [p.serialize for p in platform.query.all()]
+    return jsonify({"success": True, 'elementos': platforms}), 200
+
+
+@app.route('/get_publisher', methods=['GET'])
+def get_publisher():
+    publishers = [p.serialize for p in Publisher.query.all()]
+    return jsonify({"success": True, 'elementos': publishers}), 200
+
+
 @app.route('/do_search', methods=['GET'])
 def do_search():
     # 1. Usar search params para obtener las categorias de busqueda. Su nombre
