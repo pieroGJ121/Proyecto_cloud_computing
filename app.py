@@ -32,7 +32,7 @@ class genre(db.Model):
     def serialize(self):
         return {
             'id': self.id,
-            'genre_name': self.genre_name,
+            'name': self.genre_name,
             'created_at': self.created_at,
             'modified_at': self.modified_at,
         }
@@ -61,7 +61,7 @@ class platform(db.Model):
     def serialize(self):
         return {
             'id': self.id,
-            'platform_name': self.platform_name,
+            'name': self.platform_name,
             'created_at': self.created_at,
             'modified_at': self.modified_at,
         }
@@ -206,7 +206,7 @@ class Publisher(db.Model):
     def serialize(self):
         return {
             'id': self.id,
-            'publisher_name': self.publisher_name,
+            'name': self.publisher_name,
             'created_at': self.created_at,
             'modified_at': self.modified_at,
         }
