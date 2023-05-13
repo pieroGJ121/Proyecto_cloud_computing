@@ -31,6 +31,7 @@ password = ''
 nombre = ''
 apellido = ''
 bio = ''
+compra = False
 
 
 @app.route('/', methods=['GET'])
@@ -299,9 +300,34 @@ def purchases():
         return render_template('purchases.html', nm = nombre)
     else:
         return redirect(url_for('principal'))
+    
+@app.route('/verify_checkout', methods = ['POST'])
+def verify_checkout():
+    global compra
+    compra = True
+    return jsonify({'success': True, 'message': 'Compra casi lista'})
 
-
-
+@app.route('/checkout', methods = ['GET'])
+def checkout():
+    global compra
+    if compra:
+        return render_template('wait.html')
+    else:
+        return redirect(url_for('principal'))
+    
+@app.route('/resume', methods = ['GET'])
+def resume():
+    global compra
+    if compra:
+        compra = False
+        return render_template('resume.html')
+    else:
+        return redirect(url_for('principal'))
+    
+@app.route('/get_purchase_resume', methods = ['GET'])
+def get_purchase_resume():
+    #Se debe de devolver los datos de la compra realizada
+    return
 
 if __name__ == '__main__':
     app.run(debug=True)

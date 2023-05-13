@@ -18,6 +18,10 @@
     flex: 0 0 50%;
     padding: 20px;
     color: white;
+    border-width: 0 0 0 2px;
+    border-image: linear-gradient(to bottom, transparent, white 50%, transparent) 1;
+    border-image-slice: 1;
+    border-style: solid;
 
 }
 #game_image{
@@ -48,8 +52,14 @@
     font-size: 30px;
     margin-bottom: 10px;
 }
-#year, #genre, #publisher, #platform {
+#year, #genre, #publisher, #platform{
     margin-bottom: 10px;
+}
+#price{
+    margin-bottom: 10px;
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 25px;
 }
 #buy_button{
     display: flex;
@@ -76,11 +86,14 @@
 } 
 @media (max-width: 768px) {
     #game_details {
-      flex-direction: column;
+        flex-direction: column;
     }
     
     #left_column, #right_column {
-      flex: auto;
+        flex: auto;
+    }
+    #right_column{
+        border-width: 0 0 0 0px;
     }
 }
 @keyframes movimiento {
