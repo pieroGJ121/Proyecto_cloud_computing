@@ -39,11 +39,24 @@ function change_videogame() {
     })
 }
 
+function change_buy_button() {
+    fetch("/is_game_bought").then(function (response) {
+        return response.json()
+    }).then(function (jsonResponse) {
+        const buy_button = document.getElementById("buy_button")
+        if (jsonResponse.is_bought == 1) {
+            buy_button.innerHTML = "Juego comprado"
+        } else {
+            buy_button.innerHTML = "Comprar ahora"
+        }
+    })
+}
+
 function comprar(event) {
     event.preventDefault();
 
     fetch("/is_game_bought").then(function (response) {
-        return rsponse.json()
+        return response.json()
     }).then(function (jsonResponse) {
         if (jsonResponse.is_bought == 1) {
             const buy_message = document.getElementById("buy_message")
