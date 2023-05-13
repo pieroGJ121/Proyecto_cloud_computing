@@ -251,10 +251,10 @@ def update_data():
 
 @app.route('/get_videogame', methods=['GET'])
 def get_videogame():
-    name = request.args("name")
+    id_game = request.args("id")
 
-    game_platform = game.query.filter_by(name=name)[0].game_publisher.game_platform.serialize()
-    return jsonify({"success": True, 'user': game_platform}), 200
+    game_platform = game.query.filter_by(id=id_game)[0].game_publisher.game_platform.serialize()
+    return jsonify({"success": True, 'game_platform': game_platform}), 200
 
 
 @app.route('/videogame', methods=['GET'])
