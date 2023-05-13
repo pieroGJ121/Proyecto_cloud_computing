@@ -315,6 +315,9 @@ def search():
         return redirect(url_for('principal'))
 
 
+# Todo referente a la pagina de "purchases" va aqui
+
+
 @app.route('/purchases', methods=['GET'])
 def purchases():
     global login_val
@@ -322,6 +325,18 @@ def purchases():
         return render_template('purchases.html')
     else:
         return redirect(url_for('principal'))
+
+
+# Todo referente a comprar videogames va aqui
+
+
+@app.route('/is_game_bought', methods=['GET'])
+def is_game_bought():
+    id_game = request.args("id")
+    id_user = Usuario.query.filter_by(email=email).first()
+    return jsonify({"success": True,
+                    'is_bought': len(Compra.query.filter_by(game_id=id_game,
+                                                            usuario_id=id_user))}), 200
 
 
 @app.route('/buy_game', methods=['POST'])
