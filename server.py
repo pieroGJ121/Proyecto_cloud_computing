@@ -42,7 +42,7 @@ game_created = ''
 
 @app.route('/', methods=['GET'])
 def principal():
-    global login_val,nombre
+    global login_val
 
     if login_val:
         return render_template('index.html')
@@ -59,14 +59,14 @@ def login():
         return redirect(url_for('principal'))
     else:
         return render_template('login.html')
-    
+
 
 @app.route('/data_login', methods=['POST'])
 def data_login():
     global login_val, email, password, nombre, apellido, bio
 
-    email=request.form['email']
-    password=request.form['password']
+    email = request.form['email']
+    password = request.form['password']
 
     # Buscar el usuario en la base de datos
     user = Usuario.query.filter_by(email=email).first()
@@ -79,11 +79,15 @@ def data_login():
             nombre = user.firstname
             apellido = user.lastname
             bio = user.bio
-            return jsonify({'success': True, 'message':'Inicio de sesion correcto'}),200
+            return jsonify({'success': True,
+                            'message':'Inicio de sesion correcto'}),200
         else:
-            return jsonify({'success': False, 'message':'Correo y/o contraseña incorrectos. Intente nuevamente &#128577;'}),400
+            return jsonify({'success': False,
+                            'message':'Correo y/o contraseña incorrectos. Intente nuevamente &#128577;'}),400
     else:
-        return jsonify({'success': False, 'message':'Este usuario no está registrado &#128577;'}),400
+        return jsonify({'success': False,
+                        'message':'Este usuario no está registrado &#128577;'}),400
+
 
 @app.route('/logout', methods=['GET'])
 def logout():
@@ -119,9 +123,11 @@ def data_recover():
     user = Usuario.query.filter_by(email=email).first()
 
     if email == user.email and name == user.firstname:
-        return jsonify({'success': True, 'message': 'El usuario y nombre coinciden'}), 200
+        return jsonify({'success': True,
+                        'message': 'El usuario y nombre coinciden'}), 200
     else:
-        return jsonify({'success': False, 'message': 'Datos de acceso incorrectos. Intente nuevamente &#128577;'}), 400
+        return jsonify({'success': False,
+                        'message': 'Datos de acceso incorrectos. Intente nuevamente &#128577;'}), 400
 
 
 @app.route('/reset_password', methods=['POST'])
@@ -136,17 +142,21 @@ def reset_password():
         password = password1
         user.password = password
         db.session.commit()
-        return jsonify({'success': True, 'message': 'Cambio de contraseña correcto'}), 200
+        return jsonify({'success': True,
+                        'message': 'Cambio de contraseña correcto'}), 200
     else:
-        return jsonify({'success': False, 'message': 'Las contraseñas no coinciden &#128577;'}), 400
+        return jsonify({'success': False,
+                        'message': 'Las contraseñas no coinciden &#128577;'}), 400
 
 # Todo referente al "recuperar contrasenia" va aqui
 
 # Todo referente al "Nuevo usuario" va aqui
 
+
 @app.route('/new_user', methods=['GET'])
 def new_user():
     return render_template('register.html')
+
 
 @app.route('/create_user', methods=['POST'])
 def create_user():
@@ -164,12 +174,15 @@ def create_user():
         email = e_mail
         password = password1
         bio = biog
-        new_user = Usuario(firstname=name ,lastname = lastname ,  email=e_mail, bio=biog , password= password1)
+        new_user = Usuario(firstname=name, lastname=lastname,  email=e_mail,
+                           bio=biog, password=password1)
         db.session.add(new_user)
         db.session.commit()
-        return jsonify({'success': True, 'message': 'El correo ingresado es válido &#128577;'}), 200
+        return jsonify({'success': True,
+                        'message': 'El correo ingresado es válido &#128577;'}), 200
     else:
-        return jsonify({'success': False, 'message': 'El correo ingresado no es válido &#128577;'}), 400
+        return jsonify({'success': False,
+                        'message': 'El correo ingresado no es válido &#128577;'}), 400
 
 # Todo referente al "Nuevo usuario" va aqui
 
@@ -191,11 +204,12 @@ def get_profile():
 
 # Todo referente a la pagina de "delete-user" va aqui
 
+
 @app.route('/delete_user', methods=['POST'])
 def delete_user():
-    global nombre,apellido,bio,email,password,login_val
+    global nombre, apellido, bio, email, password, login_val
     fila_a_eliminar = Usuario.query.filter_by(email=email).first()
-    
+
     if fila_a_eliminar:
         db.session.delete(fila_a_eliminar)
         db.session.commit()
@@ -205,16 +219,19 @@ def delete_user():
         bio = ''
         email = ''
         password = ''
-        return jsonify({'success': True, 'message': 'El usuario se ha eliminado correctamete.'}), 200
+        return jsonify({'success': True,
+                        'message': 'El usuario se ha eliminado correctamete.'}), 200
     else:
-        return jsonify({'success': False, 'message': 'El usuario no se ha podido eliminar. Intentalo nuevamente'}), 400
-    
+        return jsonify({'success': False,
+                        'message': 'El usuario no se ha podido eliminar. Intentalo nuevamente'}), 400
+
 # Todo referente a la pagina de "actualizar_datos" va aqui
+
 
 @app.route('/update_data', methods=['POST'])
 def update_data():
 
-    global nombre,apellido,bio,email,password
+    global nombre, apellido, bio, email, password
 
     user = Usuario.query.filter_by(email=email).first()
 
@@ -238,21 +255,36 @@ def update_data():
 # Todo referente a la pagina de "videogame" va aqui
 
 
-@app.route('/get_videogame/<identificador>', methods=['GET'])
-def get_videogame(identificador):
-    global login_val,game_id,game_genre, game_nombre, game_sinopsis, game_created, game_image
-    if login_val:
-        juego = game.query.filter_by(id=identificador).first()
-        game_id = juego.id
-        game_nombre = juego.game_name
-        game_synopsis = juego.synopsis
-        game_created = juego.created_at
-        game_genre = juego.genre_id
-        game_image = juego.image
+#Se supone que de esta forma podria obtener un juego de manera individual y pasar al html algunos argumentos
+#@app.route('/get_videogame/<identificador>', methods=['GET'])
+#def get_videogame(identificador):
+    #global login_val,game_id,game_genre, game_nombre, game_sinopsis, game_created, game_image
+    #if login_val:
+        #juego = game.query.filter_by(id=identificador).first()
+        #game_id = juego.id
+        #game_nombre = juego.game_name
+        #game_synopsis = juego.synopsis
+        #game_created = juego.created_at
+        #game_genre = juego.genre_id
+        #game_image = juego.image
+        
+        #return render_template('game.html',id = game_id, nombre = game_nombre, sinopsis = game_synopsis, creado = game_created, genero = game_genre, imagen = game_image)
+    #else:
+        #return redirect(url_for('principal'))
+        
+@app.route('/get_videogame', methods=['GET'])
+def get_videogame():
+    id_game = request.args("id")
 
-        return render_template('game.html',id = game_id, nombre = game_nombre, sinopsis = game_synopsis, creado = game_created, genero = game_genre, imagen = game_image)
-    else:
-        return redirect(url_for('principal'))
+    game_platform = game.query.filter_by(id=id_game)[0].game_publisher.game_platform.serialize()
+    return jsonify({"success": True, 'game_platform': game_platform}), 200
+
+
+@app.route('/videogame', methods=['GET'])
+def videogame():
+    return render_template('game.html')
+
+
     
 # Todo referente a la pagina de "search" va aqui
 
@@ -289,29 +321,48 @@ def search():
     else:
         return redirect(url_for('principal'))
 
+
+# Todo referente a la pagina de "purchases" va aqui
+
+
 @app.route('/purchases', methods=['GET'])
 def purchases():
-    global login_val, nombre
+    global login_val
     if login_val:
-        return render_template('purchases.html', nm = nombre)
+        return render_template('purchases.html')
     else:
         return redirect(url_for('principal'))
-    
-@app.route('/verify_checkout', methods = ['POST'])
+
+
+# Todo referente a comprar videogames va aqui
+
+
+@app.route('/is_game_bought', methods=['GET'])
+def is_game_bought():
+    id_game = request.args("id")
+    id_user = Usuario.query.filter_by(email=email).first()
+    return jsonify({"success": True,
+                    'is_bought': len(Compra.query.filter_by(game_id=id_game,
+                                                            usuario_id=id_user))}), 200
+
+
+@app.route('/buy_game', methods=['POST'])
 def verify_checkout():
     global compra
     compra = True
     return jsonify({'success': True, 'message': 'Compra casi lista'})
 
-@app.route('/checkout', methods = ['GET'])
+
+@app.route('/checkout', methods=['GET'])
 def checkout():
     global compra
     if compra:
         return render_template('wait.html')
     else:
         return redirect(url_for('principal'))
-    
-@app.route('/resume', methods = ['GET'])
+
+
+@app.route('/resume', methods=['GET'])
 def resume():
     global compra
     if compra:

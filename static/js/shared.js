@@ -6,7 +6,8 @@ function list_games(games) {
         container_games.innerHTML = ""
         games.forEach((game) => {
             const block = document.createElement("div")
-            classs.add("item_game")
+            block.classList.add("item_game")
+            block.setAttribute("id", game.id)
 
             block.innerHTML = `
                     <img src="${game.image}">
@@ -17,6 +18,11 @@ function list_games(games) {
         })
     }
 }
+
+$(".item_game").on("click", function() {
+    window.location.href = "/videogame"
+    update_search_params("id", $(this).attr("id"))
+})
 
 function update_search_params(categoria, elemento) {
     let url = new URL(window.location)
