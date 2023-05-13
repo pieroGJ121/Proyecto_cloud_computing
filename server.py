@@ -32,6 +32,12 @@ nombre = ''
 apellido = ''
 bio = ''
 compra = False
+game_id = ''
+game_nombre = ''
+game_sinopsis = ''
+game_image = ''
+game_genre = ''
+game_created = ''
 
 
 @app.route('/', methods=['GET'])
@@ -232,15 +238,22 @@ def update_data():
 # Todo referente a la pagina de "videogame" va aqui
 
 
-@app.route('/get_videogame', methods=['GET'])
-def get_videogame():
-    # 1. Usar search params para obtener el titulo del game
-    # 1. Hacer un querry para obtener el game
-    # 2. Regresar un jsonify con el game luego de un serialize.
-    # No deberia fallar, ya que los videojuegos que aparecen son de la base de datos
-    return render_template('game.html')
+@app.route('/get_videogame/<identificador>', methods=['GET'])
+def get_videogame(identificador):
+    global login_val,game_id,game_genre, game_nombre, game_sinopsis, game_created, game_image
+    if login_val:
+        juego = game.query.filter_by(id=identificador).first()
+        game_id = juego.id
+        game_nombre = juego.game_name
+        game_synopsis = juego.synopsis
+        game_created = juego.created_at
+        game_genre = juego.genre_id
+        game_image = juego.image
 
-
+        return render_template('game.html',id = game_id, nombre = game_nombre, sinopsis = game_synopsis, creado = game_created, genero = game_genre, imagen = game_image)
+    else:
+        return redirect(url_for('principal'))
+    
 # Todo referente a la pagina de "search" va aqui
 
 
@@ -262,27 +275,10 @@ def get_publisher():
     return jsonify({"success": True, 'elementos': publishers}), 200
 
 
-@app.route('/do_search', methods=['GET'])
-def do_search():
-    # 1. Usar search params para obtener las categorias de busqueda. Su nombre
-    # estan en search.js, especificamente es: genre, platform, publisher y
-    # name. Por default el valor es Todas.
-    # 2. Hacer un if por cada categoria para verificar si el valor es Todas.
-    # Si es asi, se escoje a todos los posibles, ya que eso se significa Todas.
-    # Caso contrario, se hace un querry con el valor de la categoria.
-    # 3. Luego de tener la lista de coincidencias de cada categoria deberias
-    # hacer que llegen a su forma de game.
-    # 4. En su forma de game, debes hacer una interseccion entre las 4 para
-    # encontrar los juegos que coinciden con todo. Estoy recomendado que lo
-    # lleves a su forma de game, pero no se si la comparacion funcionara bien.
-    # Tambien lo podrias hacer por su game id y despues de tener la
-    # interseccion llevarlo a su forma de game.
-    # 5. Hacer un serialize para cada objeto game encontrado, guardarlo en una
-    # lista.
-    # 6. Regresar un jsonify para indicar si funciono y con la lista del paso
-    # 5. Seria bueno que todo este dentro de un try. Te puedes guiar del
-    # get_departments del ejercicio del profesor.
-    return
+@app.route('/do_search/<texto>', methods=['GET'])
+def do_search(texto):
+    resultados = game.query.filter(game.game_name.ilike(f'%{texto}%')).all()
+    return jsonify({'success': True, 'cantidad': len(resultados), 'juegos': [resultado.serialize() for resultado in resultados]})
 
 
 @app.route('/search', methods=['GET'])

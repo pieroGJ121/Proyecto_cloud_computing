@@ -9,21 +9,21 @@
     <div id="game_details">
         <div id="left_column">
         <div id="game_image">
-            <img src="https://i.blogs.es/2c9c70/gta-20v-20portada-20grande/450_1000.webp" alt="Game Image">
+            <img src="{{imagen}}" alt="Game Image">
         </div>
         <div id="synopsis">
             <h2>Sinopsis</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus velit quis sequi maiores sed aut numquam sit vero accusantium in consequatur ipsam a repellendus esse odio deserunt corrupti, illo nam.</p>
+            <p>{{sinopsis}}</p>
         </div>
         </div>
         <div id="right_column">
         <div id="game_info">
-            <h1 id="game_name">GRAND THEFT AUTO V - PREMIUM EDITION</h1>
-            <div id="year">Año de lanzamiento: 2013</div>
-            <div id="genre">Género: Acción, Aventura</div>
+            <h1 id="game_name">{{nombre}}</h1>
+            <div id="year">Año de lanzamiento: {{creado}}</div>
+            <div id="genre">Género: {{genero}}</div>
             <div id="publisher">Editor: ROCKSTAR GAMES</div>
             <div id="platform">Plataforma: PC, Xbox, PlayStation</div>
-            <div id="price">S/ 190</div>
+            <!--><div id="price">S/ 190</div><!-->
         </div>
         <div id="buy_button">
             <button onclick="comprar(event)">Comprar ahora</button>

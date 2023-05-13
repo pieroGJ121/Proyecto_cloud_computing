@@ -87,7 +87,7 @@ class game(db.Model):
         self.id = id
         self.game_name = name
         self.synopsis = ""
-        self.image = "static/images/videogames/default.png"
+        self.image = "https://i.blogs.es/2c9c70/gta-20v-20portada-20grande/450_1000.webp"
         self.genre_id = genre_id
         self.created_at = datetime.utcnow()
 
