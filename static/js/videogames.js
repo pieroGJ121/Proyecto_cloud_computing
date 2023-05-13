@@ -54,12 +54,12 @@ function change_buy_button() {
 
 function comprar(event) {
     event.preventDefault();
+    const buy_message = document.getElementById("buy_message")
 
     fetch("/is_game_bought").then(function (response) {
         return response.json()
     }).then(function (jsonResponse) {
         if (jsonResponse.is_bought == 1) {
-            const buy_message = document.getElementById("buy_message")
             buy_message.innerHTML = "Ya has comprado este juego"
         } else {
             fetch('/buy_game', {
@@ -70,13 +70,17 @@ function comprar(event) {
                     if (data.success === true) {
                         window.location.href = '/checkout';
                     } else {
-                        const buy_message = document.getElementById("buy_message")
                         buy_message.innerHTML = 'La verificación de compra no fue exitosa'
+                        setTimeout(function() {
+                            buy_message.innerHTML = ''
+                        }, 5000);
                     }
                 })
                 .catch(error => {
-                    const buy_message = document.getElementById("buy_message")
                     buy_message.innerHTML = 'Error al realizar la verificación de compra:'
+                        setTimeout(function() {
+                            buy_message.innerHTML = ''
+                        }, 5000);
                 });
         }
     })
