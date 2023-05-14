@@ -12,25 +12,24 @@
         <div id="game_image">
             <img src="{{imagen}}" alt="Game Image">
         </div>
-        <div id="synopsis">
+        <div>
             <h2>Sinopsis</h2>
-            <p>{{sinopsis}}</p>
+            <p id="synopsis">Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus velit quis sequi maiores sed aut numquam sit vero accusantium in consequatur ipsam a repellendus esse odio deserunt corrupti, illo nam.</p>
         </div>
         </div>
         <div id="right_column">
-        <div id="game_info">
-            <h1 id="game_name">{{nombre}}</h1>
-            <div id="year">Año de lanzamiento: {{creado}}</div>
-            <div id="genre">Género: {{genero}}</div>
-            <div id="publisher">Editor: ROCKSTAR GAMES</div>
-            <div id="platform">Plataforma: PC, Xbox, PlayStation</div>
-            <!--><div id="price">S/ 190</div><!-->
-        </div>
-        <div id="buy_button">
-            <button onclick="comprar(event)">Comprar ahora</button>
+            <div id="game_info">
+                <h3 id="game_name">GRAND THEFT AUTO V - PREMIUM EDITION</h1>
+                <div id="year">Año de lanzamiento: 2013</div>
+                <div id="genre">Género: Acción, Aventura</div>
+                <div id="publisher">Editor: ROCKSTAR GAMES</div>
+                <div id="platform">Plataforma: PC, Xbox, PlayStation</div>
+            </div>
+        <div id="buy_container">
+            <button id="buy_button" onclick="comprar(event)">Comprar ahora</button>
+            <div id="buy_message"></div>
         </div>
         </div>
     </div>
 </div>
-<script src="../static/js/game/game.js"></script>
 {% endblock %}
