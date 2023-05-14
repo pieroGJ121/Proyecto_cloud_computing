@@ -2,6 +2,7 @@
 {% block title %}Resultados de la busqueda{% endblock %}
 {% block styles%}
 <link rel="stylesheet" href="../static/css/search/search.css">
+<script src="static/js/search.js"></script>
 {% endblock %}
 {% block nav_extra %}{%include 'navbar_search.html'%}{% endblock %}
 {% block contenido %}
@@ -11,5 +12,4 @@
     <div class="container_games" id="container_games"></div>
 </div>
 <h3 class="search_results_counter" id="search_results_counter">Mostrando 10 resultados</h3>
-<script src="../static/js/search/get_games.js"></script>
 {% endblock %}
