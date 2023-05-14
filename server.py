@@ -334,6 +334,15 @@ def purchases():
         return redirect(url_for('principal'))
 
 
+@app.route('/get_compra', methods=['GET'])
+def get_compra():
+    id_game = request.args("id")
+    videogame = game.query.filter_by(id=id_game).first().serialize()
+    user = Usuario.query.filter_by(email=email).first()
+    purchase = Compra.query.filter_by(usuario_id=user.id, game_id=id_game).first().serialize()
+    return jsonify({'success': True, 'compra': purchase, "game": videogame})
+
+
 # Todo referente a comprar videogames va aqui
 
 
