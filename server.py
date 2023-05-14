@@ -294,7 +294,8 @@ def do_search(texto):
     selected = selected.filter_by(genre_id=id_genre)
 
     if selection["name"] != "":
-        selected = selected.filter_by(game_name=selection["name"])
+        name = selection["name"]
+        selected = selected.filter(game.game_name.ilike(f'%{name}%'))
 
     selected.join(game.game_publisher)
 
