@@ -19,7 +19,7 @@ function set_list(categoria) {
         elementos.forEach((elemento) => {
             const block = document.createElement("li")
             const classes = block.classList
-            classs.add("sidenav-item")
+            classes.add("sidenav-item")
             block.id = `${elemento.name}`
             block.onclick = update_search_params(categoria, elemento.name)
 

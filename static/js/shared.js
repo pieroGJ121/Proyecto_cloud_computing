@@ -19,10 +19,16 @@ function list_games(games) {
     }
 }
 
-$(".item_game").on("click", function() {
-    window.location.href = "/videogame"
-    update_search_params("id", $(this).attr("id"))
-})
+// Obtener todos los elementos con la clase "item_game"
+var itemGames = document.getElementsByClassName('item_game');
+
+// Iterar sobre los elementos y agregar el evento de clic a cada uno
+for (var i = 0; i < itemGames.length; i++) {
+  itemGames[i].addEventListener('click', function() {
+    window.location.href = '/videogame';
+    update_search_params('id', this.getAttribute('id'));
+  });
+}
 
 function update_search_params(categoria, elemento) {
     let url = new URL(window.location)
@@ -42,6 +48,7 @@ function update_search_params(categoria, elemento) {
         })
 }
 
+
 function do_search(name) {
     if (window.location.href != "/search") {
         window.location.href = "/search"
@@ -49,7 +56,12 @@ function do_search(name) {
     update_search_params("name", name)
 }
 
-$("#searchForm").on("submit", function(event) {
-    event.preventDefault() // Evita que el formulario se envíe de forma predeterminada
-    do_search(document.myform.SearchInput.value)
+document.addEventListener('DOMContentLoaded', function(){
+    const formulario = document.getElementById('searchForm');
+    formulario.addEventListener('submit', function(event) {
+        event.preventDefault()
+        const campoBusqueda = formulario.elements['SearchInput'].value;
+        console.log(campoBusqueda)
+        do_search(campoBusqueda)
+    })
 })

@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="../static/css/main_parts/navbar.css">
   <link rel="stylesheet" href="../static/css/main_parts/nav_extra.css">
   <link rel="stylesheet" media="all" href="../static/css/main_parts/background.css" />
-  <script src="static/js/shared.js"></script>
+  <script src="../static/js/shared.js"></script>
   {% block styles %}{% endblock %}
 </head>
 
@@ -33,7 +33,7 @@
           <div class="col-md-4">
             <form class="d-flex input-group w-auto my-auto mb-3 mb-md-0" id="searchForm">
               <input autocomplete="off" type="search" class="form-control rounded" placeholder="Busca aquí" id="SearchInput">
-              <span onclick="myform.submit()" class="input-group-text border-0 d-none d-lg-flex"><i class="fas fa-search"></i></span>
+              <span class="input-group-text border-0 d-none d-lg-flex"><i class="fas fa-search"></i></span>
             </form>
           </div>
 
@@ -80,7 +80,6 @@
     {%include 'footer.html'%}
   <script type="text/javascript" src="https://mdbootstrap.com/api/snippets/static/download/MDB5-Pro-Advanced_6.2.0/js/mdb.min.js"></script>
   <script type="text/javascript" src="https://mdbootstrap.com/api/snippets/static/download/MDB5-Pro-Advanced_6.2.0/plugins/js/all.min.js"></script>
-  <script type="text/javascript" src="../static/js/search/search.js"></script>
 </body>
 
 </html>
