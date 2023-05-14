@@ -32,12 +32,6 @@ nombre = ''
 apellido = ''
 bio = ''
 compra = False
-game_id = ''
-game_nombre = ''
-game_sinopsis = ''
-game_image = ''
-game_genre = ''
-game_created = ''
 
 
 @app.route('/', methods=['GET'])
@@ -199,7 +193,7 @@ def profile():
 
 @app.route('/get_profile', methods=['GET'])
 def get_profile():
-    user = Usuario.query.filter_by(email=email)[0]
+    user = Usuario.query.filter_by(email=email).first()
     return jsonify({"success": True, 'user': user.serialize()}), 200
 
 # Todo referente a la pagina de "delete-user" va aqui
@@ -255,28 +249,11 @@ def update_data():
 # Todo referente a la pagina de "videogame" va aqui
 
 
-#Se supone que de esta forma podria obtener un juego de manera individual y pasar al html algunos argumentos
-#@app.route('/get_videogame/<identificador>', methods=['GET'])
-#def get_videogame(identificador):
-    #global login_val,game_id,game_genre, game_nombre, game_sinopsis, game_created, game_image
-    #if login_val:
-        #juego = game.query.filter_by(id=identificador).first()
-        #game_id = juego.id
-        #game_nombre = juego.game_name
-        #game_synopsis = juego.synopsis
-        #game_created = juego.created_at
-        #game_genre = juego.genre_id
-        #game_image = juego.image
-        
-        #return render_template('game.html',id = game_id, nombre = game_nombre, sinopsis = game_synopsis, creado = game_created, genero = game_genre, imagen = game_image)
-    #else:
-        #return redirect(url_for('principal'))
-        
 @app.route('/get_videogame', methods=['GET'])
 def get_videogame():
     id_game = request.args("id")
 
-    game_platform = game.query.filter_by(id=id_game)[0].game_publisher.game_platform.serialize()
+    game_platform = game.query.filter_by(id=id_game).first().game_publisher.game_platform.serialize()
     return jsonify({"success": True, 'game_platform': game_platform}), 200
 
 
@@ -285,32 +262,55 @@ def videogame():
     return render_template('game.html')
 
 
-    
 # Todo referente a la pagina de "search" va aqui
 
 
 @app.route('/get_genre', methods=['GET'])
 def get_genre():
-    genres = [g.serialize for g in genre.query.all()]
+    genres = [g.serialize() for g in genre.query.all()]
     return jsonify({"success": True, 'elementos': genres}), 200
 
 
 @app.route('/get_platform', methods=['GET'])
 def get_platform():
-    platforms = [p.serialize for p in platform.query.all()]
+    platforms = [p.serialize() for p in platform.query.all()]
     return jsonify({"success": True, 'elementos': platforms}), 200
 
 
 @app.route('/get_publisher', methods=['GET'])
 def get_publisher():
-    publishers = [p.serialize for p in Publisher.query.all()]
+    publishers = [p.serialize() for p in Publisher.query.all()]
     return jsonify({"success": True, 'elementos': publishers}), 200
 
 
-@app.route('/do_search/<texto>', methods=['GET'])
+@app.route('/do_search', methods=['GET'])
 def do_search(texto):
-    resultados = game.query.filter(game.game_name.ilike(f'%{texto}%')).all()
-    return jsonify({'success': True, 'cantidad': len(resultados), 'juegos': [resultado.serialize() for resultado in resultados]})
+    selection = {"genre": request.args("genre"), "platform": request.args("platform"),
+                 "publisher": request.args("publisher"), "name": request.args("name")}
+    selected = game.query
+
+    if selection["genre"] != "Todas":
+        id_genre = genre.query.filter_by(genre_name=selection["genre"]).first().id
+    selected = selected.filter_by(genre_id=id_genre)
+
+    if selection["name"] != "":
+        selected = selected.filter_by(game_name=selection["name"])
+
+    selected.join(game.game_publisher)
+
+    if selection["publisher"] != "Todas":
+        id_publisher = Publisher.query.filter_by(publisher_name=selection["publisher"]).first().id
+        selected = selected.filter(game.game_publisher.has(publisher_id=id_publisher))
+
+    selected.join(Game_publisher.game_platform)
+
+    if selection["platform"] != "Todas":
+        id_platform = platform.query.filter_by(platform_name=selection["platform"]).first().id
+        selected = selected.filter(game.game_publisher.has(Game_publisher.game_platform.has(platform_id=id_platform)))
+
+    selected = [game.serialize() for game in selected.all()]
+
+    return jsonify({'success': True, 'games': selected})
 
 
 @app.route('/search', methods=['GET'])
@@ -347,7 +347,7 @@ def is_game_bought():
 
 
 @app.route('/buy_game', methods=['POST'])
-def verify_checkout():
+def buy_game():
     global compra
     compra = True
     return jsonify({'success': True, 'message': 'Compra casi lista'})
@@ -370,11 +370,7 @@ def resume():
         return render_template('resume.html')
     else:
         return redirect(url_for('principal'))
-    
-@app.route('/get_purchase_resume', methods = ['GET'])
-def get_purchase_resume():
-    #Se debe de devolver los datos de la compra realizada
-    return
+
 
 if __name__ == '__main__':
     app.run(debug=True)

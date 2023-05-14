@@ -124,7 +124,7 @@ class Usuario(db.Model):
     modified_at = db.Column(db.DateTime(timezone=True), nullable=True,
                             server_default=db.text("now()"))
 
-    def __init__(self, firstname,lastname ,email, bio , password):
+    def __init__(self, firstname, lastname, email, bio, password):
         self.firstname = firstname
         self.lastname = lastname
         self.email = email
@@ -142,7 +142,7 @@ class Usuario(db.Model):
             'lastname': self.lastname,
             'email': self.email,
             'bio': self.bio,
-            'password' : self.password ,
+            'password': self.password,
             'created_at': self.created_at,
             'modified_at': self.modified_at,
             'games_bought': [compra.serialize().game for compra in
