@@ -12,9 +12,9 @@ function change_videogame() {
         const genre_game = game.genre
 
         const title = document.getElementByTagName("title")[0]
+        titel.innerHTML = `${game.game_name}`
 
         const game_name = document.getElementById("game_name")
-
         game_name.innerHTML = `${game.game_name}`
 
         const container_image = document.getElementById("game_image")
@@ -55,6 +55,8 @@ function change_buy_button() {
 function comprar(event) {
     event.preventDefault();
     const buy_message = document.getElementById("buy_message")
+    let url = new URLSearchParams(document.location.search)
+    let id_game = params.get("id")
 
     fetch("/is_game_bought").then(function (response) {
         return response.json()
@@ -69,6 +71,7 @@ function comprar(event) {
                 .then(data => {
                     if (data.success === true) {
                         window.location.href = '/checkout';
+                        update_search_params("id", id_game)
                     } else {
                         buy_message.innerHTML = 'La verificación de compra no fue exitosa'
                         setTimeout(function() {
