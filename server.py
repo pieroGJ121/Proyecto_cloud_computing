@@ -115,13 +115,16 @@ def data_recover():
 
     # Buscar el usuario en la base de datos
     user = Usuario.query.filter_by(email=email).first()
-
-    if email == user.email and name == user.firstname:
-        return jsonify({'success': True,
-                        'message': 'El usuario y nombre coinciden'}), 200
+    if user:
+        if email == user.email and name == user.firstname:
+            return jsonify({'success': True,
+                            'message': 'El usuario y nombre coinciden'}), 200
+        else:
+            return jsonify({'success': False,
+                            'message': 'Datos de acceso incorrectos. Intente nuevamente &#128577;'}), 400
     else:
-        return jsonify({'success': False,
-                        'message': 'Datos de acceso incorrectos. Intente nuevamente &#128577;'}), 400
+         return jsonify({'success': False,
+                        'message': 'No hay ningún usuario registrado con esos datos &#128577;'}), 400
 
 
 @app.route('/reset_password', methods=['POST'])

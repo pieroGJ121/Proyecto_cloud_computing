@@ -4,12 +4,12 @@ from flask import (
 from flask_sqlalchemy import SQLAlchemy
 import uuid
 from datetime import datetime
-
+from flask_migrate import Migrate
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1234@localhost:5432/project_dbp'
 db = SQLAlchemy(app)
-
+migrate = Migrate(app, db)
 
 # Models
 class genre(db.Model):
@@ -115,7 +115,7 @@ class Usuario(db.Model):
     lastname = db.Column(db.String(120), unique=False, nullable=False)
     email = db.Column(db.String(300), unique=True, nullable=False)
     password = db.Column(db.String(300), unique=False, nullable=False)
-    bio = db.Column(db.String(500), nullable=False)
+    bio = db.Column(db.Text, nullable=False)
 
     compras = db.relationship('Compra', backref='usuario', lazy=True)
 
