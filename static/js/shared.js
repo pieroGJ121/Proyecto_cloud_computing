@@ -30,7 +30,7 @@ for (var i = 0; i < itemGames.length; i++) {
   });
 }
 
-function update_search_params(categoria, elemento) {
+function change_search_params(categoria, elemento) {
     let url = new URL(window.location)
     url.searchParams.set(categoria, elemento)
 
@@ -39,19 +39,30 @@ function update_search_params(categoria, elemento) {
 
     history.pushState({}, null, url)
 
-    fetch(`/do_search`)
+}
+
+function update_search_params(categoria, elemento) {
+    change_search_params(categoria, elemento)
+
+    const params = new URLSearchParams(window.location.search)
+    const url = "/do_search?" + params.toString()
+    let games
+
+    fetch(url)
+    // The do_search endpoint doesn't have the query parameters, only search does
         .then(function (response) {
             return response.json()
         }).then(function (jsonResponse) {
-            const games = jsonResponse.games
-            list_games(games)
+            console.log(jsonResponse)
+            games = jsonResponse.games
         })
+    list_games(games)
 }
 
 
 function do_search(name) {
-    if (window.location.href != "/search") {
-        window.location.href = "/search"
+    if (window.location.pathname != "/search") {
+        window.location.pathname = "/search"
     }
     update_search_params("name", name)
 }
