@@ -7,7 +7,6 @@ function change_videogame() {
     fetch(`/get_videogame/${identificador}`).then(function (response) {
         return response.json()
     }).then(function (jsonResponse) {
-        console.log(jsonResponse)
         const game_platform = jsonResponse.game_platform
         //const platform_game = game_platform.platform
 
@@ -54,29 +53,33 @@ function change_buy_button() {
     
     fetch(`/is_game_bought/${identificador}`).then(function (response) {
         return response.json()
-    }).then(function (jsonResponse) {
-        console.log(jsonResponse)
-        
-        const buy_button = document.getElementById("buy_button")
+    }).then(function (jsonResponse) {        
+        const buy_button = document.getElementById('buy_button_b')
         if (jsonResponse.is_bought == 1) {
-            buy_button.innerHTML = "Juego comprado"
+            buy_button.innerHTML = "Ya has comprado este juego"
+            buy_button.disabled = true
+            buy_button.style.cursor = 'not-allowed'
+            buy_button.style.filter = 'brightness(0.4)'
+            buy_button.style.pointerEvents = 'none';
         } else {
             buy_button.innerHTML = "Comprar ahora"
         }
     })
 }
-/*
+
 function comprar(event) {
     event.preventDefault();
     const buy_message = document.getElementById("buy_message")
-    let url = new URLSearchParams(document.location.search)
-    let id_game = params.get("id")
+    const url = window.location.href;
+    const urlObj = new URL(url);
+    const searchParams = new URLSearchParams(urlObj.search);
+    const identificador = searchParams.get("id");
 
-    fetch("/is_game_bought").then(function (response) {
+    fetch(`/is_game_bought/${identificador}`).then(function (response) {
         return response.json()
     }).then(function (jsonResponse) {
         if (jsonResponse.is_bought == 1) {
-            buy_message.innerHTML = "Ya has comprado este juego"
+            console.log("Juego comprado")
         } else {
             fetch('/buy_game', {
                 method: 'POST',
@@ -87,9 +90,12 @@ function comprar(event) {
                         window.location.href = '/checkout';
                         update_search_params("id", id_game)
                     } else {
+                        buy_message.style.color = 'red'
+                        buy_message.style.display = 'flex'
                         buy_message.innerHTML = 'La verificación de compra no fue exitosa'
                         setTimeout(function() {
                             buy_message.innerHTML = ''
+                            buy_message.style.display = 'none'
                         }, 5000);
                     }
                 })
@@ -97,13 +103,12 @@ function comprar(event) {
                     buy_message.innerHTML = 'Error al realizar la verificación de compra:'
                         setTimeout(function() {
                             buy_message.innerHTML = ''
+                            buy_message.style.display = 'none'
                         }, 5000);
                 });
         }
     })
 }
-
-*/
 
 document.addEventListener('DOMContentLoaded', function() {
     change_videogame();

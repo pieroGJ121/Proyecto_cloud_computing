@@ -85,7 +85,15 @@
 } 
 .buy_button button:hover {
     filter: brightness(1.1);
-} 
+}
+#buy_message{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 50px;
+    color: green;
+    font-size: 40px;
+}
 @media (max-width: 768px) {
     #game_details {
         flex-direction: column;
