@@ -254,7 +254,7 @@ def update_data():
 
 @app.route('/get_videogame', methods=['GET'])
 def get_videogame():
-    id_game = request.args("id")
+    id_game = request.args.get("id")
 
     game_platform = game.query.filter_by(id=id_game).first().game_publisher.game_platform.serialize()
     return jsonify({"success": True, 'game_platform': game_platform}), 200
@@ -339,7 +339,7 @@ def purchases():
 
 @app.route('/get_compra', methods=['GET'])
 def get_compra():
-    id_game = request.args("id")
+    id_game = request.args.get("id")
     videogame = game.query.filter_by(id=id_game).first().serialize()
     user = Usuario.query.filter_by(email=email).first()
     purchase = Compra.query.filter_by(usuario_id=user.id, game_id=id_game).first().serialize()
@@ -351,7 +351,7 @@ def get_compra():
 
 @app.route('/is_game_bought', methods=['GET'])
 def is_game_bought():
-    id_game = request.args("id")
+    id_game = request.args.get("id")
     id_user = Usuario.query.filter_by(email=email).first()
     return jsonify({"success": True,
                     'is_bought': len(Compra.query.filter_by(game_id=id_game,
