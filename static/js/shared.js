@@ -8,6 +8,7 @@ function list_games(games) {
             const block = document.createElement("div")
             block.classList.add("item_game")
             block.setAttribute("id", game.id)
+            block.setAttribute("onclick", `go_to_videogame(${game.id})`)
 
             block.innerHTML = `
                     <img src="${game.image}">
@@ -19,16 +20,13 @@ function list_games(games) {
     }
 }
 
-// Obtener todos los elementos con la clase "item_game"
-var itemGames = document.getElementsByClassName('item_game');
-
-// Iterar sobre los elementos y agregar el evento de clic a cada uno
-for (var i = 0; i < itemGames.length; i++) {
-  itemGames[i].addEventListener('click', function() {
-    window.location.href = '/videogame';
-    update_search_params('id', this.getAttribute('id'));
-  });
+function go_to_videogame(id) {
+    const params = new URLSearchParams()
+    params.append("id", id)
+    const url = "/videogame?" + params.toString()
+    window.location.href = url
 }
+
 
 function change_search_params(categoria, elemento) {
     let url = new URL(window.location)
@@ -60,7 +58,7 @@ function update_search_params(categoria, elemento) {
 
 function do_search(name) {
     if (window.location.pathname != "/search") {
-        const params = new URLSearchParams(window.location.search)
+        const params = new URLSearchParams()
         params.append("genre", "Todas")
         params.append("platform", "Todas")
         params.append("publisher", "Todas")
