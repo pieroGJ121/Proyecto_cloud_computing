@@ -1,8 +1,13 @@
 function list_games(games) {
     const container_games = document.getElementById("container_games")
+    const search_text_p = document.getElementById('search_text_p')
     if (games.length == 0) {
-        container_games.innerHTML = "There are no games"
+        search_text_p.innerHTML = "No hay resultados que coincidan con la busqueda"
+        container_games.innerHTML = ''
+        const search_results_counter = document.getElementById('search_results_counter')
+        search_results_counter.style.display = 'None'
     } else {
+        search_text_p.innerHTML = "Resultados para la busqueda: "
         container_games.innerHTML = ""
         games.forEach((game) => {
             const block = document.createElement("div")
