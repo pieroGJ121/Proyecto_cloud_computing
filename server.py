@@ -292,8 +292,8 @@ def do_search():
     selected = game.query
 
     if selection["genre"] != "Todas":
-        id_genre = genre.query.filter_by(genre_name=selection["genre"]).first()
-        selected = selected.filter(genre_id=id_genre)
+        id_genre = genre.query.filter_by(genre_name=selection["genre"]).first().id
+        selected = selected.filter_by(genre_id=id_genre)
 
     if selection["name"] != "":
         name = selection["name"]
