@@ -287,14 +287,13 @@ def get_publisher():
 
 
 @app.route('/do_search', methods=['GET'])
-def do_search(texto):
-    selection = {"genre": request.args("genre"), "platform": request.args("platform"),
-                 "publisher": request.args("publisher"), "name": request.args("name")}
+def do_search():
+    selection = request.args.to_dict()
     selected = game.query
 
     if selection["genre"] != "Todas":
-        id_genre = genre.query.filter_by(genre_name=selection["genre"]).first().id
-    selected = selected.filter_by(genre_id=id_genre)
+        id_genre = genre.query.filter_by(genre_name=selection["genre"]).first()
+        selected = selected.filter(genre_id=id_genre)
 
     if selection["name"] != "":
         name = selection["name"]
@@ -314,7 +313,7 @@ def do_search(texto):
 
     selected = [game.serialize() for game in selected.all()]
 
-    return jsonify({'success': True, 'games': selected})
+    return jsonify({'success': True, 'games': selected}), 200
 
 
 @app.route('/search', methods=['GET'])

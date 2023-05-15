@@ -1,5 +1,5 @@
 function list_games(games) {
-    const container_games = document.getElementByClassName("container_games")[0]
+    const container_games = document.getElementById("container_games")
     if (games.length == 0) {
         container_games.innerHTML = "There are no games"
     } else {
@@ -49,22 +49,27 @@ function update_search_params(categoria, elemento) {
     let games
 
     fetch(url)
-    // The do_search endpoint doesn't have the query parameters, only search does
         .then(function (response) {
             return response.json()
         }).then(function (jsonResponse) {
-            console.log(jsonResponse)
             games = jsonResponse.games
+            list_games(games)
         })
-    list_games(games)
 }
 
 
 function do_search(name) {
     if (window.location.pathname != "/search") {
-        window.location.pathname = "/search"
+        const params = new URLSearchParams(window.location.search)
+        params.append("genre", "Todas")
+        params.append("platform", "Todas")
+        params.append("publisher", "Todas")
+        params.append("name", name)
+        const url = "/search?" + params.toString()
+        window.location.href = url
+    } else {
+        update_search_params("name", name)
     }
-    update_search_params("name", name)
 }
 
 document.addEventListener('DOMContentLoaded', function(){
@@ -72,7 +77,6 @@ document.addEventListener('DOMContentLoaded', function(){
     formulario.addEventListener('submit', function(event) {
         event.preventDefault()
         const campoBusqueda = formulario.elements['SearchInput'].value;
-        console.log(campoBusqueda)
         do_search(campoBusqueda)
     })
 })

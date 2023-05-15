@@ -1,11 +1,9 @@
 function set_information() {
-    change_search_params("genre", "Todas")
-    change_search_params("platform", "Todas")
-    change_search_params("publisher", "Todas")
-
     set_list("genre", "1-0-0")
     set_list("platform", "1-0-1")
     set_list("publisher", "1-0-2")
+
+    update_search_params("genre", "Todas")
 }
 
 function set_list(categoria, list_id) {
