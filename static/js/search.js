@@ -21,7 +21,7 @@ function set_list(categoria, list_id) {
             const classes = block.classList
             classes.add("sidenav-item")
             block.id = `${elemento.name}`
-            block.onclick = update_search_params(categoria, elemento.name)
+            block.onclick = `update_search_params(${categoria}, ${elemento.name})`
 
             block.innerHTML = `
                     <a class="sidenav-link">${elemento.name}</a>
