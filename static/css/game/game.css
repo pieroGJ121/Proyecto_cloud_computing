@@ -37,7 +37,9 @@
 }
 #synopsis {
     margin-top: 30px;
-    color: whitesmoke; 
+    color: whitesmoke;
+    align-items: center;
+    justify-content: center;
 }
 
 #synopsis h2{
@@ -61,12 +63,12 @@
     font-weight: bold;
     font-size: 25px;
 }
-#buy_button{
+.buy_button{
     display: flex;
     align-items: center;
     justify-content: center;
 }
-#buy_button button {
+.buy_button button {
     background: rgb(0, 189, 174);
     background: linear-gradient(90deg, rgba(0, 189, 174, 1) 0%, rgba(0, 79, 196, 1) 100%);
     background-size: 200% 200%;
@@ -81,7 +83,7 @@
     border-radius: 10px;
     border: #c8ffff 2px solid;
 } 
-#buy_button button:hover {
+.buy_button button:hover {
     filter: brightness(1.1);
 } 
 @media (max-width: 768px) {

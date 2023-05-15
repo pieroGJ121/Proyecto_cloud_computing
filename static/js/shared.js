@@ -1,3 +1,4 @@
+let campoBusqueda = ''
 function list_games(games) {
     const container_games = document.getElementById("container_games")
     const search_text_p = document.getElementById('search_text_p')
@@ -7,8 +8,10 @@ function list_games(games) {
         const search_results_counter = document.getElementById('search_results_counter')
         search_results_counter.style.display = 'None'
     } else {
-        search_text_p.innerHTML = "Resultados para la busqueda: "
+        search_text_p.innerHTML = `Resultados para la busqueda: ${campoBusqueda}`
         container_games.innerHTML = ""
+        search_results_counter.style.display = 'Block'
+        search_results_counter.innerHTML = `Mostrando ${games.length} resultado(s)`
         games.forEach((game) => {
             const block = document.createElement("div")
             block.classList.add("item_game")
@@ -79,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function(){
     const formulario = document.getElementById('searchForm');
     formulario.addEventListener('submit', function(event) {
         event.preventDefault()
-        const campoBusqueda = formulario.elements['SearchInput'].value;
+        campoBusqueda = formulario.elements['SearchInput'].value;
         do_search(campoBusqueda)
     })
 })

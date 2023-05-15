@@ -252,11 +252,11 @@ def update_data():
 # Todo referente a la pagina de "videogame" va aqui
 
 
-@app.route('/get_videogame', methods=['GET'])
-def get_videogame():
-    id_game = request.args.get("id")
-
-    game_platform = game.query.filter_by(id=id_game).first().game_publisher.game_platform.serialize()
+@app.route('/get_videogame/<identificador>', methods=['GET'])
+def get_videogame(identificador):
+    print("Id del juego: ", identificador)
+    
+    game_platform = game.query.filter_by(id=identificador).first().game_publisher.game_platform.serialize()
     return jsonify({"success": True, 'game_platform': game_platform}), 200
 
 
@@ -349,14 +349,16 @@ def get_compra():
 # Todo referente a comprar videogames va aqui
 
 
-@app.route('/is_game_bought', methods=['GET'])
-def is_game_bought():
-    id_game = request.args.get("id")
+@app.route('/is_game_bought/<identificador>', methods=['GET'])
+def is_game_bought(identificador):
     id_user = Usuario.query.filter_by(email=email).first()
+    state = Compra.query.filter_by(game_id=identificador, usuario_id=id_user).first()
+    if state:
+        state = 1
+    else:
+        state = 0
     return jsonify({"success": True,
-                    'is_bought': len(Compra.query.filter_by(game_id=id_game,
-                                                            usuario_id=id_user))}), 200
-
+                    'is_bought': state}), 200
 
 @app.route('/buy_game', methods=['POST'])
 def buy_game():
