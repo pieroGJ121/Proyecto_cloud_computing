@@ -335,15 +335,29 @@ def purchases():
         return redirect(url_for('principal'))
 
 
-@app.route('/get_compra', methods=['GET'])
-def get_compra():
+@app.route('/get_compra/<identificador>', methods=['GET'])
+def get_compra(identificador):
     global email
-    id_game = request.args.get("id")
-    videogame = game.query.filter_by(id=id_game).first().serialize()
+    videogame = game.query.filter_by(id=identificador).first().serialize()
     user = Usuario.query.filter_by(email=email).first()
-    purchase = Compra.query.filter_by(usuario_id=user.id, game_id=id_game).first().serialize()
+    purchase = Compra.query.filter_by(usuario_id=user.id, game_id=identificador).first().serialize()
     return jsonify({'success': True, 'compra': purchase, "game": videogame})
 
+@app.route('/add_compra/<identificador>', methods=['POST'])
+def add_compra(identificador):
+    global email
+    game_req = game.query.filter_by(id=identificador).first()
+    game_data = game_req.serialize()
+
+    user = Usuario.query.filter_by(email=email).first()
+
+    new_purchase = Compra(user.id, game_req.id)
+
+    db.session.add(new_purchase)
+    db.session.commit()
+
+    purchase = Compra.query.filter_by(usuario_id=user.id, game_id=game_req.id).first()
+    return jsonify({'success': True, 'compra': purchase.id, 'fecha': purchase.created_at, "game": game_data})
 
 # Todo referente a comprar videogames va aqui
 

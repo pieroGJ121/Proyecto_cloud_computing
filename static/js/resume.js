@@ -1,22 +1,32 @@
-window.onload = function () {
-    get_compra()
-}
-
 function get_compra () {
-    fetch("/get_compra").then(function (response) {
+    const id_game = localStorage.getItem('id_game');
+    fetch(`/add_compra/${id_game}`, {
+        method: 'POST',
+    }).then(function (response) {
         return response.json()
     }).then(function (jsonResponse) {
         const compra = jsonResponse.compra
+        const fecha = jsonResponse.fecha
         const game = jsonResponse.game
 
-        const name = document.getElementByClassName('title')
-        name.innerHTML = game.game_name
+        const title = document.getElementById('titulo_principal')
+        title.innerHTML = `Gracias por comprar ${game.game_name}`
+        
+        const game_title = document.getElementById('game_title')
+        game_title.innerHTML = `${game.game_name}`
 
-        const purchase_date = document.getElementByClassName('purchase-date')
-        purchase_date.innerHTML = `Fecha de compra: ${compra.created_at}`
+        const container_image = document.getElementById('game_image')
+        container_image.innerHTML = `
+                        <img src="${game.image}" alt="Game Image">
+                        `
+        const purchase_date = document.getElementById('purchase_date')
+        purchase_date.innerHTML = `Fecha de compra: ${fecha}`
 
-        const id = document.getElementByClassName('order-id')
-        id.innerHTML = `ID de compra: ${compra.id}`
+        const id = document.getElementById('order_id')
+        id.innerHTML = `ID de compra: ${compra}`
 
-        list_games(games_bought)
 })}
+
+document.addEventListener('DOMContentLoaded', function() {
+    get_compra()
+});

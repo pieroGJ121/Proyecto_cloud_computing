@@ -81,6 +81,7 @@ function comprar(event) {
         if (jsonResponse.is_bought == 1) {
             console.log("Juego comprado")
         } else {
+            localStorage.setItem('id_game', identificador);
             fetch('/buy_game', {
                 method: 'POST',
             })
