@@ -2,7 +2,7 @@
 
 <div align="center">
   <a href="https://github.com/CS1103/proyecto-final-2023_0-proyecto-final-2023_0-grupo-5">
-    <img src="extra/square_maze.jpg" alt="hex board" width="150" height="150">
+    <img src="static/logo/logo_2.png" alt="hex board" width="300" height="100">
   </a>
   <h1>👾 GPT VIDEOGAMES 👾</h1>
   
@@ -51,12 +51,6 @@ de la Universidad de Ingeniería y Tecnología 💙🤍. Esperemos les guste. �
 Este proyecto consiste en el desarrollo de una aplicación virtual llamada GPT VIDEOGAMES,
 la cual consiste en vender videojuegos de manera virtual, ya sea por marcas, plataformas o categorías.
 
-Este juego tiene como objetivo ofrecer posibilidades
-infinitas a la hora de jugar, ya que ningun juego será igual que el anterior, además
-de poder configurar algunos aspectos del juego antes de empezar para mejorar la
-experiencia. No obstante, el juego también permite decidir la forma de jugar, ya sea
-entre un jugador de manera local, u contra la misma computadora.
-
 ### Objetivos Principales
 
 #### Misión
@@ -65,18 +59,18 @@ Esta página tiene como misión llegar a ser de total comodidad para el cliente 
 
 #### Visión
 
-La visión de esta página es 
+La visión de esta página es ser una de las plataformas líderes en la industria de entretenimiento electrónico y afines en el Perú.
 
 ### Librerías, Frameworks y Plugins
 
+- SQLAlchemy
+- 
 - Todas las que hemos visto en clase (mencionarlas)
+
 
 ### Script
 
-- Backtracking algorithm to generate random mazes
-- Deep-First Search to find the path in the maze
-- Breadth-First Search to find the shortest path in the maze
-- Using Raylib library to create games with C++
+- asasas
 
 ### API
 
@@ -93,22 +87,3 @@ lskdfajsdfjsdf
 ### Ejecución del Sistema
 
 kASKAJFASKDF
-
-
-
-
-
-## Instrucciones de uso
-
-### Instrucciones
-
-### Reglas de juego
-
-El juego MAZERS genera un laberinto de tamaño (n x m), y a partir de aquí se puede hacer lo siguiete:
-
-- Al comienzo de cada partida se genera un laberinto con recuadros llenos o vacios (paredes y espacios para moverse).
-- Cada jugador cuenta con un indicador cuadrado de un color distinto al otro. (Siempre son 2 jugadores)
-- Los movimientos se harán por turnos de manera consecutiva, donde es posible moverse en cualquier dirección siempre y cuando haya un recuadro de espacio disponible como mínimo.
-- El movimiento se hace hasta encontrar una bifurcación (2 o más caminos disponibles). Siempre se avanza todas las casillas disponibles hasta que haya varios caminos, o no haya caminos disponibles y solo se pueda regresar al punto de control de donde se realizó el movimiento.
-- La finalidad del juego es llegar a la meta (el centro de laberinto) antes que el otro jugador.
-- Gana el jugador que llegue primero al centro del laberinto (objetivo).
