@@ -338,26 +338,25 @@ def purchases():
 @app.route('/get_compra/<identificador>', methods=['GET'])
 def get_compra(identificador):
     global email
-    videogame = game.query.filter_by(id=identificador).first().serialize()
-    user = Usuario.query.filter_by(email=email).first()
-    purchase = Compra.query.filter_by(usuario_id=user.id, game_id=identificador).first().serialize()
-    return jsonify({'success': True, 'compra': purchase, "game": videogame})
+    user_id = Usuario.query.filter_by(email=email).first().id
+    purchase = Compra.query.filter_by(usuario_id=user_id,
+                                      game_id=identificador).first()
+    return jsonify({'success': True, 'compra': purchase.serialize()})
+
 
 @app.route('/add_compra/<identificador>', methods=['POST'])
 def add_compra(identificador):
     global email
-    game_req = game.query.filter_by(id=identificador).first()
-    game_data = game_req.serialize()
+    game_id = game.query.filter_by(id=identificador).first().id
+    user_id = Usuario.query.filter_by(email=email).first().id
 
-    user = Usuario.query.filter_by(email=email).first()
-
-    new_purchase = Compra(user.id, game_req.id)
+    new_purchase = Compra(user_id, game_id)
 
     db.session.add(new_purchase)
     db.session.commit()
 
-    purchase = Compra.query.filter_by(usuario_id=user.id, game_id=game_req.id).first()
-    return jsonify({'success': True, 'compra': purchase.id, 'fecha': purchase.created_at, "game": game_data})
+    purchase = Compra.query.filter_by(usuario_id=user_id, game_id=game_id).first()
+    return jsonify({'success': True, 'compra': purchase})
 
 # Todo referente a comprar videogames va aqui
 

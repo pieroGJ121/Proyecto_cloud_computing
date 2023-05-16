@@ -145,9 +145,11 @@ class Usuario(db.Model):
             'password': self.password,
             'created_at': self.created_at,
             'modified_at': self.modified_at,
-            'games_bought': [compra.serialize().game for compra in
-                             self.compras]
         }
+
+    def get_games_bought(self):
+        return [compra.serialize().game for compra in
+                self.compras]
 
 
 class Compra(db.Model):
@@ -281,12 +283,12 @@ class Game_platform (db.Model):
             'modified_at': self.modified_at,
         }
 
+
 # Creates models
-# with app.app_context():
-#    db.create_all()
+with app.app_context():
+    db.create_all()
 
 
-# Start the server
 if __name__ == '__main__':
     app.run(debug=True)
 else:
