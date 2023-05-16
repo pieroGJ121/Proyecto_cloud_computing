@@ -63,19 +63,21 @@ La visión de esta página es ser una de las plataformas líderes en la industri
 
 ### Librerías, Frameworks y Plugins
 
-- Flask_SQLAlchemy
-- Flask_Migration
-- UUID
-- datetime
+Front-end:
+- Flask
+- SQLAlchemy
+
+Back-end:
+-Flask
+- SQLAlchemy
+
+Base de Datos:
+- d
 - 
-- 
-- Fetch
-- Jsonify 
 
 ### Script
 
 - asasas
-
 
 ### Hosts
 
