@@ -67,7 +67,7 @@ La visión de esta página es ser una de las plataformas líderes en la industri
 - Flask
 - XMLHttpRequest
 - Fetch
-- 
+- Migraciones
 - Todas las que hemos visto en clase (mencionarlas)
 
 
