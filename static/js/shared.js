@@ -78,7 +78,28 @@ function do_search(name) {
     }
 }
 
+function get_number_purchases() {
+    const counter_purchases_cart = document.getElementById('counter_purchases_cart')
+    fetch("/get_compras").then(function (response) {
+        return response.json()
+    }).then(function (jsonResponse) {
+        if (!jsonResponse.success) {
+            counter_purchases_cart.style.display = 'none'
+        }
+        else{
+            if(jsonResponse.purchases.length <= 9){
+                counter_purchases_cart.innerHTML = `${jsonResponse.purchases.length}`
+            }
+            else{
+                counter_purchases_cart.innerHTML = '+9'
+            }
+        }
+
+    })
+}
+
 document.addEventListener('DOMContentLoaded', function(){
+    get_number_purchases()
     const formulario = document.getElementById('searchForm');
     formulario.addEventListener('submit', function(event) {
         event.preventDefault()
