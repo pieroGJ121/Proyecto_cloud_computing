@@ -65,19 +65,17 @@ La visión de esta página es ser una de las plataformas líderes en la industri
 
 - Flask_SQLAlchemy
 - Flask_Migration
-- XMLHttpRequest
-- Fetch
-- Jsonify
-- GET y POST
+- UUID
+- datetime
 - 
+- 
+- Fetch
+- Jsonify 
 
 ### Script
 
 - asasas
 
-### API
-
-fwefuqwegfgwuef
 
 ### Hosts
 
