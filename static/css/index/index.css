@@ -1,0 +1,16 @@
+.main_body{
+    min-height: 100vh;
+}
+
+.index_content{
+    color:  whitesmoke !important;
+    margin: 30px 40px;
+}
+.index_content h2{
+    font-weight: bold;
+    font-size: 60px;
+}
+.index_content p{
+    text-align: justify;
+    font-size: 20px;
+}
