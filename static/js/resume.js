@@ -22,7 +22,7 @@ function get_compra () {
         purchase_date.innerHTML = `Fecha de compra: ${compra.created_at}`
 
         const id = document.getElementById('order_id')
-        id.innerHTML = `ID de compra: ${compra}`
+        id.innerHTML = `ID de compra: ${compra.id}`
 
 })}
 

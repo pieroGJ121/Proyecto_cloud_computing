@@ -6,7 +6,6 @@ from flask import (
     redirect,
     url_for
 )
-from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from functionalities.validate_email import validar_correo
 from app import (
@@ -18,7 +17,6 @@ from app import (
     Publisher,
     game,
     Compra,
-    Publisher,
     Game_publisher,
     Game_platform
 )
@@ -74,13 +72,13 @@ def data_login():
             apellido = user.lastname
             bio = user.bio
             return jsonify({'success': True,
-                            'message':'Inicio de sesion correcto'}),200
+                            'message': 'Inicio de sesion correcto'}), 200
         else:
             return jsonify({'success': False,
-                            'message':'Correo y/o contraseña incorrectos. Intente nuevamente &#128577;'}),400
+                            'message': 'Correo y/o contraseña incorrectos. Intente nuevamente &#128577;'}), 400
     else:
         return jsonify({'success': False,
-                        'message':'Este usuario no está registrado &#128577;'}),400
+                        'message': 'Este usuario no está registrado &#128577;'}), 400
 
 
 @app.route('/logout', methods=['GET'])
@@ -123,7 +121,7 @@ def data_recover():
             return jsonify({'success': False,
                             'message': 'Datos de acceso incorrectos. Intente nuevamente &#128577;'}), 400
     else:
-         return jsonify({'success': False,
+        return jsonify({'success': False,
                         'message': 'No hay ningún usuario registrado con esos datos &#128577;'}), 400
 
 
@@ -344,7 +342,6 @@ def get_purchased_games():
                     "user": user.serialize()})
 
 
-
 @app.route('/get_compra/<identificador>', methods=['GET'])
 def get_compra(identificador):
     global email
@@ -366,7 +363,7 @@ def add_compra(identificador):
     db.session.commit()
 
     purchase = Compra.query.filter_by(usuario_id=user_id, game_id=game_id).first()
-    return jsonify({'success': True, 'compra': purchase})
+    return jsonify({'success': True, 'compra': purchase.serialize()})
 
 # Todo referente a comprar videogames va aqui
 
@@ -375,7 +372,8 @@ def add_compra(identificador):
 def is_game_bought(identificador):
     global email
     user = Usuario.query.filter_by(email=email).first()
-    state = Compra.query.filter_by(usuario_id=user.id, game_id = int(identificador)).first()
+    state = Compra.query.filter_by(usuario_id=user.id,
+                                   game_id=int(identificador)).first()
 
     if state:
         state = 1
@@ -384,6 +382,7 @@ def is_game_bought(identificador):
 
     return jsonify({"success": True,
                     'is_bought': state}), 200
+
 
 @app.route('/buy_game', methods=['POST'])
 def buy_game():
