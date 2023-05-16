@@ -196,13 +196,6 @@ def profile():
 
 @app.route('/get_profile', methods=['GET'])
 def get_profile():
-    global email
-    user = Usuario.query.filter_by(email=email).first()
-    return jsonify({"success": True, 'user': user.firstname}), 200
-
-@app.route('/get_all_profile', methods=['GET'])
-def get_all_profile():
-    global email
     user = Usuario.query.filter_by(email=email).first()
     return jsonify({"success": True, 'user': user.serialize()}), 200
 
@@ -342,22 +335,13 @@ def purchases():
         return redirect(url_for('principal'))
 
 
-@app.route('/get_compras', methods=['GET'])
-def get_compra():
+@app.route('/get_compra/<identificador>', methods=['GET'])
+def get_compra(identificador):
     global email
+    videogame = game.query.filter_by(id=identificador).first().serialize()
     user = Usuario.query.filter_by(email=email).first()
-    purchase = Compra.query.filter_by(usuario_id=user.id).all()
-
-    if purchase:
-        id_juegos = [p.game_id for p in purchase]
-        fechas = [p.created_at for p in purchase]
-        compras_user = [game.query.filter_by(id = idgame).first().serialize() for idgame in id_juegos]
-        for dic, fecha in zip(compras_user, fechas):
-            dic["fecha_compra"] = fecha
-    else:
-        return jsonify({'success': False, 'message': 'aun no has adquirido ningún juego. ¿Por qué no hacerlo ahora? 😄'}),400
-
-    return jsonify({'success': True, 'purchases': compras_user})
+    purchase = Compra.query.filter_by(usuario_id=user.id, game_id=identificador).first().serialize()
+    return jsonify({'success': True, 'compra': purchase, "game": videogame})
 
 @app.route('/add_compra/<identificador>', methods=['POST'])
 def add_compra(identificador):

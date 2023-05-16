@@ -145,6 +145,8 @@ class Usuario(db.Model):
             'password': self.password,
             'created_at': self.created_at,
             'modified_at': self.modified_at,
+            'games_bought': [compra.serialize().game for compra in
+                             self.compras]
         }
 
 
