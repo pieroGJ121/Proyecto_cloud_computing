@@ -148,7 +148,7 @@ class Usuario(db.Model):
         }
 
     def get_games_bought(self):
-        return [compra.serialize().game for compra in
+        return [compra.get_game() for compra in
                 self.compras]
 
 
@@ -182,6 +182,11 @@ class Compra(db.Model):
             'created_at': self.created_at,
             'modified_at': self.modified_at,
         }
+
+    def get_game(self):
+        game_data = self.game.serialize()
+        game_data["bought_at"] = self.created_at
+        return game_data
 
 
 class Publisher(db.Model):
