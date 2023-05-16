@@ -64,6 +64,9 @@ La visión de esta página es ser una de las plataformas líderes en la industri
 ### Librerías, Frameworks y Plugins
 
 - SQLAlchemy
+- Flask
+- XMLHttpRequest
+- Fetch
 - 
 - Todas las que hemos visto en clase (mencionarlas)
 
