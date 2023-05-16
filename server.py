@@ -335,6 +335,16 @@ def purchases():
         return redirect(url_for('principal'))
 
 
+@app.route('/get_purchased_games', methods=['GET'])
+def get_purchased_games():
+    global email
+    user = Usuario.query.filter_by(email=email).first()
+    games_bought = user.get_games_bought()
+    return jsonify({'success': True, 'games': games_bought,
+                    "user": user.serialize()})
+
+
+
 @app.route('/get_compra/<identificador>', methods=['GET'])
 def get_compra(identificador):
     global email
