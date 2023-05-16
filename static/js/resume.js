@@ -17,7 +17,7 @@ function get_compra () {
 
         const container_image = document.getElementById('game_image')
         container_image.innerHTML = `
-                        <img src="${game.image}" alt="Game Image">
+                        <img src="${game.image}" alt="${game.game_name}">
                         `
         const purchase_date = document.getElementById('purchase_date')
         purchase_date.innerHTML = `Fecha de compra: ${fecha}`

@@ -16,12 +16,24 @@
 }
 
 .pac_container{
-    margin-top: 50px;
-    margin-bottom: 200px;
+    min-height: 200px;
+    background-color: black;
+}
+.back_pac1{
+  margin-top: 50px;
+  height: 30px;
+  background-color: black;
+  border-top: blue 5px solid;
+}
+.back_pac2{
+  height: 30px;
+  background-color: black;
+  border-bottom: blue 5px solid;
+  margin-bottom: 50px;
 }
 
 .pacman{
-    margin:40px 10px;
+    margin:0px 10px;
   }
   
   .pacman-top{
