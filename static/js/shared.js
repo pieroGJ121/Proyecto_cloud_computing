@@ -1,32 +1,21 @@
 let campoBusqueda = ''
-function list_games(games) {
-    const container_games = document.getElementById("container_games")
-    const search_text_p = document.getElementById('search_text_p')
-    if (games.length == 0) {
-        search_text_p.innerHTML = "No hay resultados que coincidan con la busqueda"
-        container_games.innerHTML = ''
-        const search_results_counter = document.getElementById('search_results_counter')
-        search_results_counter.style.display = 'None'
-    } else {
-        search_text_p.innerHTML = `Resultados para la busqueda: ${campoBusqueda}`
-        container_games.innerHTML = ""
-        search_results_counter.style.display = 'Block'
-        search_results_counter.innerHTML = `Mostrando ${games.length} resultado(s)`
-        games.forEach((game) => {
-            const block = document.createElement("div")
-            block.classList.add("item_game")
-            block.setAttribute("id", game.id)
-            block.setAttribute("onclick", `go_to_videogame(${game.id})`)
 
-            block.innerHTML = `
+function list_games(games, message, field, container_games) {
+    games.forEach((game) => {
+        const block = document.createElement("div")
+        block.classList.add("item_game")
+        block.setAttribute("id", game.id)
+        block.setAttribute("onclick", `go_to_videogame(${game.id})`)
+
+        block.innerHTML = `
                     <img src="${game.image}">
                     <h4>${game.game_name}</h4>
-                    <p>${game.synopsis}</div>
+                    <p>${message}${game[field]}</p>
                     `
-            container_games.appendChild(block)
-        })
-    }
+        container_games.appendChild(block)
+    })
 }
+
 
 function go_to_videogame(id) {
     const params = new URLSearchParams()
@@ -58,8 +47,23 @@ function update_search_params(categoria, elemento) {
         .then(function (response) {
             return response.json()
         }).then(function (jsonResponse) {
-            games = jsonResponse.games
-            list_games(games)
+
+            const search_text_p = document.getElementById('search_text_p')
+            const search_results_counter = document.getElementById('search_results_counter')
+            const container_games = document.getElementById("container_games")
+            container_games.innerHTML = ""
+            const games = jsonResponse.games
+
+            if (games.length == 0) {
+                search_text_p.innerHTML = "No hay resultados que coincidan con la busqueda"
+                search_results_counter.style.display = 'None'
+            } else {
+                search_text_p.innerHTML = `Resultados para la busqueda: ${campoBusqueda}`
+                search_results_counter.style.display = 'Block'
+                search_results_counter.innerHTML = `Mostrando ${games.length} resultado(s)`
+
+                list_games(games, "", "synopsis", container_games)
+            }
         })
 }
 
