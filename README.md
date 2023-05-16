@@ -63,13 +63,13 @@ La visión de esta página es ser una de las plataformas líderes en la industri
 
 ### Librerías, Frameworks y Plugins
 
-- SQLAlchemy
-- Flask
+- Flask_SQLAlchemy
+- Flask_Migration
 - XMLHttpRequest
 - Fetch
-- Migraciones
-- Todas las que hemos visto en clase (mencionarlas)
-
+- Jsonify
+- GET y POST
+- 
 
 ### Script
 
