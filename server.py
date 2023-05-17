@@ -20,6 +20,7 @@ from app import (
     Game_publisher,
     Game_platform
 )
+from functionalities.send_email import enviar_correo
 
 migrate = Migrate(app, db)
 
@@ -163,18 +164,23 @@ def create_user():
     password1 = request.form['password']
 
     if validar_correo(e_mail):
-        login_val = True
-        nombre = name
-        apellido = lastname
-        email = e_mail
-        password = password1
-        bio = biog
-        new_user = Usuario(firstname=name, lastname=lastname,  email=e_mail,
-                           bio=biog, password=password1)
-        db.session.add(new_user)
-        db.session.commit()
-        return jsonify({'success': True,
-                        'message': 'El correo ingresado es válido &#128577;'}), 200
+        em = Usuario.query.filter_by(email=e_mail).first()
+        if em:
+            return jsonify({'success': False,
+                'message': 'Este correo ya está registrado &#128577;'}), 400
+        else:
+            login_val = True
+            nombre = name
+            apellido = lastname
+            email = e_mail
+            password = password1
+            bio = biog
+            new_user = Usuario(firstname=name, lastname=lastname,  email=e_mail,
+                            bio=biog, password=password1)
+            db.session.add(new_user)
+            db.session.commit()
+            return jsonify({'success': True,
+                            'message': 'El correo ingresado es válido &#128577;'}), 200
     else:
         return jsonify({'success': False,
                         'message': 'El correo ingresado no es válido &#128577;'}), 400
@@ -204,9 +210,12 @@ def get_profile():
 def delete_user():
     global nombre, apellido, bio, email, password, login_val
     fila_a_eliminar = Usuario.query.filter_by(email=email).first()
-
     if fila_a_eliminar:
-        db.session.delete(fila_a_eliminar)
+        compras_eliminar = Compra.query.filter_by(usuario_id = fila_a_eliminar.id).all() #Primero es necesario borrar las compras porque sino da error por la relacion existente
+        if compras_eliminar:
+            for i in compras_eliminar:
+                db.session.delete(i)
+        db.session.delete(fila_a_eliminar) #Despues de borrar las compras recien se borra el usuario
         db.session.commit()
         login_val = False
         nombre = ''
@@ -228,14 +237,26 @@ def update_data():
 
     global nombre, apellido, bio, email, password
 
+    nombre_r = request.form['username']
+    apellido_r = request.form['lastname']
+    bio_r = request.form['bio']
+    email_r = request.form['email']
+    password_r = request.form['password']
+
+    user2 = Usuario.query.filter_by(email=email_r).first() #Verificar si el correo al que se quiere cambiar ya existe
+
+    if user2:
+        if user2.email != email:
+            return redirect(url_for('profile'))
+
     user = Usuario.query.filter_by(email=email).first()
 
-    nombre = request.form['username']
-    apellido = request.form['lastname']
-    bio = request.form['bio']
-    email = request.form['email']
-    password = request.form['password']
-
+    nombre = nombre_r
+    apellido = apellido_r
+    bio = bio_r
+    password = password_r
+    email = email_r
+ 
     user.firstname = nombre
     user.lastname = apellido
     user.bio = bio
@@ -363,6 +384,9 @@ def add_compra(identificador):
     db.session.commit()
 
     purchase = Compra.query.filter_by(usuario_id=user_id, game_id=game_id).first()
+
+    enviar_correo(email,purchase.serialize()['game']['game_name'],'Fecha: {}'.format(purchase.created_at), 'ID de compra: {}'.format(purchase.id))
+
     return jsonify({'success': True, 'compra': purchase.serialize()})
 
 # Todo referente a comprar videogames va aqui
