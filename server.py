@@ -175,8 +175,8 @@ def create_user():
             email = e_mail
             password = password1
             bio = biog
-            new_user = Usuario(firstname=name, lastname=lastname,  email=e_mail,
-                            bio=biog, password=password1)
+            new_user = Usuario(firstname=name, lastname=lastname, email=e_mail,
+                               bio=biog, password=password1)
             db.session.add(new_user)
             db.session.commit()
             return jsonify({'success': True,
@@ -316,13 +316,9 @@ def do_search():
         name = selection["name"]
         selected = selected.filter(game.game_name.ilike(f'%{name}%'))
 
-    selected.join(game.game_publisher)
-
     if selection["publisher"] != "Todas":
         id_publisher = Publisher.query.filter_by(publisher_name=selection["publisher"]).first().id
         selected = selected.filter(game.game_publisher.has(publisher_id=id_publisher))
-
-    selected.join(Game_publisher.game_platform)
 
     if selection["platform"] != "Todas":
         id_platform = platform.query.filter_by(platform_name=selection["platform"]).first().id
