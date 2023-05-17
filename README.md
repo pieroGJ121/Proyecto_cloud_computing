@@ -175,15 +175,46 @@ Para cargar las bases de datos se ejecuta:
   Esta ruta sirve para obtener todas
   
 - @app.route('/search_query', methods=['GET'])
+  Esta ruta sirve hacer una búsqueda mediante filtros
+  - Primero hace la consulta a base de las 4 opciones (videojuego, género, plataforma o publisher)
+  - Luego filtra a los videojuegos que cumplan con el requerimiento seleccionado
   
+- @app.route('/search', methods=['GET'])
+  Esta ruta sirve para validar que esté logueado
+  - Si está logueado, te renderiza a la vista "search"
+  - Si no está logueado, te redirige a la página principal
   
+- @app.route('/purchases', methods=['GET'])
+  Esta ruta sirve para validar que esté logueado
+  - Si está logueado, te renderiza a la vista "purchase"
+  - Si no está logueado, te redirige a la página principal
   
+- @app.route('/games_purchased', methods=['GET'])
+  Esta ruta busca al usuario y te retorna las compras que ha realizado.
   
+- @app.route('/compra_data/<identificador>', methods=['GET'])  
+  Esta ruta sirve para obtener los datos de todas las compras que hizo el usuario.
   
+- @app.route('/new_compra/<identificador>', methods=['POST'])   
+  Esta ruta sirve para validar y crear una nueva compra 
+  - Cuando está validado toda la info requerida, te envía un correo confirmando la compra realizada
   
+- @app.route('/game_state/<identificador>', methods=['GET'])
+  Esta ruta sirve para vel el estado de tu compra
   
+- @app.route('/new_game', methods=['POST'])
+  Esta ruta sirve para agregar un nuevo juego al carrito de compras.
   
-
+- @app.route('/checkout', methods=['GET'])
+  Esta ruta sirve para verificar la compra
+  - Si la compra no está verificada, te renderiza a la vista 'wait'
+  - Si la compra está verificada, te redirecciona a la página principal
+  
+ - @app.route('/resume', methods=['GET']) 
+  Esta ruta sirve para ver el resumen de la compra
+  - Si la compra aun no se realizó, te renderiza al resumen
+  - Si la compra se realiza, te redirecciona a la página principal
+  
 
 ### Hosts
 
