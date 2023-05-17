@@ -138,8 +138,22 @@ Para cargar las bases de datos se ejecuta:
   En caso de que el email no sea validado, te retornará un mensaje de correo no valido
   
 - @app.route('/profile', methods=['GET'])
+  Esta ruta sirve para ingresar a tu perfil
+  - Si estas logueado y todo es corrercto, te va a renderizar a la vista user
+  - Si no está logueado, te va a redirigir a la página principal
+ 
+- @app.route('/profile_data', methods=['GET'])
+  Esta ruta sirve para validar los datos correspondientes al email ingresado.
   
-
+- @app.route('/user_deletion', methods=['POST'])
+  Esta ruta sirve para eliminar el usuario
+  - Primero, para poder eliminar el usuario, se tienen que eliminar las compras realizadas por este
+  - Después, se busca en la base de datos aquellas compras relacionadas con el id del usuario y se eliminan
+  - De ahí, se actualiza la base de datos y se eliminan esos datos
+   - Si se eliminaron los datos correctamente, te retornará que el ususario fue eliminado exitosamente
+   - Si no se pudo, retornará que lo intentes nuevamente
+ 
+- @app.route('/data_modification', methods=['POST'])
 
 
 
