@@ -1,5 +1,3 @@
-let campoBusqueda = ''
-
 function list_games(games, message, field, container_games) {
     games.forEach((game) => {
         const block = document.createElement("div")
@@ -58,7 +56,7 @@ function update_search_params(categoria, elemento) {
                 search_text_p.innerHTML = "No hay resultados que coincidan con la busqueda"
                 search_results_counter.style.display = 'None'
             } else {
-                search_text_p.innerHTML = `Resultados para la busqueda: ${campoBusqueda}`
+                search_text_p.innerHTML = `Resultados para la busqueda: ${params.get("name")}`
                 search_results_counter.style.display = 'Block'
                 search_results_counter.innerHTML = `Mostrando ${games.length} resultado(s)`
 
@@ -107,7 +105,6 @@ document.addEventListener('DOMContentLoaded', function(){
     const formulario = document.getElementById('searchForm');
     formulario.addEventListener('submit', function(event) {
         event.preventDefault()
-        campoBusqueda = formulario.elements['SearchInput'].value;
-        do_search(campoBusqueda)
+        do_search(formulario.elements['SearchInput'].value)
     })
 })

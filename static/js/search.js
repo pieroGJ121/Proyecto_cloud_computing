@@ -33,4 +33,7 @@ function set_list(categoria, list_id) {
 
 window.onload = function() {
     set_information()
+    const params = new URLSearchParams(window.location.search)
+    const input = document.getElementById('SearchInput');
+    input.setAttribute("value", params.get("name"))
 }
