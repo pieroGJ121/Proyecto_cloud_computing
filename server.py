@@ -240,14 +240,14 @@ def update_data():
     nombre_r = request.form['username']
     apellido_r = request.form['lastname']
     bio_r = request.form['bio']
-    email_r = request.form['email']
+    #email_r = request.form['email']
     password_r = request.form['password']
 
-    user2 = Usuario.query.filter_by(email=email_r).first() #Verificar si el correo al que se quiere cambiar ya existe
+    #user2 = Usuario.query.filter_by(email=email_r).first() #Verificar si el correo al que se quiere cambiar ya existe
 
-    if user2:
-        if user2.email != email:
-            return redirect(url_for('profile'))
+    #if user2:
+        #if user2.email != email:
+            #return redirect(url_for('profile'))
 
     user = Usuario.query.filter_by(email=email).first()
 
@@ -255,12 +255,12 @@ def update_data():
     apellido = apellido_r
     bio = bio_r
     password = password_r
-    email = email_r
+    #email = email_r
  
     user.firstname = nombre
     user.lastname = apellido
     user.bio = bio
-    user.email = email
+    #user.email = email
     user.password = password
 
     db.session.commit()
