@@ -26,6 +26,7 @@ de la Universidad de Ingeniería y Tecnología 💙🤍. Esperemos les guste. �
         <li><a href="#objetivos-principales">Objetivos Principales</a></li>
         <li><a href="#librerías-framworks-y-plugins">Librerías, Frameworks y Plugins</a></li>
         <li><a href="#script">Script</a></li>
+        <li><a href="#api">Script</a></li>
         <li><a href="#hosts">Hosts</a></li>
         <li><a href="#manejo-de-errores-http">Manejo de Errores HTTP</a></li>
         <li><a href="#ejecución-del-sistema">Ejecución del Sistema</a></li>
@@ -86,6 +87,21 @@ Para cargar las bases de datos se ejecuta:
 - Dentro del script, primero se ejecuta python app.py, para crear las bases de datos. -
 - Luego de cargar, se debe cancelar con Ctr+c.
 - Después, se usa ejecuta el código de los sql scripts encontrados dentro de la carpate /sql. Estos llenan las tablas de la base de datos con los datos de los videojuegos.
+
+### API
+
+- @app.route('/', methods=['GET'])
+  Esta ruta se ejecuta para poder ingresar a la aplicación.
+  En caso de que se loguee, se renderiza a la vista index
+  En caso de que no esté logueado, se redirecciona a la ruta login
+
+- @app.route('/login', methods=['GET'])
+  Si ya está logueado, te va a redirigir a la vista principal
+  Y en caso no lo esté, te renderiza a la vista login.
+
+- @app.route('/data_login', methods=['POST'])
+  Esta ruta sirve para validad de que el ususario esté logueado.
+  
 
 ### Hosts
 
