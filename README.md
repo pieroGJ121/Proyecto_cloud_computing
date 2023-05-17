@@ -70,6 +70,7 @@ Back-end:
 - Flask: Flask es un framework ligero de desarrollo web en Python que permite crear aplicaciones web rápidas y eficientes. Proporciona herramientas y bibliotecas para manejar solicitudes HTTP, enrutar URL, generar respuestas dinámicas y gestionar bases de datos. Flask es altamente personalizable y fácil de aprender, lo que lo convierte en una elección popular para desarrolladores de backend. Se usa en este proyecto para manejar las solicitudes a la base de datos y algunas operaciones de verificación.
 
 - SQLAlchemy: SQLAlchemy es una biblioteca de mapeo objeto-relacional en Python que facilita la interacción con bases de datos relacionales. Proporciona una capa de abstracción que permite interactuar con la base de datos utilizando objetos y consultas en lugar de escribir consultas SQL directamente. SQLAlchemy simplifica el manejo de la persistencia de datos y la creación de consultas complejas.
+- SMTPLIB: La biblioteca smtplib de Python se utiliza para enviar correos electrónicos a través de un servidor SMTP. Primero, se establece una conexión con el servidor utilizando smtplib.SMTP, luego se autentica con credenciales y se envía el correo utilizando sendmail. Todo esto se usa para enviar correos al usuario al final de la compra.
 
 Base de Datos:
 - Flask_migrate
@@ -78,10 +79,12 @@ Base de Datos:
 ### Script
 
 Para cargar las bases de datos se ejecuta:
+```sh
 ./load.sh
+```
 - Se debe estar dentro del repositorio, en el mismo nivel que app.py.
 - Dentro del script, primero se ejecuta python app.py, para crear las bases de datos. -
-- Luego de cargar, se debe cancelar con C-c.
+- Luego de cargar, se debe cancelar con Ctr+c.
 - Después, se usa ejecuta el código de los sql scripts encontrados dentro de la carpate /sql. Estos llenan las tablas de la base de datos con los datos de los videojuegos.
 
 ### Hosts
