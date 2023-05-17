@@ -86,7 +86,7 @@ Para cargar las bases de datos se ejecuta:
 - Se debe estar dentro del repositorio, en el mismo nivel que app.py.
 - Dentro del script, primero se ejecuta python app.py, para crear las bases de datos. -
 - Luego de cargar, se debe cancelar con Ctr+c.
-- Después, se usa ejecuta el código de los sql scripts encontrados dentro de la carpate /sql. Estos llenan las tablas de la base de datos con los datos de los videojuegos.
+- Después, se usa ejecuta el código de los sql scripts encontrados dentro de la carpete /sql. Estos llenan las tablas de la base de datos con los datos de los videojuegos.
 
 ### API
 
