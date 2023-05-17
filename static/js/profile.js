@@ -1,5 +1,5 @@
 function change_profile() {
-    fetch("/get_profile").then(function (response) {
+    fetch("/profile_data").then(function (response) {
         return response.json()
     }).then(function (jsonResponse) {
         user = jsonResponse.user

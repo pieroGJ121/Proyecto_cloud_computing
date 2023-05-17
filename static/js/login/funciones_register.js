@@ -21,7 +21,7 @@ function register(e){
   
     const formData = new FormData(formUserData)
 
-    fetch('/create_user', {
+    fetch('/new_user', {
         method: 'POST',
         body: formData,
     }).then(function (response) {

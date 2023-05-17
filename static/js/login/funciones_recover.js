@@ -19,7 +19,7 @@ function verify_submission(e){
   
     const formData = new FormData(formUserData)
 
-    fetch('/data_recover', {
+    fetch('/data_recovery', {
         method: 'POST',
         body: formData,
     }).then(function (response) {
@@ -76,7 +76,7 @@ function reset_password(e){
   
     const formData = new FormData(formPassword)
 
-    fetch('/reset_password', {
+    fetch('/password_change', {
         method: 'POST',
         body: formData,
     }).then(function (response) {

@@ -8,7 +8,7 @@ function hide_msg() {
     submit_final.style.display = 'Block'
 }
 function delete_user(){
-    fetch('/delete_user', {
+    fetch('/user_deletion', {
         method: 'POST',
     })
     .then(function (response) {

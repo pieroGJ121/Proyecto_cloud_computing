@@ -100,12 +100,12 @@ def logout():
 
 # Todo referente al "recuperar contrasenia" va aqui
 
-@app.route('/recover_password', methods=['GET'])
+@app.route('/password_recovery', methods=['GET'])
 def recover_password():
     return render_template('recover_password.html')
 
 
-@app.route('/data_recover', methods=['POST'])
+@app.route('/data_recovery', methods=['POST'])
 def data_recover():
     global email, password
 
@@ -126,7 +126,7 @@ def data_recover():
                         'message': 'No hay ningún usuario registrado con esos datos &#128577;'}), 400
 
 
-@app.route('/reset_password', methods=['POST'])
+@app.route('/password_change', methods=['POST'])
 def reset_password():
     global password
 
@@ -154,7 +154,7 @@ def new_user():
     return render_template('register.html')
 
 
-@app.route('/create_user', methods=['POST'])
+@app.route('/new_user', methods=['POST'])
 def create_user():
     global login_val, nombre, apellido, email, password, bio
     name = request.form['name']
@@ -198,7 +198,7 @@ def profile():
         return redirect(url_for('principal'))
 
 
-@app.route('/get_profile', methods=['GET'])
+@app.route('/profile_data', methods=['GET'])
 def get_profile():
     user = Usuario.query.filter_by(email=email).first()
     return jsonify({"success": True, 'user': user.serialize()}), 200
@@ -206,7 +206,7 @@ def get_profile():
 # Todo referente a la pagina de "delete-user" va aqui
 
 
-@app.route('/delete_user', methods=['POST'])
+@app.route('/user_deletion', methods=['POST'])
 def delete_user():
     global nombre, apellido, bio, email, password, login_val
     fila_a_eliminar = Usuario.query.filter_by(email=email).first()
@@ -232,7 +232,7 @@ def delete_user():
 # Todo referente a la pagina de "actualizar_datos" va aqui
 
 
-@app.route('/update_data', methods=['POST'])
+@app.route('/data_modification', methods=['POST'])
 def update_data():
 
     global nombre, apellido, bio, email, password
@@ -271,7 +271,7 @@ def update_data():
 # Todo referente a la pagina de "videogame" va aqui
 
 
-@app.route('/get_videogame/<identificador>', methods=['GET'])
+@app.route('/videogame_data/<identificador>', methods=['GET'])
 def get_videogame(identificador):
     game_platform = game.query.filter_by(id=identificador).first().game_publisher.game_platform.serialize()
     return jsonify({"success": True, 'game_platform': game_platform}), 200
@@ -285,25 +285,25 @@ def videogame():
 # Todo referente a la pagina de "search" va aqui
 
 
-@app.route('/get_genre', methods=['GET'])
+@app.route('/genre_data', methods=['GET'])
 def get_genre():
     genres = [g.serialize() for g in genre.query.all()]
     return jsonify({"success": True, 'elementos': genres}), 200
 
 
-@app.route('/get_platform', methods=['GET'])
+@app.route('/platform_data', methods=['GET'])
 def get_platform():
     platforms = [p.serialize() for p in platform.query.all()]
     return jsonify({"success": True, 'elementos': platforms}), 200
 
 
-@app.route('/get_publisher', methods=['GET'])
+@app.route('/publisher_data', methods=['GET'])
 def get_publisher():
     publishers = [p.serialize() for p in Publisher.query.all()]
     return jsonify({"success": True, 'elementos': publishers}), 200
 
 
-@app.route('/do_search', methods=['GET'])
+@app.route('/search_query', methods=['GET'])
 def do_search():
     selection = request.args.to_dict()
     selected = game.query
@@ -354,7 +354,7 @@ def purchases():
         return redirect(url_for('principal'))
 
 
-@app.route('/get_purchased_games', methods=['GET'])
+@app.route('/games_purchased', methods=['GET'])
 def get_purchased_games():
     global email
     user = Usuario.query.filter_by(email=email).first()
@@ -363,7 +363,7 @@ def get_purchased_games():
                     "user": user.serialize()})
 
 
-@app.route('/get_compra/<identificador>', methods=['GET'])
+@app.route('/compra_data/<identificador>', methods=['GET'])
 def get_compra(identificador):
     global email
     user_id = Usuario.query.filter_by(email=email).first().id
@@ -372,7 +372,7 @@ def get_compra(identificador):
     return jsonify({'success': True, 'compra': purchase.serialize()})
 
 
-@app.route('/add_compra/<identificador>', methods=['POST'])
+@app.route('/new_compra/<identificador>', methods=['POST'])
 def add_compra(identificador):
     global email
     game_id = game.query.filter_by(id=identificador).first().id
@@ -385,14 +385,14 @@ def add_compra(identificador):
 
     purchase = Compra.query.filter_by(usuario_id=user_id, game_id=game_id).first()
 
-    enviar_correo(email,purchase.serialize()['game']['game_name'],'Fecha: {}'.format(purchase.created_at), 'ID de compra: {}'.format(purchase.id))
+    enviar_correo(email, purchase.serialize()['game']['game_name'],'Fecha: {}'.format(purchase.created_at), 'ID de compra: {}'.format(purchase.id))
 
     return jsonify({'success': True, 'compra': purchase.serialize()})
 
 # Todo referente a comprar videogames va aqui
 
 
-@app.route('/is_game_bought/<identificador>', methods=['GET'])
+@app.route('/game_state/<identificador>', methods=['GET'])
 def is_game_bought(identificador):
     global email
     user = Usuario.query.filter_by(email=email).first()
@@ -408,7 +408,7 @@ def is_game_bought(identificador):
                     'is_bought': state}), 200
 
 
-@app.route('/buy_game', methods=['POST'])
+@app.route('/new_game', methods=['POST'])
 def buy_game():
     global compra
     compra = True

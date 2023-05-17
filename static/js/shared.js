@@ -40,7 +40,7 @@ function update_search_params(categoria, elemento) {
     change_search_params(categoria, elemento)
 
     const params = new URLSearchParams(window.location.search)
-    const url = "/do_search?" + params.toString()
+    const url = "/search_query?" + params.toString()
     let games
 
     fetch(url)
@@ -84,7 +84,7 @@ function do_search(name) {
 
 function get_number_purchases() {
     const counter_purchases_cart = document.getElementById('counter_purchases_cart')
-    fetch("/get_purchased_games").then(function (response) {
+    fetch("/games_purchased").then(function (response) {
         return response.json()
     }).then(function (jsonResponse) {
         if (!jsonResponse.success) {

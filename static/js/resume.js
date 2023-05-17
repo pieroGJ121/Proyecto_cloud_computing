@@ -1,10 +1,12 @@
 function get_compra () {
     const id_game = localStorage.getItem('id_game');
-    fetch(`/add_compra/${id_game}`, {
+    fetch(`/new_compra/${id_game}`, {
         method: 'POST',
     }).then(function (response) {
         return response.json()
     }).then(function (jsonResponse) {
+        get_number_purchases()
+
         const compra = jsonResponse.compra
         const game = compra.game
 

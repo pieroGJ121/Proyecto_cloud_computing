@@ -4,7 +4,7 @@ function change_videogame() {
     const searchParams = new URLSearchParams(urlObj.search);
     const identificador = searchParams.get("id");
 
-    fetch(`/get_videogame/${identificador}`).then(function (response) {
+    fetch(`/videogame_data/${identificador}`).then(function (response) {
         return response.json()
     }).then(function (jsonResponse) {
         const game_platform = jsonResponse.game_platform
@@ -51,7 +51,7 @@ function change_buy_button() {
     const searchParams = new URLSearchParams(urlObj.search);
     const identificador = searchParams.get("id");
     
-    fetch(`/is_game_bought/${identificador}`).then(function (response) {
+    fetch(`/game_state/${identificador}`).then(function (response) {
         return response.json()
     }).then(function (jsonResponse) {        
         const buy_button = document.getElementById('buy_button_b')
@@ -75,14 +75,14 @@ function comprar(event) {
     const searchParams = new URLSearchParams(urlObj.search);
     const identificador = searchParams.get("id");
 
-    fetch(`/is_game_bought/${identificador}`).then(function (response) {
+    fetch(`/game_state/${identificador}`).then(function (response) {
         return response.json()
     }).then(function (jsonResponse) {
         if (jsonResponse.is_bought == 1) {
             console.log("Juego comprado")
         } else {
             localStorage.setItem('id_game', identificador);
-            fetch('/buy_game', {
+            fetch('/new_game', {
                 method: 'POST',
             })
                 .then(response => response.json())

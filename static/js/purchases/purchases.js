@@ -1,5 +1,5 @@
 function get_purchased_games () {
-    fetch("/get_purchased_games").then(function (response) {
+    fetch("/games_purchased").then(function (response) {
         return response.json()
     }).then(function (jsonResponse) {
         const user = jsonResponse.user

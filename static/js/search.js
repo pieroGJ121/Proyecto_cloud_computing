@@ -7,7 +7,7 @@ function set_information() {
 }
 
 function set_list(categoria, list_id) {
-    fetch(`/get_${categoria}`).then(function (response) {
+    fetch(`/${categoria}_data`).then(function (response) {
         return response.json()
     }).then(function (jsonResponse) {
         const elementos = jsonResponse.elementos
