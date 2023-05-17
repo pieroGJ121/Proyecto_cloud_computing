@@ -131,7 +131,14 @@ Para cargar las bases de datos se ejecuta:
   Esta ruta sirve para agregar un nuevo ususario y te renderiza a la vista register
 
 - @app.route('/new_user', methods=['POST'])
-
+  Esta ruta sirve para agregar la info del nuevo usuario a registrar
+  Te pide completar los campos del formulario y valida el correo
+   - Si el correo ya existe en la base de datos, te retornará un mensaje de correo ya registrado
+   - Si el correo no se encuentra en la base de datos, se registrará y te retornará un mensaje de correo valido
+  En caso de que el email no sea validado, te retornará un mensaje de correo no valido
+  
+- @app.route('/profile', methods=['GET'])
+  
 
 
 
