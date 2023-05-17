@@ -212,8 +212,8 @@ Para cargar las bases de datos se ejecuta:
   
  - @app.route('/resume', methods=['GET']) 
   Esta ruta sirve para ver el resumen de la compra
-  - Si la compra aun no se realizó, te renderiza al resumen
-  - Si la compra se realiza, te redirecciona a la página principal
+   - Si la compra aun no se realizó, te renderiza al resumen
+   - Si la compra se realiza, te redirecciona a la página principal
   
 
 ### Hosts
