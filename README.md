@@ -63,12 +63,13 @@ La visión de esta página es ser una de las plataformas líderes en la industri
 ### Librerías, Frameworks y Plugins
 
 Front-end:
-- Flask
-- Fetch
+- Flask: Estamos usando flask para servir datos. En este caso, se devuelven respuestas en formato JSON para ser trabajadas por JavaScript.
+- Fetch: Fetch es una función integrada en JavaScript que permite realizar solicitudes HTTP desde el navegador. Proporciona una forma moderna y flexible de hacer peticiones a servidores web, obtener datos y manejar respuestas. Fetch es fácil de usar y compatible con Promises, lo que facilita el manejo de datos asíncronos en el frontend.
 
 Back-end:
-- Flask
-- SQLAlchemy
+- Flask: Flask es un framework ligero de desarrollo web en Python que permite crear aplicaciones web rápidas y eficientes. Proporciona herramientas y bibliotecas para manejar solicitudes HTTP, enrutar URL, generar respuestas dinámicas y gestionar bases de datos. Flask es altamente personalizable y fácil de aprender, lo que lo convierte en una elección popular para desarrolladores de backend. Se usa en este proyecto para manejar las solicitudes a la base de datos y algunas operaciones de verificación.
+
+- SQLAlchemy: SQLAlchemy es una biblioteca de mapeo objeto-relacional en Python que facilita la interacción con bases de datos relacionales. Proporciona una capa de abstracción que permite interactuar con la base de datos utilizando objetos y consultas en lugar de escribir consultas SQL directamente. SQLAlchemy simplifica el manejo de la persistencia de datos y la creación de consultas complejas.
 
 Base de Datos:
 - Flask_migrate
