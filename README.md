@@ -154,9 +154,26 @@ Para cargar las bases de datos se ejecuta:
    - Si no se pudo, retornará que lo intentes nuevamente
  
 - @app.route('/data_modification', methods=['POST'])
+  Esta ruta sirve para actualizar los datos del usuario
+  - Te pide rellenar el formulario con los nuevos datos
+  - De ahí, buscas al ususario y actualizas los campos
+  - y te redirecciona a la página principal
 
+- @app.route('/videogame_data/<identificador>', methods=['GET'])
+  Esta ruta sirve para obtener los datos del videojuego en base a su id.
+  
+- @app.route('/videogame', methods=['GET'])  
+  Esta ruta sirva para obtener la lista de videojuegos.
 
-
+- @app.route('/genre_data', methods=['GET'])
+  
+  
+  
+  
+  
+  
+  
+  
 
 
 ### Hosts
