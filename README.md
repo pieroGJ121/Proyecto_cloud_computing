@@ -76,7 +76,7 @@ Base de Datos:
 
 ### Script
 
-- asasas
+- 
 
 ### Hosts
 
