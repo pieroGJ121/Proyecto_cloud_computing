@@ -93,7 +93,13 @@ Local host 5000
 
 ### Manejo de Errores HTTP
 
-- Log in del usuario
+- Para la sección del login del usuario, el servidor responde con código 400 si el usuario no existe o la contraseña es incorrecta, y 200 si es que todo ha ido bien.
+- Para la sección de recuperar constraseña, el servidor responde con código 400 si al momento de verificar las credenciales del usuario estas no coinciden, o con código 200 si pasa lo contrario.
+- Para la sección de crear usuario, el servidor responde con código 400 (BAD_REQUEST) si se trata de ingresar un correo ya registrado, o con código, o con código 200 si el registro es exitoso.
+- Para la sección de busqueda, el servidor siempre responde con código 200, ya que el que encuentre resultados o no, no indica que la petición de busqueda no se haya realizado correctamente.
+- Para la sección de compra, el servidor siempre responde con código 200, ya que lo único que se hace es una inserción de datos dentro de la base de datos con datos verificados en pasos anteriores.
+- Para la sección de editar datos, el servidor siempre responde con código 200, ya que el único dato relevante para definir si hay un error o no al insertar datos en la base de datos es el correo, el cual ya esta restringido para edición desde el principio.
+- Para la sección de compras realizadas por el usuario, el servidor siempre responde con código 200, ya que la petición de busqueda siempre se hace con los datos obtenido anteriormente, y lo único que varia es el contenido dentro del JSON que se devuelve.
 
 ### Ejecución del Sistema
 
