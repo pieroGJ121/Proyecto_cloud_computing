@@ -1,8 +1,8 @@
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
-DELETE FROM platform;
+DELETE FROM platforms;
 
-INSERT INTO platform VALUES
+INSERT INTO platforms VALUES
 (1,'Wii'),
 (2,'NES'),
 (3,'GB'),
@@ -35,9 +35,9 @@ INSERT INTO platform VALUES
 (30,'GG'),
 (31,'PCFX');
 
-DELETE FROM genre;
+DELETE FROM genres;
 
-INSERT INTO genre VALUES
+INSERT INTO genres VALUES
 (1,'Action'),
 (2,'Adventure'),
 (3,'Fighting'),
