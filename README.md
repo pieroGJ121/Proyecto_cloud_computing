@@ -76,7 +76,11 @@ Base de Datos:
 
 ### Script
 
-- 
+Para cargar las bases de datos se ejecuta:
+./load.sh
+Se debe estar dentro del repositorio, en el mismo nivel que app.py.
+Dentro del script, primero se ejecuta python app.py, para crear las bases de datos. Luego de cargar, se debe cancelar con C-c.
+Luego, se usa ejecuta el código de los sql scripts encontrados dentro de la carpate /sql. Estos llenan las tablas de la base de datos con los datos de los videojuegos.
 
 ### Hosts
 
