@@ -163,9 +163,18 @@ Para cargar las bases de datos se ejecuta:
   Esta ruta sirve para obtener los datos del videojuego en base a su id.
   
 - @app.route('/videogame', methods=['GET'])  
-  Esta ruta sirva para obtener la lista de videojuegos.
+  Esta ruta sirve para obtener la lista de videojuegos.
 
 - @app.route('/genre_data', methods=['GET'])
+  Esta ruta sirve para obtener todos los géneros de videojuegos
+  
+- @app.route('/platform_data', methods=['GET'])
+  Esta ruta sirve para obtener todas las plataformas de videojuegos
+  
+- @app.route('/publisher_data', methods=['GET'])
+  Esta ruta sirve para obtener todas
+  
+- @app.route('/search_query', methods=['GET'])
   
   
   
