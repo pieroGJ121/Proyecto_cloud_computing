@@ -92,8 +92,8 @@ Para cargar las bases de datos se ejecuta:
 
 - @app.route('/', methods=['GET'])
   Esta ruta se ejecuta para poder ingresar a la aplicación.
-  En caso de que se loguee, se renderiza a la vista index
-  En caso de que no esté logueado, se redirecciona a la ruta login
+  - En caso de que se loguee, se renderiza a la vista index
+  - En caso de que no esté logueado, se redirecciona a la ruta login
 
 - @app.route('/login', methods=['GET'])
   Si ya está logueado, te va a redirigir a la vista principal
