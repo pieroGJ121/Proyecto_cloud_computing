@@ -26,7 +26,7 @@ de la Universidad de Ingeniería y Tecnología 💙🤍. Esperemos les guste. �
         <li><a href="#objetivos-principales">Objetivos Principales</a></li>
         <li><a href="#librerías-framworks-y-plugins">Librerías, Frameworks y Plugins</a></li>
         <li><a href="#script">Script</a></li>
-        <li><a href="#api">API</a></li>
+        <li><a href="#rutas">Rutas</a></li>
         <li><a href="#hosts">Hosts</a></li>
         <li><a href="#manejo-de-errores-http">Manejo de Errores HTTP</a></li>
         <li><a href="#ejecución-del-sistema">Ejecución del Sistema</a></li>
@@ -87,7 +87,7 @@ Para cargar las bases de datos se ejecuta:
 - Luego de cargar, se debe cancelar con Ctr+c.
 - Después, se usa ejecuta el código de los sql scripts encontrados dentro de la carpete /sql. Estos llenan las tablas de la base de datos con los datos de los videojuegos.
 
-### API
+### Rutas
 
 - @app.route('/', methods=['GET'])
   Esta ruta se ejecuta para poder ingresar a la aplicación.
