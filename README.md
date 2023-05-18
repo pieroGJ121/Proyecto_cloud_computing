@@ -1,7 +1,7 @@
 <a name="readme-top"></a>
 
 <div align="center">
-  <a href="https://github.com/CS1103/proyecto-final-2023_0-proyecto-final-2023_0-grupo-5">
+  <a href="https://github.com/Fabrizzio20k/Proyecto_DBP">
     <img src="static/logo/logo_2.png" alt="hex board" width="300" height="100">
   </a>
   <h1>👾 GPT VIDEOGAMES 👾</h1>
@@ -30,6 +30,7 @@ de la Universidad de Ingeniería y Tecnología 💙🤍. Esperemos les guste. �
         <li><a href="#hosts">Hosts</a></li>
         <li><a href="#manejo-de-errores-http">Manejo de Errores HTTP</a></li>
         <li><a href="#ejecución-del-sistema">Ejecución del Sistema</a></li>
+        <li><a href="#recursos-extra">Recursos extra</a></li>
       </ul>
     </a></li>
   </ol>
@@ -245,3 +246,7 @@ Local host 5000
 ### Ejecución del Sistema
 
 Para ejecutar el sistema se tiene que correr server.py
+
+### Recursos extra
+
+[Modelo entidad-relación de la base de datos implementada](extra/Diagrama.png)
