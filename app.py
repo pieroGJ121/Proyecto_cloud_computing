@@ -1,15 +1,39 @@
-from flask import (
-    Flask
-)
+from flask import (Flask)
 from flask_sqlalchemy import SQLAlchemy
 import uuid
+import secrets
 from datetime import datetime
 from flask_migrate import Migrate
+from flask_login import LoginManager, UserMixin
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1234@localhost:5432/project_dbp'
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+login_manager = LoginManager()
+login_manager.init_app(app)
+app.secret_key = secrets.token_hex(32)
+
+
+# Class for current user
+class User(UserMixin):
+    def __init__(self, user):
+        self.id = user.id
+        self.email = user.email
+        self.password = user.password
+        self.firstname = user.firstname
+        self.lastname = user.lastname
+        self.bio = user.bio
+
+
+# Logic to load the user
+@login_manager.user_loader
+def load_user(id):
+    usuario = Usuario.query.filter_by(id=id).first()
+    if usuario:
+        return User(usuario)
+    else:
+        return None
 
 
 # Models
@@ -74,7 +98,8 @@ class game(db.Model):
     __tablename__ = 'games'
     id = db.Column(db.Integer, primary_key=True)
     game_name = db.Column(db.String(200), unique=True, nullable=False)
-    genre_id = db.Column(db.Integer, db.ForeignKey('genres.id'), nullable=False)
+    genre_id = db.Column(db.Integer, db.ForeignKey(
+        'genres.id'), nullable=False)
     synopsis = db.Column(db.String(1000), nullable=True)
     image = db.Column(db.String(500), nullable=True)
 
@@ -91,7 +116,8 @@ class game(db.Model):
         self.id = id
         self.game_name = name
         self.synopsis = ""
-        self.image = "/static/game_images/generic/generic_image.jpeg" #DEFAULT IMAGE BY THE MOMENT...
+        # DEFAULT IMAGE BY THE MOMENT...
+        self.image = "/static/game_images/generic/generic_image.jpeg"
         self.genre_id = genre_id
         self.created_at = datetime.utcnow()
 

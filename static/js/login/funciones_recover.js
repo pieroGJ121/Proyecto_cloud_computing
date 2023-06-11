@@ -76,7 +76,7 @@ function reset_password(e){
   
     const formData = new FormData(formPassword)
 
-    fetch('/password_change', {
+    fetch('/password_recovery', {
         method: 'POST',
         body: formData,
     }).then(function (response) {

@@ -19,7 +19,7 @@ function verify_login(e){
   
     const formData = new FormData(formLogin)
 
-    fetch('/data_login', {
+    fetch('/login', {
         method: 'POST',
         body: formData,
     }).then(function (response) {
