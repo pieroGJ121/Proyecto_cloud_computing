@@ -78,6 +78,7 @@ class game(db.Model):
     synopsis = db.Column(db.String(1000), nullable=True)
     image = db.Column(db.String(500), nullable=True)
 
+    ofertas = db.relationship('Oferta', backref='game', lazy=True)
     compras = db.relationship('Compra', backref='game', lazy=True)
     game_publisher = db.relationship('Game_publisher',
                                      backref='game', lazy=True, uselist=False)
@@ -121,6 +122,7 @@ class Usuario(db.Model):
     password = db.Column(db.String(300), unique=False, nullable=False)
     bio = db.Column(db.Text, nullable=False)
 
+    ofertas = db.relationship('Oferta', backref='usuario', lazy=True)
     compras = db.relationship('Compra', backref='usuario', lazy=True)
 
     created_at = db.Column(db.DateTime(timezone=True), nullable=False,
@@ -155,6 +157,16 @@ class Usuario(db.Model):
         return [compra.get_game() for compra in
                 self.compras]
 
+    def get_games_being_sold(self):
+        ofertas_pendientes = []
+        ofertas_realizadas = []
+        for o in self.ofertas:
+            if o.realizada == True:
+                ofertas_realizadas.append(o.get_game())
+            else:
+                ofertas_pendientes.append(o.get_game())
+        return [ofertas_pendientes, ofertas_realizadas]
+
 
 class Compra(db.Model):
     __tablename__ = 'compras'
@@ -177,6 +189,44 @@ class Compra(db.Model):
 
     def __repr__(self):
         return '<Compra %r %r>' % (self.usuario_id, self.game_id)
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'usuario': self.usuario.serialize(),
+            'game': self.game.serialize(),
+            'created_at': self.created_at,
+            'modified_at': self.modified_at,
+        }
+
+    def get_game(self):
+        game_data = self.game.serialize()
+        game_data["bought_at"] = self.created_at
+        return game_data
+
+
+class Oferta(db.Model):
+    __tablename__ = 'ofertas'
+    id = db.Column(db.String(36), primary_key=True,
+                   default=lambda: str(uuid.uuid4()),
+                   server_default=db.text("uuid_generate_v4()"))
+    usuario_id = db.Column(db.String(36), db.ForeignKey('usuarios.id'),
+                           nullable=False)
+    game_id = db.Column(db.Integer, db.ForeignKey('games.id'), nullable=False)
+    realizada = db.Column(db.Boolean(), nullable=False, default=True)
+
+    created_at = db.Column(db.DateTime(timezone=True), nullable=False,
+                           server_default=db.text("now()"))
+    modified_at = db.Column(db.DateTime(timezone=True), nullable=True,
+                            server_default=db.text("now()"))
+
+    def __init__(self, usuario_id, game_id):
+        self.usuario_id = usuario_id
+        self.game_id = game_id
+        self.created_at = datetime.utcnow()
+
+    def __repr__(self):
+        return '<Oferta %r %r>' % (self.usuario_id, self.game_id)
 
     def serialize(self):
         return {
