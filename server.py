@@ -86,7 +86,7 @@ def recover_password():
         password2 = request.form['password2']
 
         if password1 == password2:
-            user = Usuario.query.filter_by(email=email).first()
+            user = Usuario.query.filter_by(email=current_user.email).first()
             user.password = password1
             db.session.commit()
             return jsonify({'success': True,
