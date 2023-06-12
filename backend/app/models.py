@@ -1,18 +1,22 @@
-from flask import (Flask)
 from flask_sqlalchemy import SQLAlchemy
 import uuid
 import secrets
 from datetime import datetime
-from flask_migrate import Migrate
+from config.local import config
 from flask_login import LoginManager, UserMixin
 
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:1234@localhost:5432/project_dbp'
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
+
+db = SQLAlchemy()
 login_manager = LoginManager()
-login_manager.init_app(app)
-app.secret_key = secrets.token_hex(32)
+
+
+def setup_db(app, database_path):
+    app.config["SQLALCHEMY_DATABASE_URI"] = config['DATABASE_URI'] if database_path is None else database_path
+    db.app = app
+    db.init_app(app)
+    db.create_all()
+    login_manager.init_app(db.app)
+    db.app.secret_key = secrets.token_hex(32)
 
 
 # Class for current user
@@ -367,14 +371,3 @@ class Game_platform (db.Model):
             'created_at': self.created_at,
             'modified_at': self.modified_at,
         }
-
-
-# Creates models
-with app.app_context():
-    db.create_all()
-
-
-if __name__ == '__main__':
-    app.run(debug=True)
-else:
-    print('another way to run this app')
