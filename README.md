@@ -148,7 +148,7 @@ Para cargar las bases de datos se ejecuta:
 
 - @app.route('/profile_data', methods=['GET'])
   Esta ruta sirve para validar los datos correspondientes al email ingresado.
-- @app.route('/user_deletion', methods=['POST'])
+- @app.route('/user_deletion', methods=['DELETE'])
   Esta ruta sirve para eliminar el usuario
 
   - Primero, para poder eliminar el usuario, se tienen que eliminar las compras realizadas por este

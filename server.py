@@ -1,4 +1,5 @@
-from flask import (Flask, render_template, jsonify, request, redirect, url_for)
+from flask import (Flask, render_template, jsonify,
+                   request, redirect, url_for, abort)
 from flask_login import (login_user, login_required,
                          logout_user, current_user)
 from functionalities.validate_email import validar_correo
@@ -46,7 +47,7 @@ def login():
             return jsonify({'success': False,
                             'message': 'Este usuario no está registrado &#128577;'}), 400
     else:
-        pass
+        abort(405)
 
 
 @app.route('/logout', methods=['GET'])
@@ -86,7 +87,8 @@ def recover_password():
         password2 = request.form['password2']
 
         if password1 == password2:
-            user = Usuario.query.filter_by(email=current_user.email).first()
+            email = request.form['email']
+            user = Usuario.query.filter_by(email=email).first()
             user.password = password1
             db.session.commit()
             return jsonify({'success': True,
@@ -95,7 +97,7 @@ def recover_password():
             return jsonify({'success': False,
                             'message': 'Las contraseñas no coinciden &#128577;'}), 400
     else:
-        pass
+        abort(405)
 
 
 # Todo referente al "Nuevo usuario" va aqui
@@ -126,7 +128,7 @@ def new_user():
             return jsonify({'success': False,
                             'message': 'El correo ingresado no es válido &#128577;'}), 400
     else:
-        pass
+        abort(405)
 
 
 # Todo referente a la pagina de "profile" va aqui
@@ -136,61 +138,64 @@ def profile():
     return render_template('user.html')
 
 
-@app.route('/profile_data', methods=['GET'])
+@app.route('/profile_data', methods=['GET', 'PATCH', 'DELETE'])
 @login_required
 def get_profile():
     user = Usuario.query.filter_by(email=current_user.email).first()
-    return jsonify({"success": True, 'user': user.serialize()}), 200
+    if request.method == 'GET':
+        return jsonify({"success": True, 'user': user.serialize()}), 200
+    elif request.method == 'PATCH':
+        nombre = request.form['username']
+        apellido = request.form['lastname']
+        bio = request.form['bio']
+        password = request.form['password']
 
+        user = Usuario.query.filter_by(email=current_user.email).first()
 
-# Todo referente a la pagina de "delete-user" va aqui
-@app.route('/user_deletion', methods=['POST'])
-@login_required
-def delete_user():
-    fila_a_eliminar = Usuario.query.filter_by(email=current_user.email).first()
-    if fila_a_eliminar:
-        # Primero es necesario borrar las compras porque sino da error por la relacion existente
-        compras_eliminar = Compra.query.filter_by(
-            usuario_id=fila_a_eliminar.id).all()
-        if compras_eliminar:
-            for i in compras_eliminar:
-                db.session.delete(i)
-        # Despues de borrar las compras recien se borra el usuario
-        db.session.delete(fila_a_eliminar)
+        user.firstname = nombre
+        user.lastname = apellido
+        user.bio = bio
+        user.password = password
+
+        current_user.firstname = nombre
+        current_user.lastname = apellido
+        current_user.bio = bio
+        current_user.password = password
+
         db.session.commit()
-        logout_user()
-        return jsonify({'success': True,
-                        'message': 'El usuario se ha eliminado correctamete.'}), 200
+
+        return jsonify({'success': True, 'message': 'Usuario actualizado correctamente'}), 200
+    elif request.method == 'DELETE':
+        if user:
+            # Primero es necesario borrar las compras porque sino da error por la relacion existente
+            compras_eliminar = Compra.query.filter_by(
+                usuario_id=user.id).all()
+            if compras_eliminar:
+                for i in compras_eliminar:
+                    db.session.delete(i)
+            # Despues de borrar las compras recien se borra el usuario
+            db.session.delete(user)
+            db.session.commit()
+            logout_user()
+            return jsonify({'success': True,
+                            'message': 'El usuario se ha eliminado correctamete.'}), 200
+        else:
+            return jsonify({'success': False,
+                            'message': 'El usuario no se ha podido eliminar. Intentalo nuevamente'}), 500
     else:
-        return jsonify({'success': False,
-                        'message': 'El usuario no se ha podido eliminar. Intentalo nuevamente'}), 400
+        abort(405)
 
 
-# Todo referente a la pagina de "actualizar_datos" va aqui
-@app.route('/data_modification', methods=['POST'])
+# Todo referente a la pagina de "subir juegos" va aqui
+@app.route('/upload_game', methods=['GET', 'POST'])
 @login_required
-def update_data():
-
-    nombre = request.form['username']
-    apellido = request.form['lastname']
-    bio = request.form['bio']
-    password = request.form['password']
-
-    user = Usuario.query.filter_by(email=current_user.email).first()
-
-    user.firstname = nombre
-    user.lastname = apellido
-    user.bio = bio
-    user.password = password
-
-    current_user.firstname = nombre
-    current_user.lastname = apellido
-    current_user.bio = bio
-    current_user.password = password
-
-    db.session.commit()
-
-    return redirect(url_for('principal'))
+def upload_game():
+    if request.method == 'GET':
+        return render_template('upload_game.html')
+    elif request.method == 'POST':
+        pass
+    else:
+        abort(405)
 
 
 # Todo referente a la pagina de "videogame" va aqui
@@ -363,6 +368,16 @@ def resume():
 @app.errorhandler(401)
 def unauthorized(error):
     return render_template('error401.html'), 401
+
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('error404.html'), 404
+
+
+@app.errorhandler(405)
+def method_not_allowed(error):
+    return render_template('error405.html'), 405
 
 
 if __name__ == '__main__':

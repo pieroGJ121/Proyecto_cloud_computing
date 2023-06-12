@@ -1,5 +1,7 @@
 const pendingForms = new WeakMap()
+const pendingForms2 = new WeakMap()
 const data_recover = document.getElementById('data_recover')
+const password_changer = document.getElementById('password_changer')
 data_recover.addEventListener('submit', verify_submission)
 
 function verify_submission(e){
@@ -15,7 +17,6 @@ function verify_submission(e){
   
     const controller = new AbortController()
     pendingForms.set(formUserData, controller)
-    console.log('formCreateEmployee: ', formUserData)
   
     const formData = new FormData(formUserData)
 
@@ -23,7 +24,6 @@ function verify_submission(e){
         method: 'POST',
         body: formData,
     }).then(function (response) {
-        console.log('response', response)
         return response.json()
       })
       .then(function (responseJson) {
@@ -55,8 +55,6 @@ function verify_submission(e){
       })
 }
 
-const pendingForms2 = new WeakMap()
-const password_changer = document.getElementById('password_changer')
 password_changer.addEventListener('submit', reset_password)
 
 function reset_password(e){
@@ -75,12 +73,12 @@ function reset_password(e){
     console.log('formCreateEmployee: ', formPassword)
   
     const formData = new FormData(formPassword)
+    formData.append('email', data_recover.elements['email'].value);
 
     fetch('/password_recovery', {
         method: 'POST',
         body: formData,
     }).then(function (response) {
-        console.log('response', response)
         return response.json()
       })
       .then(function (responseJson) {

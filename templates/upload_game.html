@@ -1,0 +1,62 @@
+{% extends "body_layout.html" %} {% block title %}Vende ahora y obten ganancias
+de más del 90% {% endblock %} {%block styles%}
+<link rel="stylesheet" href="../static/css/purchases/purchases.css" />
+<link rel="stylesheet" href="../static/css/marketplace/upload_game.css" />
+<script src="static/js/purchases/purchases.js"></script>
+{% endblock %} {% block contenido %}
+
+<div class="container_form_game">
+  <h1>Vende tus juegos aqui y recibe hasta el 95% de tus ganancias 😁</h1>
+  <form id="game_form_game" class="game_form_game">
+    <div class="form_group_game">
+      <label for="name">NOMBRE DEL JUEGO</label>
+      <input type="text" id="name" class="form_control_game" required />
+    </div>
+    <div class="form_group_game">
+      <label for="release_year">AÑO DE LANZAMIENTO</label>
+      <input
+        type="number"
+        id="release_year"
+        class="form_control_game"
+        required
+      />
+    </div>
+    <div class="form_group_game">
+      <label for="genre">GÉNERO</label>
+      <input type="text" id="genre" class="form_control_game" required />
+    </div>
+    <div class="form_group_game">
+      <label for="publisher">EDITOR</label>
+      <input type="text" id="publisher" class="form_control_game" required />
+    </div>
+    <div class="form_group_game">
+      <label for="platforms">PLATAFORMAS</label>
+      <select id="platforms" class="form_control_game" multiple required>
+        <option value="PC">PC</option>
+        <option value="PlayStation">PlayStation</option>
+        <option value="Xbox">Xbox</option>
+        <option value="Nintendo Switch">Nintendo Switch</option>
+      </select>
+    </div>
+    <div class="form_group_game">
+      <label for="synopsis">SINOPSIS</label>
+      <textarea id="synopsis" class="form_control_game" required></textarea>
+    </div>
+    <div class="form_group_game">
+      <label for="price">PRECIO - S/</label>
+      <input type="number" id="price" class="form_control_game" required />
+    </div>
+    <div class="image-section">
+      <div class="form_group_game">
+        <label for="image_upload">SUBIR IMAGEN</label>
+        <input type="file" id="image_upload" accept="image/*" required />
+        <div class="image-preview"></div>
+      </div>
+    </div>
+    <div class="form_group_game">
+      <button type="submit" class="btn btn-primary">Publicar</button>
+    </div>
+  </form>
+</div>
+
+{% endblock %}

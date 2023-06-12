@@ -1,85 +1,158 @@
 <!DOCTYPE html>
 <html lang="es">
+  <head>
+    <title id="titulo_principal">{% block title %}{% endblock %}</title>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <base target="_parent" />
+    <link rel="icon" type="image/png" href="../static/logo/logo.png" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap"
+      rel="stylesheet"
+    />
+    <base target="_parent" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://mdbootstrap.com/api/snippets/static/download/MDB5-Pro-Advanced_6.2.0/css/mdb.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://mdbootstrap.com/api/snippets/static/download/MDB5-Pro-Advanced_6.2.0/plugins/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../static/css/main_parts/navbar.css" />
+    <link rel="stylesheet" href="../static/css/main_parts/nav_extra.css" />
+    <link
+      rel="stylesheet"
+      media="all"
+      href="../static/css/main_parts/background.css"
+    />
+    <script src="../static/js/shared.js"></script>
+    {% block styles %}{% endblock %}
+  </head>
 
-<head>
-  <title id="titulo_principal">{% block title %}{% endblock %}</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <base target="_parent">
-  <link rel="icon" type="image/png" href="../static/logo/logo.png">
-  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
-  <base target="_parent">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-  <link rel="stylesheet" href="https://mdbootstrap.com/api/snippets/static/download/MDB5-Pro-Advanced_6.2.0/css/mdb.min.css">
-  <link rel="stylesheet" href="https://mdbootstrap.com/api/snippets/static/download/MDB5-Pro-Advanced_6.2.0/plugins/css/all.min.css">
-  <link rel="stylesheet" href="../static/css/main_parts/navbar.css">
-  <link rel="stylesheet" href="../static/css/main_parts/nav_extra.css">
-  <link rel="stylesheet" media="all" href="../static/css/main_parts/background.css" />
-  <script src="../static/js/shared.js"></script>
-  {% block styles %}{% endblock %}
-</head>
-
-<body>
-  <header class="mb-0">
-    <div class="p-3 text-center">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4 d-flex justify-content-center justify-content-md-start mb-3 mb-md-0">
-            <a href="{{url_for('principal')}}" class="ms-md-2">
-              <img src="../static/logo/logo_2.png" height="50">
-            </a>
-          </div>
-
-          <div class="col-md-4">
-            <form class="d-flex input-group w-auto my-auto mb-3 mb-md-0" id="searchForm">
-              <input autocomplete="off" type="search" class="form-control rounded" placeholder="Busca aquí" id="SearchInput">
-              <span class="input-group-text border-0 d-none d-lg-flex"><i class="fas fa-search"></i></span>
-            </form>
-          </div>
-
-          <div class="col-md-4 d-flex justify-content-center justify-content-md-end align-items-center">
-            <div class="d-flex">
-              <!-- Cart -->
-              <a class="text-reset me-3" href="/purchases">
-                <span><i class="fas fa-shopping-cart"></i></span>
-                <span class="badge rounded-pill badge-notification" id="counter_purchases_cart"></span>
+  <body>
+    <header class="mb-0">
+      <div class="p-3 text-center">
+        <div class="container">
+          <div class="row">
+            <div
+              class="col-md-4 d-flex justify-content-center justify-content-md-start mb-3 mb-md-0"
+            >
+              <a href="{{url_for('principal')}}" class="ms-md-2">
+                <img src="../static/logo/logo_2.png" height="50" />
               </a>
+            </div>
 
-              <!-- User -->
-              <div class="dropdown">
-                <a class="text-reset dropdown-toggle d-flex align-items-center hidden-arrow" href="#"
-                  id="navbarDropdownMenuLink" role="button" data-mdb-toggle="dropdown" aria-expanded="false">
-                  <img src="/static/images/user.png" class="rounded-circle" height="22" alt=""
-                    loading="lazy" />
+            <div class="col-md-4">
+              <form
+                class="d-flex input-group w-auto my-auto mb-3 mb-md-0"
+                id="searchForm"
+              >
+                <input
+                  autocomplete="off"
+                  type="search"
+                  class="form-control rounded"
+                  placeholder="Busca aquí"
+                  id="SearchInput"
+                />
+                <span class="input-group-text border-0 d-none d-lg-flex"
+                  ><i class="fas fa-search"></i
+                ></span>
+              </form>
+            </div>
+
+            <div
+              class="col-md-4 d-flex justify-content-center justify-content-md-end align-items-center"
+            >
+              <div class="d-flex">
+                <!-- Cart -->
+                <a class="text-reset me-3" href="/purchases">
+                  <span
+                    ><i class="fa-solid fa-gamepad" style="color: #ffffff"></i
+                  ></span>
+                  <span
+                    class="badge rounded-pill badge-notification"
+                    id="counter_purchases_cart"
+                  ></span>
                 </a>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
-                  <li><a class="dropdown-item" href="/profile">Mi perfil</a></li>
-                  <li><a class="dropdown-item" href="/logout">Cerrar sesión</a></li>
-                </ul>
+                <!-- Marketplace dashboard -->
+                <a class="text-reset me-3" href="#">
+                  <span
+                    ><i class="fa-solid fa-shop" style="color: #ffffff"></i
+                  ></span>
+                </a>
+                <!-- Upload a new game -->
+                <a class="text-reset me-3" href="/upload_game">
+                  <span
+                    ><i class="fa-solid fa-upload" style="color: #ffffff"></i
+                  ></span>
+                </a>
+                <!-- User -->
+                <div class="dropdown">
+                  <a
+                    class="text-reset dropdown-toggle d-flex align-items-center hidden-arrow"
+                    href="#"
+                    id="navbarDropdownMenuLink"
+                    role="button"
+                    data-mdb-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <img
+                      src="/static/images/user.png"
+                      class="rounded-circle"
+                      height="22"
+                      alt=""
+                      loading="lazy"
+                    />
+                  </a>
+                  <ul
+                    class="dropdown-menu dropdown-menu-end"
+                    aria-labelledby="navbarDropdownMenuLink"
+                  >
+                    <li>
+                      <a class="dropdown-item" href="/profile">Mi perfil</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="/logout">Cerrar sesión</a>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <!-- Jumbotron -->
-    
-    {% block nav_extra %}{% endblock %}
-  </header>
+      <!-- Jumbotron -->
+
+      {% block nav_extra %}{% endblock %}
+    </header>
     <div class="hero">
-
       <div class="cube"></div>
       <div class="cube"></div>
       <div class="cube"></div>
       <div class="cube"></div>
       <div class="cube"></div>
       <div class="cube"></div>
-
     </div>
-    {% block contenido %}{% endblock %}
-    {%include 'footer.html'%}
-  <script type="text/javascript" src="https://mdbootstrap.com/api/snippets/static/download/MDB5-Pro-Advanced_6.2.0/js/mdb.min.js"></script>
-  <script type="text/javascript" src="https://mdbootstrap.com/api/snippets/static/download/MDB5-Pro-Advanced_6.2.0/plugins/js/all.min.js"></script>
-</body>
-
+    {% block contenido %}{% endblock %} {%include 'footer.html'%}
+    <script
+      type="text/javascript"
+      src="https://mdbootstrap.com/api/snippets/static/download/MDB5-Pro-Advanced_6.2.0/js/mdb.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://mdbootstrap.com/api/snippets/static/download/MDB5-Pro-Advanced_6.2.0/plugins/js/all.min.js"
+    ></script>
+    <script
+      src="https://kit.fontawesome.com/2116c4358d.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>

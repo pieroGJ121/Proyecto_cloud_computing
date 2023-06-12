@@ -1,0 +1,89 @@
+.container_form_game {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: transparent;
+    color: whitesmoke;
+  }
+
+.container_form_game h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: lighter;
+}
+
+.game_form_game {
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    background: rgb(0,42,51);
+    background: linear-gradient(0deg, rgba(0,42,51,1) 0%, rgba(0,22,66,1) 100%);
+}
+  
+.form_group_game {
+    margin-bottom: 20px;
+    padding: 10px;
+    flex-basis: 50%;
+}
+
+.form_group_game input:focus {
+    background: #24283B;
+    color: white;
+}
+  
+label {
+    font-weight: bold;
+    color: #01d28e;
+    font-size: 13px;
+}
+  
+.form_control_game {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    background: #24283B;
+    color: #8f8f8f;
+    transition: border-color 0.2s ease;
+}
+
+.form_control_game:focus {
+    outline: none;
+    border: 1px solid #01d28e !important;
+  }
+  
+.synopsis {
+    height: 150px;
+}
+  
+.image-section {
+    flex-basis: 100%;
+}
+  
+.image-section .form_group_game {
+    margin-bottom: 0;
+}
+  
+.image-preview {
+    width: 200px;
+    height: 200px;
+    background-color: #007bff;
+    border-radius: 10px;
+    margin-top: 10px;
+    background-color: #004466;
+}
+  
+.btn {
+    padding: 10px 20px;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+  
+.btn:hover {
+    background-color: #0056b3;
+}

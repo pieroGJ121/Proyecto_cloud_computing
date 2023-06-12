@@ -1,3 +1,5 @@
+const pendingForms = new WeakMap()
+
 function hide_msg() {
     const confirm_msg = document.getElementById('confirm_msg')
     const submit_final = document.getElementById('submit_final')
@@ -8,8 +10,8 @@ function hide_msg() {
     submit_final.style.display = 'Block'
 }
 function delete_user(){
-    fetch('/user_deletion', {
-        method: 'POST',
+    fetch('/profile_data', {
+        method: 'DELETE',
     })
     .then(function (response) {
         console.log('response', response)
@@ -27,6 +29,40 @@ function delete_user(){
         }
       })
 }
+
+document.getElementById('register_data_2').addEventListener('submit', function(e) {
+  e.preventDefault()
+  e.stopPropagation()
+
+  const formUserData = e.currentTarget
+  const previousController = pendingForms.get(formUserData)
+  if (previousController) {
+    previousController.abort()
+  }
+
+  const controller = new AbortController()
+  pendingForms.set(formUserData, controller)
+
+  const formData = new FormData(formUserData)
+
+  fetch('/profile_data', {
+    method: 'PATCH',
+    body: formData,
+  })
+  .then(function(response) {
+    return response.json()
+  }).then(function(responseJson) {
+    if (responseJson.success) {
+      window.location.href = "/";
+    } else {
+      console.log('Error al actualizar los datos');
+    }
+  })
+  .catch(function(error) {
+    console.log('Error en la solicitud:', error);
+  });
+});
+
 
 
 const MAX_WORDS = 50; // Define el número máximo de palabras permitido
