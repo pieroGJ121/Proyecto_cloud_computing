@@ -369,6 +369,56 @@ def create_app(test_config=None):
         global compra
         compra = True
         return jsonify({'success': True, 'message': 'Compra casi lista'})
+    
+
+
+    @app.route('/new_oferta', methods=['POST'])
+    def new_oferta():
+        returned_code = 200
+        list_errors = []
+        try:
+            body = request.form 
+
+
+
+            if 'usuario_id' not in body:
+                list_errors.append('usuario_id is required')
+            else:
+                usuario_id = body['usuario_id']
+
+            if 'game_id' not in body:
+                list_errors.append('game_id is required')
+            else:
+                game_id = body['game_id']
+
+            #talves precio ? 
+            #if 'precio' not in body:
+            #    list_errors.append('price is required')
+            #else:
+            #    precio = body['precio']   
+
+            if len(list_errors) > 0:
+                    returned_code = 400
+            else:
+                oferta = Oferta(usuario_id ,game_id)
+                
+                db.session.add(oferta)
+                db.session.commit()
+        
+        except:
+            db.session.rollback()
+            returned_code = 500
+        finally:
+            db.session.close()
+        
+        if returned_code == 400:
+            return jsonify({'success': False, 'message': 'Error creating ofert', 'errors': list_errors}), returned_code
+        elif returned_code == 500:
+            return jsonify({'success': False , 'message': 'Error!'}), returned_code
+            #abort(returned_code)
+        else:
+            return jsonify({'success': True, 'message': 'ofert Created successfully!'}), returned_code
+
 
     @app.route('/checkout', methods=['GET'])
     @login_required
