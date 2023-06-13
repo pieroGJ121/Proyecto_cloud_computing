@@ -420,6 +420,38 @@ def create_app(test_config=None):
             return jsonify({'success': True, 'message': 'ofert Created successfully!'}), returned_code
 
 
+    @app.route('/oferta/<id>', methods=['PATCH'])
+    def update_oferta(id):
+        returned_code = 200
+        list_errors = []
+        try:
+            body = request.json
+            
+            oferta = Oferta.query.get(id)
+            if not oferta:
+                return jsonify({'success': False, 'message': 'Oferta not found'}), 404
+            
+            #if 'precio' in body:
+            #    oferta.precio = body['precio']
+            
+            if 'realizada' in body:
+                oferta.realizada = body['realizada']
+            
+            db.session.commit()
+        
+        except:
+            db.session.rollback()
+            returned_code = 500
+        finally:
+            db.session.close()
+        
+        if returned_code == 500:
+            #abort(returned_code)
+            return jsonify({'success': False, 'message': 'Error updating oferta'}), returned_code
+        else:
+            return jsonify({'success': True, 'message': 'Oferta updated successfully'}), returned_code
+
+
     @app.route('/checkout', methods=['GET'])
     @login_required
     def checkout():
