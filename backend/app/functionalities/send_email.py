@@ -6,8 +6,8 @@ def enviar_correo(destinatario,titulo,fecha,id_compra):
     # Configuración del servidor SMTP de Gmail
     smtp_server = 'smtp.gmail.com'
     smtp_port = 587
-    sender_email = 'fokameca@gmail.com'
-    sender_password = 'jutsriydmyjjtfuj'
+    sender_email = 'gptgames98@gmail.com'
+    sender_password = 'xcmqlgabocyakkps'
 
     # Creación del mensaje de correo electrónico
     message = MIMEMultipart('alternative')
