@@ -16,23 +16,27 @@
     border: 1px solid #ccc;
     border-radius: 10px;
     padding: 20px;
-    display: flex;
-    flex-wrap: wrap;
     background: rgb(0,42,51);
     background: linear-gradient(0deg, rgba(0,42,51,1) 0%, rgba(0,22,66,1) 100%);
+    display: flex;
+    flex-wrap: wrap;
 }
-  
+
+.columna {
+    flex-basis: 50%;
+    min-width: 200px;
+}
+
 .form_group_game {
     margin-bottom: 20px;
     padding: 10px;
-    flex-basis: 50%;
 }
 
 .form_group_game input:focus {
     background: #24283B;
     color: white;
 }
-  
+
 label {
     font-weight: bold;
     color: #01d28e;
@@ -52,12 +56,17 @@ label {
 .form_control_game:focus {
     outline: none;
     border: 1px solid #01d28e !important;
-  }
-  
-.synopsis {
-    height: 150px;
 }
-  
+
+#synopsis {
+    height: 150px;
+    resize: none;
+}
+
+#synopsis:focus {
+    color: white;
+}
+
 .image-section {
     flex-basis: 100%;
 }
@@ -87,3 +96,32 @@ label {
 .btn:hover {
     background-color: #0056b3;
 }
+
+@media screen and (max-width: 768px) {
+    .columna {
+        flex-basis: 100%;
+    }
+}
+    
+
+/*
+
+
+*/
+
+  
+/*
+  
+  .nombre, .pais, .precio, .anio {
+    border: 1px solid black;
+    padding: 10px;
+  }
+  
+  .imagenes {
+    flex-basis: 100%;
+    min-width: 200px;
+    border: 1px solid black;
+    padding: 10px;
+  }
+  
+*/
