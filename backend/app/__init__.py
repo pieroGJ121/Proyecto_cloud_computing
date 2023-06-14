@@ -28,19 +28,19 @@ from .models import (
     User)
 from .functionalities.send_email import enviar_correo
 from flask_migrate import Migrate
-
+import os
 
 compra = False
 
 
 def create_app(test_config=None):
-    app = Flask(__name__)
+    app = Flask(__name__, template_folder='../templates',
+                static_folder='../static')
     with app.app_context():
         app.config['UPLOAD_FOLDER'] = 'static/employees'
         setup_db(app, test_config['database_path'] if test_config else None)
         CORS(app, origins='*')
         migrate = Migrate(app, db)
-
 
     @app.route('/', methods=['GET'])
     def principal():
@@ -49,8 +49,8 @@ def create_app(test_config=None):
         else:
             return redirect(url_for('login'))
 
-
     # Todo referente al login va aqui
+
     @app.route('/login', methods=['GET', 'POST'])
     def login():
         if request.method == 'GET':
@@ -78,15 +78,14 @@ def create_app(test_config=None):
         else:
             abort(405)
 
-
     @app.route('/logout', methods=['GET'])
     @login_required
     def logout():
         logout_user()
         return redirect(url_for('login'))
 
-
     # Todo referente al "recuperar contrasenia" va aqui
+
     @app.route('/data_recovery', methods=['POST'])
     def data_recover():
 
@@ -105,7 +104,6 @@ def create_app(test_config=None):
         else:
             return jsonify({'success': False,
                             'message': 'No hay ningún usuario registrado con esos datos &#128577;'}), 400
-
 
     @app.route('/password_recovery', methods=['GET', 'POST'])
     def recover_password():
@@ -128,8 +126,8 @@ def create_app(test_config=None):
         else:
             abort(405)
 
-
     # Todo referente al "Nuevo usuario" va aqui
+
     @app.route('/new_user', methods=['GET', 'POST'])
     def new_user():
         if request.method == 'GET':
@@ -159,13 +157,12 @@ def create_app(test_config=None):
         else:
             abort(405)
 
-
     # Todo referente a la pagina de "profile" va aqui
+
     @app.route('/profile', methods=['GET'])
     @login_required
     def profile():
         return render_template('user.html')
-
 
     @app.route('/profile_data', methods=['GET', 'PATCH', 'DELETE'])
     @login_required
@@ -214,8 +211,8 @@ def create_app(test_config=None):
         else:
             abort(405)
 
-
     # Todo referente a la pagina de "subir juegos" va aqui
+
     @app.route('/upload_game', methods=['GET', 'POST'])
     @login_required
     def upload_game():
@@ -226,8 +223,8 @@ def create_app(test_config=None):
         else:
             abort(405)
 
-
     # Todo referente a la pagina de "videogame" va aqui
+
     @app.route('/videogame_data/<identificador>', methods=['GET'])
     @login_required
     def get_videogame(identificador):
@@ -235,19 +232,17 @@ def create_app(test_config=None):
             id=identificador).first().game_publisher.game_platform.serialize()
         return jsonify({"success": True, 'game_platform': game_platform}), 200
 
-
     @app.route('/videogame', methods=['GET'])
     def videogame():
         return render_template('game.html')
 
-
     # Todo referente a la pagina de "search" va aqui
+
     @app.route('/genre_data', methods=['GET'])
     @login_required
     def get_genre():
         genres = [g.serialize() for g in genre.query.all()]
         return jsonify({"success": True, 'elementos': genres}), 200
-
 
     @app.route('/platform_data', methods=['GET'])
     @login_required
@@ -255,13 +250,11 @@ def create_app(test_config=None):
         platforms = [p.serialize() for p in platform.query.all()]
         return jsonify({"success": True, 'elementos': platforms}), 200
 
-
     @app.route('/publisher_data', methods=['GET'])
     @login_required
     def get_publisher():
         publishers = [p.serialize() for p in Publisher.query.all()]
         return jsonify({"success": True, 'elementos': publishers}), 200
-
 
     @app.route('/search_query', methods=['GET'])
     @login_required
@@ -294,19 +287,17 @@ def create_app(test_config=None):
 
         return jsonify({'success': True, 'games': selected}), 200
 
-
     @app.route('/search', methods=['GET'])
     @login_required
     def search():
         return render_template('search.html')
 
-
     # Todo referente a la pagina de "purchases" va aqui
+
     @app.route('/purchases', methods=['GET'])
     @login_required
     def purchases():
         return render_template('purchases.html')
-
 
     @app.route('/games_purchased', methods=['GET'])
     @login_required
@@ -316,7 +307,6 @@ def create_app(test_config=None):
         return jsonify({'success': True, 'games': games_bought,
                         "user": user.serialize()})
 
-
     @app.route('/compra_data/<identificador>', methods=['GET'])
     @login_required
     def get_compra(identificador):
@@ -324,7 +314,6 @@ def create_app(test_config=None):
         purchase = Compra.query.filter_by(usuario_id=user_id,
                                           game_id=identificador).first()
         return jsonify({'success': True, 'compra': purchase.serialize()})
-
 
     @app.route('/new_compra/<identificador>', methods=['POST'])
     @login_required
@@ -346,8 +335,8 @@ def create_app(test_config=None):
 
         return jsonify({'success': True, 'compra': purchase.serialize()})
 
-
     # Todo referente a comprar videogames va aqui
+
     @app.route('/game_state/<identificador>', methods=['GET'])
     @login_required
     def is_game_bought(identificador):
@@ -369,17 +358,13 @@ def create_app(test_config=None):
         global compra
         compra = True
         return jsonify({'success': True, 'message': 'Compra casi lista'})
-    
-
 
     @app.route('/new_oferta', methods=['POST'])
     def new_oferta():
         returned_code = 200
         list_errors = []
         try:
-            body = request.form 
-
-
+            body = request.form
 
             if 'usuario_id' not in body:
                 list_errors.append('usuario_id is required')
@@ -391,34 +376,33 @@ def create_app(test_config=None):
             else:
                 game_id = body['game_id']
 
-            #talves precio ? 
-            #if 'precio' not in body:
+            # talves precio ?
+            # if 'precio' not in body:
             #    list_errors.append('price is required')
-            #else:
-            #    precio = body['precio']   
+            # else:
+            #    precio = body['precio']
 
             if len(list_errors) > 0:
-                    returned_code = 400
+                returned_code = 400
             else:
-                oferta = Oferta(usuario_id ,game_id)
-                
+                oferta = Oferta(usuario_id, game_id)
+
                 db.session.add(oferta)
                 db.session.commit()
-        
+
         except:
             db.session.rollback()
             returned_code = 500
         finally:
             db.session.close()
-        
+
         if returned_code == 400:
             return jsonify({'success': False, 'message': 'Error creating ofert', 'errors': list_errors}), returned_code
         elif returned_code == 500:
-            return jsonify({'success': False , 'message': 'Error!'}), returned_code
-            #abort(returned_code)
+            return jsonify({'success': False, 'message': 'Error!'}), returned_code
+            # abort(returned_code)
         else:
             return jsonify({'success': True, 'message': 'ofert Created successfully!'}), returned_code
-
 
     @app.route('/oferta/<id>', methods=['PATCH'])
     def update_oferta(id):
@@ -426,31 +410,30 @@ def create_app(test_config=None):
         list_errors = []
         try:
             body = request.json
-            
+
             oferta = Oferta.query.get(id)
             if not oferta:
                 return jsonify({'success': False, 'message': 'Oferta not found'}), 404
-            
-            #if 'precio' in body:
+
+            # if 'precio' in body:
             #    oferta.precio = body['precio']
-            
+
             if 'realizada' in body:
                 oferta.realizada = body['realizada']
-            
+
             db.session.commit()
-        
+
         except:
             db.session.rollback()
             returned_code = 500
         finally:
             db.session.close()
-        
+
         if returned_code == 500:
-            #abort(returned_code)
+            # abort(returned_code)
             return jsonify({'success': False, 'message': 'Error updating oferta'}), returned_code
         else:
             return jsonify({'success': True, 'message': 'Oferta updated successfully'}), returned_code
-
 
     @app.route('/checkout', methods=['GET'])
     @login_required
@@ -484,7 +467,4 @@ def create_app(test_config=None):
     def method_not_allowed(error):
         return render_template('error405.html'), 405
 
-    if __name__ == '__main__':
-        app.run(debug=True)
-    else:
-        print('Importing {}'.format(__name__))
+    return app

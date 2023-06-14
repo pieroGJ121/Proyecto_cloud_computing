@@ -2,5 +2,5 @@
 
 
 config = {
-    'DATABASE_URI': 'postgresql://postgres@localhost:5432/project_2_dbp',
+    'DATABASE_URI': 'postgresql://postgres:1234@localhost:5432/project_dbp',
 }
