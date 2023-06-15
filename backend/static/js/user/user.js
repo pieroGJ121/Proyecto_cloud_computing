@@ -68,7 +68,7 @@ document.getElementById('register_data_2').addEventListener('submit', function(e
 const MAX_WORDS = 50; // Define el número máximo de palabras permitido
 const textarea = document.querySelector('textarea');
 
-var autosizeScript = document.createElement('script');
+let autosizeScript = document.createElement('script');
 autosizeScript.src = "https://cdnjs.cloudflare.com/ajax/libs/autosize.js/4.0.2/autosize.min.js";
 document.head.appendChild(autosizeScript);
 

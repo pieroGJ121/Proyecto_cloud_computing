@@ -42,7 +42,7 @@ function register(e){
       })
 }
 
-var autosizeScript = document.createElement('script');
+let autosizeScript = document.createElement('script');
 autosizeScript.src = "https://cdnjs.cloudflare.com/ajax/libs/autosize.js/4.0.2/autosize.min.js";
 document.head.appendChild(autosizeScript);
 
