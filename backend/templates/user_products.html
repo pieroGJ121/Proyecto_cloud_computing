@@ -20,74 +20,123 @@
       <tbody>
         <tr>
           <td>
-            <img src="path_to_image.jpg" alt="Juego" />
+            <div class="image-preview">
+              <h3 id="prev">La vista previa de la imagen aparecera aquí 👇🏻</h3>
+              <img id="preview-image" src="" />
+            </div>
+            <div class="image-section">
+              <div class="form_group_game">
+                <label for="image_upload"></label>
+                <input
+                  type="file"
+                  id="image_upload"
+                  accept="image/*"
+                  style="display: none"
+                  required
+                />
+                <button
+                  type="button"
+                  id="upload_button"
+                  class="custom-upload-btn"
+                >
+                  Seleccionar imagen
+                </button>
+              </div>
+            </div>
           </td>
           <td>
             <h2>Si</h2>
           </td>
           <td>
-            <input type="text" placeholder="Nombre del juego" /><br />
-            <input type="text" placeholder="Fecha de lanzamiento" /><br />
-            <input type="text" placeholder="Género" /><br />
-            <input type="text" placeholder="Editor" /><br />
-            <input type="text" placeholder="Plataformas" /><br />
-            <input type="text" placeholder="Precio" /><br />
-            <textarea placeholder="Sinopsis"></textarea>
+            <div class="form_group_game">
+              <label for="name">NOMBRE DEL JUEGO</label>
+              <input type="text" id="name" class="form_control_game" required />
+            </div>
+            <div class="form_group_game">
+              <label for="price">PRECIO - S/</label>
+              <input
+                type="number"
+                id="price"
+                class="form_control_game"
+                required
+              />
+            </div>
+            <div class="form_group_game">
+              <label for="genre">GÉNERO</label>
+              <div class="custom-select">
+                <select id="genre" class="form_control_game" required>
+                  <option value="" selected disabled hidden>
+                    Selecciona un género
+                  </option>
+                  <option value="Accion">Accion</option>
+                  <option value="Aventura">Aventura</option>
+                  <option value="Retro">Retro</option>
+                  <option value="Terror">Terror</option>
+                </select>
+              </div>
+            </div>
+            <div class="form_group_game">
+              <label for="platforms">PLATAFORMAS</label>
+              <div class="custom-select">
+                <select id="platforms" class="form_control_game" required>
+                  <option value="" selected disabled hidden>
+                    Selecciona una plataforma
+                  </option>
+                  <option value="PC">PC</option>
+                  <option value="PlayStation">PlayStation</option>
+                  <option value="Xbox">Xbox</option>
+                  <option value="Nintendo Switch">Nintendo Switch</option>
+                </select>
+              </div>
+            </div>
+            <div class="form_group_game">
+              <label for="release_date">FECHA DE LANZAMIENTO</label>
+              <input
+                type="date"
+                id="release_year"
+                class="form_control_game"
+                required
+              />
+            </div>
+            <div class="form_group_game">
+              <label for="publisher">EDITOR</label>
+              <div class="custom-select">
+                <select id="publisher" class="form_control_game" required>
+                  <option value="" selected disabled hidden>
+                    Selecciona un editor
+                  </option>
+                  <option value="TAKE TWO INTERACTIVE">
+                    TAKE TWO INTERACTIVE
+                  </option>
+                  <option value="Xbox Game Studios">Xbox Game Studios</option>
+                  <option value="Valve">Valve</option>
+                  <option value="Ubisoft">Ubisoft</option>
+                </select>
+              </div>
+            </div>
+            <div class="form_group_game">
+              <label for="synopsis">SINOPSIS (250 PALABRAS MÁXIMO)</label>
+              <textarea
+                id="synopsis"
+                class="form_control_game"
+                required
+              ></textarea>
+            </div>
           </td>
           <td>
-            <button onclick="updateRow(this)">Actualizar</button>
-            <button onclick="deleteRow(this)">Eliminar</button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <img
-              src="path_to_image.jpg"
-              onclick="uploadImage(this)"
-              alt="Juego"
-            />
-          </td>
-          <td>
-            <h2>Si</h2>
-          </td>
-          <td>
-            <input type="text" placeholder="Nombre del juego" /><br />
-            <input type="text" placeholder="Fecha de lanzamiento" /><br />
-            <input type="text" placeholder="Género" /><br />
-            <input type="text" placeholder="Editor" /><br />
-            <input type="text" placeholder="Plataformas" /><br />
-            <input type="text" placeholder="Precio" /><br />
-            <textarea placeholder="Sinopsis"></textarea>
-          </td>
-          <td>
-            <button onclick="updateRow(this)">Actualizar</button>
-            <button onclick="deleteRow(this)">Eliminar</button>
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <img src="../../../../Downloads/Peter_Castle.jpg" alt="Juego" />
-          </td>
-          <td>
-            <h2>Si</h2>
-          </td>
-          <td>
-            <input type="text" placeholder="Nombre del juego" /><br />
-            <input type="text" placeholder="Fecha de lanzamiento" /><br />
-            <input type="text" placeholder="Género" /><br />
-            <input type="text" placeholder="Editor" /><br />
-            <input type="text" placeholder="Plataformas" /><br />
-            <input type="text" placeholder="Precio" /><br />
-            <textarea placeholder="Sinopsis"></textarea>
-          </td>
-          <td>
-            <button onclick="updateRow(this)">Actualizar</button>
-            <button onclick="deleteRow(this)">Eliminar</button>
+            <div class="buttons">
+              <button id="update" onclick="updateRow(this)">Actualizar</button>
+              <button id="delete" onclick="deleteRow(this)">Eliminar</button>
+            </div>
           </td>
         </tr>
       </tbody>
     </table>
   </div>
+</div>
+<div class="info">
+  <h3>Hasta ahora has publicado 5 juegos</h3>
+  <h3>En total has recaudado: S/ 40.73</h3>
 </div>
 <script src="static/js/marketplace/update_game.js"></script>
 {% endblock %}
