@@ -243,7 +243,6 @@ class Oferta(db.Model):
     usuario_id = db.Column(db.String(36), db.ForeignKey('usuarios.id'),
                            nullable=False)
     game_id = db.Column(db.Integer, db.ForeignKey('games.id'), nullable=False)
-    realizada = db.Column(db.Boolean(), nullable=False, default=True)
 
     created_at = db.Column(db.DateTime(timezone=True), nullable=False,
                            server_default=db.text("now()"))

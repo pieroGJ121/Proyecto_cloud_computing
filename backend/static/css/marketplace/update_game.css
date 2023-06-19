@@ -1,0 +1,54 @@
+.main-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+  
+.main-container h1 {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 50px;
+    color: white;
+    font-weight: lighter;
+}
+  
+.tabla{
+    width: 100%;
+    margin: 0 auto;
+    padding: 25px;
+}
+
+.tabla table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 0 auto;
+}
+
+th, td {
+    text-align: center;
+    padding: 8px;
+}
+  
+th{
+    font-size: 17px;
+    color: whitesmoke;
+    border-top: 5px solid white;
+    border-bottom: 5px solid white;
+}
+  
+td input[type="text"],
+td textarea {
+    width: calc(100% - 16px); /* Resta el doble del padding para considerar los bordes */
+    box-sizing: border-box;
+}
+  
+  td img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    cursor: pointer;
+  }
+  

@@ -1,0 +1,93 @@
+{% extends "body_layout.html" %} {% block title %}Centro de ventas del usuario
+{% endblock %} {%block styles%}
+<link rel="stylesheet" href="../static/css/marketplace/update_game.css" />
+{% endblock %} {% block contenido %}
+<div class="main-container">
+  <h1>
+    Desde aquí podras administrar todos los juegos que has publicado hasta ahora
+    🤑
+  </h1>
+  <div class="tabla">
+    <table>
+      <thead>
+        <tr>
+          <th>Imagen</th>
+          <th>¿Vendido?</th>
+          <th>Detalles</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <img src="path_to_image.jpg" alt="Juego" />
+          </td>
+          <td>
+            <h2>Si</h2>
+          </td>
+          <td>
+            <input type="text" placeholder="Nombre del juego" /><br />
+            <input type="text" placeholder="Fecha de lanzamiento" /><br />
+            <input type="text" placeholder="Género" /><br />
+            <input type="text" placeholder="Editor" /><br />
+            <input type="text" placeholder="Plataformas" /><br />
+            <input type="text" placeholder="Precio" /><br />
+            <textarea placeholder="Sinopsis"></textarea>
+          </td>
+          <td>
+            <button onclick="updateRow(this)">Actualizar</button>
+            <button onclick="deleteRow(this)">Eliminar</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <img
+              src="path_to_image.jpg"
+              onclick="uploadImage(this)"
+              alt="Juego"
+            />
+          </td>
+          <td>
+            <h2>Si</h2>
+          </td>
+          <td>
+            <input type="text" placeholder="Nombre del juego" /><br />
+            <input type="text" placeholder="Fecha de lanzamiento" /><br />
+            <input type="text" placeholder="Género" /><br />
+            <input type="text" placeholder="Editor" /><br />
+            <input type="text" placeholder="Plataformas" /><br />
+            <input type="text" placeholder="Precio" /><br />
+            <textarea placeholder="Sinopsis"></textarea>
+          </td>
+          <td>
+            <button onclick="updateRow(this)">Actualizar</button>
+            <button onclick="deleteRow(this)">Eliminar</button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <img src="../../../../Downloads/Peter_Castle.jpg" alt="Juego" />
+          </td>
+          <td>
+            <h2>Si</h2>
+          </td>
+          <td>
+            <input type="text" placeholder="Nombre del juego" /><br />
+            <input type="text" placeholder="Fecha de lanzamiento" /><br />
+            <input type="text" placeholder="Género" /><br />
+            <input type="text" placeholder="Editor" /><br />
+            <input type="text" placeholder="Plataformas" /><br />
+            <input type="text" placeholder="Precio" /><br />
+            <textarea placeholder="Sinopsis"></textarea>
+          </td>
+          <td>
+            <button onclick="updateRow(this)">Actualizar</button>
+            <button onclick="deleteRow(this)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<script src="static/js/marketplace/update_game.js"></script>
+{% endblock %}

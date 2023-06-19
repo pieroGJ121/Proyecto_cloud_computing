@@ -104,8 +104,8 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
   
 .image-preview {
-    width: 200px;
-    height: 300px;
+    width: 240px;
+    height: 320px;
     border-radius: 10px;
     margin-top: 10px;
     background-color: #051025;
@@ -114,7 +114,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     justify-content: center;
     align-items: center;
 }
-  
+
+#preview-image {
+    max-width: 100%;
+    max-height: 100%;
+}
+
 .image-preview h3{
     color: #ffffff;
     font-size: 20px;
@@ -135,11 +140,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     display: none;
 }
 
-#preview-image {
-    max-width: 100%;
-    max-height: 100%;
-}
-
 .custom-upload-btn {
     padding: 10px 20px;
     border: 1px solid #01d28e;
@@ -147,10 +147,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background-color: #051025;
     color: #fff;
     cursor: pointer;
+    transition: background-color 0.2s ease;
 }
   
 .custom-upload-btn:hover {
-    background-color: #111b2e;
+    background-color: #1e2a41;
 }
   
 .submit_button{

@@ -223,6 +223,31 @@ def create_app(test_config=None):
         else:
             abort(405)
 
+    # Todo referente a la pagina de "juegos subidos por el usuario" va aqui
+
+    @app.route('/seller', methods=['GET', 'POST', 'PATCH', 'DELETE'])
+    @login_required
+    def update_game():
+        if request.method == 'GET':
+            return render_template('user_products.html')
+        elif request.method == 'POST':
+            pass
+        elif request.method == 'PATCH':
+            pass
+        elif request.method == 'DELETE':
+            pass
+        else:
+            abort(405)
+
+    # Todo referente a la pagina de "recuperar las ofertas de ventas del jugador" va aqui
+    @app.route('/info_user_game/<identificador>', methods=['GET'])
+    @login_required
+    def get_all_info_user_game(identificador):
+        if request.method == 'GET':
+            pass
+        else:
+            abort(405)
+
     # Todo referente a la pagina de "videogame" va aqui
 
     @app.route('/videogame_data/<identificador>', methods=['GET'])
