@@ -245,12 +245,24 @@ def create_app(test_config=None):
 
     # Todo referente a la pagina de "videogame" va aqui
 
-    @app.route('/videogame_data/<identificador>', methods=['GET'])
+    @app.route('/game_data/<identificador>', methods=['GET'])
     @login_required
     def get_videogame(identificador):
-        game_platform = game.query.filter_by(
-            id=identificador).first().game_publisher.game_platform.serialize()
-        return jsonify({"success": True, 'game_platform': game_platform}), 200
+       game = 0
+        try:
+            game = Game.query.get(identificador)
+            if not game:
+                returned_code = 404
+        except Exception as e:
+            db.session.rollback()
+            returned_code = 500
+        finally:
+            db.session.close()
+
+        if returned_code != 200:
+            abort(returned_code)
+        else:
+            return jsonify({"success": True, 'game': game.serialized()}), 200
 
     @app.route('/videogame', methods=['GET'])
     def videogame():
