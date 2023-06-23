@@ -395,17 +395,21 @@ def create_app(test_config=None):
                 list_errors.append('game_id is required')
             else:
                 game_id = body['game_id']
-
-            # talves precio ?
-            # if 'precio' not in body:
-            #    list_errors.append('price is required')
-            # else:
-            #    precio = body['precio']
+            
+            if 'price' not in body:
+                list_errors.append('price is required')
+            else:
+                price = body['price']
+            
+            if 'plataforma' not in body:
+                list_errors.append('plataforma is required')
+            else:
+                plataforma = body['plataforma']
 
             if len(list_errors) > 0:
                 returned_code = 400
             else:
-                oferta = Oferta(usuario_id, game_id)
+                oferta = Oferta(usuario_id, game_id ,price , plataforma )
 
                 db.session.add(oferta)
                 db.session.commit()
@@ -422,7 +426,7 @@ def create_app(test_config=None):
             return jsonify({'success': False, 'message': 'Error!'}), returned_code
             # abort(returned_code)
         else:
-            return jsonify({'success': True, 'message': 'ofert Created successfully!'}), returned_code
+            return jsonify({'success': True, 'message': 'Ofert Created successfully!'}), returned_code
 
     @app.route('/oferta/<id>', methods=['PATCH'])
     def update_oferta(id):
@@ -435,8 +439,6 @@ def create_app(test_config=None):
             if not oferta:
                 return jsonify({'success': False, 'message': 'Oferta not found'}), 404
 
-            # if 'precio' in body:
-            #    oferta.precio = body['precio']
 
             if 'realizada' in body:
                 oferta.realizada = body['realizada']
@@ -454,7 +456,7 @@ def create_app(test_config=None):
             return jsonify({'success': False, 'message': 'Error updating oferta'}), returned_code
         else:
             return jsonify({'success': True, 'message': 'Oferta updated successfully'}), returned_code
-
+    
     @app.route('/checkout', methods=['GET'])
     @login_required
     def checkout():
