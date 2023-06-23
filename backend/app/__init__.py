@@ -428,6 +428,24 @@ def create_app(test_config=None):
         else:
             return jsonify({'success': True, 'message': 'Ofert Created successfully!'}), returned_code
 
+    @app.route('/ofertas', methods=['GET'])
+    def get_ofertas():
+        returned_code = 200
+        ofertas_list = [] 
+        try : 
+            ofertas = Oferta.query.all()
+            ofertas_list = [oferta.serialize() for oferta in ofertas]
+            if not ofertas_list:
+                returned_code = 404     
+        
+        except Exception as e:
+            returned_code = 500
+        
+        if returned_code != 200:
+            abort(returned_code)
+        
+        return jsonify({'success': True, 'ofertas': ofertas_list}), returned_code
+
     @app.route('/oferta/<id>', methods=['PATCH'])
     def update_oferta(id):
         returned_code = 200
