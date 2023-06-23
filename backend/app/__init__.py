@@ -446,6 +446,29 @@ def create_app(test_config=None):
         
         return jsonify({'success': True, 'ofertas': ofertas_list}), returned_code
 
+    @app.route('/oferta/<id>', methods=['DELETE'])
+    def delete_oferta(id):
+        returned_code = 200
+        try:
+            oferta = Oferta.query.get(id)
+            if not oferta:
+                returned_code = 404
+            else:
+                db.session.delete(oferta)
+                db.session.commit()
+
+        except:
+            db.session.rollback()
+            returned_code = 500
+        finally:
+            db.session.close()
+
+        if returned_code != 200:
+            return jsonify({'success': False, 'message': 'Error deleting oferta'}), returned_code
+        else:
+            return jsonify({'success': True, 'message': 'Oferta deleted successfully'}), returned_code
+
+
     @app.route('/oferta/<id>', methods=['PATCH'])
     def update_oferta(id):
         returned_code = 200
