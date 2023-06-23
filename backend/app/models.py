@@ -184,6 +184,7 @@ class Oferta(db.Model):
                            nullable=False)
     game_id = db.Column(db.Integer, db.ForeignKey('games.id'), nullable=False)
     price = db.Column(db.Integer, nullable=False)
+    plataforma = db.Column(db.String(36), nullable=False)
 
     created_at = db.Column(db.DateTime(timezone=True), nullable=False,
                            server_default=db.text("now()"))

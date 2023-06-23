@@ -16,14 +16,9 @@ from flask_cors import CORS
 from .models import (
     db,
     Usuario,
-    genre,
-    platform,
-    Publisher,
-    game,
+    Game,
     Compra,
     Oferta,
-    Game_publisher,
-    Game_platform,
     setup_db,
     User)
 from .functionalities.send_email import enviar_correo
