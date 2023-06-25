@@ -1,0 +1,13 @@
+#confirm_msg{
+    color: #ff5757; 
+    display: none;
+}
+#submit_final{
+    background-color: #b43737 !important; 
+    border-color: #b43737 !important;
+    display: none;
+}
+#prev_submit{
+    background-color: #b43737 !important; 
+    border-color: #b43737 !important;
+}
