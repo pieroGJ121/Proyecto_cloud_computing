@@ -292,30 +292,34 @@ def create_app(test_config=None):
     @login_required
     def do_search():
         selection = request.args.to_dict()
-        selected = game.query
+        fields = "fields name, cover.image_id;"
+        body = fields + " limit 500;"
+        where = ""
 
         if selection["genre"] != "Todas":
-            id_genre = genre.query.filter_by(
-                genre_name=selection["genre"]).first().id
-            selected = selected.filter_by(genre_id=id_genre)
-
-        if selection["name"] != "":
-            name = selection["name"]
-            selected = selected.filter(game.game_name.ilike(f'%{name}%'))
+            where = " where genre.name = " + selection["genre"]
 
         if selection["publisher"] != "Todas":
-            id_publisher = Publisher.query.filter_by(
-                publisher_name=selection["publisher"]).first().id
-            selected = selected.filter(
-                game.game_publisher.has(publisher_id=id_publisher))
+            where += " & publisher.name = " + selection["publisher"]
 
         if selection["platform"] != "Todas":
+            where += " & involved_companies.company.name = " + selection["publisher"] + ";"
             id_platform = platform.query.filter_by(
                 platform_name=selection["platform"]).first().id
             selected = selected.filter(game.game_publisher.has(
                 Game_publisher.game_platform.has(platform_id=id_platform)))
 
-        selected = [game.serialize() for game in selected.all()]
+            body += where
+        if selection["name"] != "":
+            body = 'search "' + selection["name"] + '";'
+
+        results = do_request_api(body, path + "/count")
+        offset = 0
+        selected = []
+        while results - offset // 500 >= 0:
+            for i in do_request_api(body + "offset " + offset ";", path).json():
+                selected.extend(i)
+            offset += 500
 
         return jsonify({'success': True, 'games': selected}), 200
 
