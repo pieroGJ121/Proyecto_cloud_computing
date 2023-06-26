@@ -64,7 +64,8 @@ class Game(db.Model):
         return '<Game %r>' % (self.id)
 
     def serialize_basic(self):
-        body = "fields *; where id = " + id + ";"
+        fields = "fields name, first_release_year, genres.name, platforms.name, involved_companies.company.name, cover.image_id;"
+        body = fields + " where id = " + id + ";"
         data = do_request_api(body, "games").json()[0]
         return {
             'id': self.id,
@@ -75,7 +76,7 @@ class Game(db.Model):
             'platforms': data["platforms"],
             'summary': data["summary"],
             'involved_companies': data["involved_companies"],
-            'covers': data["covers"],
+            'cover': "https:" + data["cover"],
             'created_at': self.created_at,
             'modified_at': self.modified_at,
         }
