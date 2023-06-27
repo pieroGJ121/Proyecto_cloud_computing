@@ -248,7 +248,7 @@ def create_app(test_config=None):
     @app.route('/game_data/<identificador>', methods=['GET'])
     @login_required
     def get_videogame(identificador):
-       game = 0
+        game = 0
         try:
             game = Game.query.get(identificador)
             if not game:
@@ -407,12 +407,12 @@ def create_app(test_config=None):
                 list_errors.append('game_id is required')
             else:
                 game_id = body['game_id']
-            
+
             if 'price' not in body:
                 list_errors.append('price is required')
             else:
                 price = body['price']
-            
+
             if 'plataforma' not in body:
                 list_errors.append('plataforma is required')
             else:
@@ -421,7 +421,7 @@ def create_app(test_config=None):
             if len(list_errors) > 0:
                 returned_code = 400
             else:
-                oferta = Oferta(usuario_id, game_id ,price , plataforma )
+                oferta = Oferta(usuario_id, game_id, price, plataforma)
 
                 db.session.add(oferta)
                 db.session.commit()
@@ -443,19 +443,19 @@ def create_app(test_config=None):
     @app.route('/ofertas', methods=['GET'])
     def get_ofertas():
         returned_code = 200
-        ofertas_list = [] 
-        try : 
+        ofertas_list = []
+        try:
             ofertas = Oferta.query.all()
             ofertas_list = [oferta.serialize() for oferta in ofertas]
             if not ofertas_list:
-                returned_code = 404     
-        
+                returned_code = 404
+
         except Exception as e:
             returned_code = 500
-        
+
         if returned_code != 200:
             abort(returned_code)
-        
+
         return jsonify({'success': True, 'ofertas': ofertas_list}), returned_code
 
     @app.route('/oferta/<id>', methods=['DELETE'])
@@ -480,7 +480,6 @@ def create_app(test_config=None):
         else:
             return jsonify({'success': True, 'message': 'Oferta deleted successfully'}), returned_code
 
-
     @app.route('/oferta/<id>', methods=['PATCH'])
     def update_oferta(id):
         returned_code = 200
@@ -491,7 +490,6 @@ def create_app(test_config=None):
             oferta = Oferta.query.get(id)
             if not oferta:
                 return jsonify({'success': False, 'message': 'Oferta not found'}), 404
-
 
             if 'realizada' in body:
                 oferta.realizada = body['realizada']
@@ -509,7 +507,7 @@ def create_app(test_config=None):
             return jsonify({'success': False, 'message': 'Error updating oferta'}), returned_code
         else:
             return jsonify({'success': True, 'message': 'Oferta updated successfully'}), returned_code
-    
+
     @app.route('/checkout', methods=['GET'])
     @login_required
     def checkout():

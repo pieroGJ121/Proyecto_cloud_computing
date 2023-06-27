@@ -1,79 +1,125 @@
-{% extends "body_layout.html" %}
-{% block title %}Compra los mejores juegos aquí{% endblock %}
-{% block styles%}
-<link rel="stylesheet" href="../static/css/index/slider_style.css">
-<link rel="stylesheet" href="../static/css/index/slider_extra.css">
-<link rel="stylesheet" href="../static/css/index/index.css">
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/jssor-slider/27.1.0/jssor.slider.min.js'></script>
+{% extends "body_layout.html" %} {% block title %}Compra los mejores juegos
+aquí{% endblock %} {% block styles%}
+<link rel="stylesheet" href="../static/css/index/slider_style.css" />
+<link rel="stylesheet" href="../static/css/index/slider_extra.css" />
+<link rel="stylesheet" href="../static/css/index/index.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jssor-slider/27.1.0/jssor.slider.min.js"></script>
 <script src="../static/js/index/slider_script.js"></script>
-{% endblock %}
-
-{% block contenido %}
+{% endblock %} {% block contenido %}
 <div class="main_body">
-    <section class="wow fadeIn example no-padding no-transition slider-top"> 
-        <div class="slider_wrapper">
-        
-        <div id="slider1_container">
-
-            <div data-u="loading" class="jssorl-009-spin">
-                <img class="load-ico" src="https://www.jssor.com/theme/svg/loading/static-svg/spin.svg" />
-            </div>
-
-            <div data-u="slides" class="slides-i">
-                <div>
-                    <img data-u="image" src="../static/images/Slide_1.png"  class="slider" />
-                </div>
-                <div>
-                    <img data-u="image" src="../static/images/Slide_2.png" class="slider" />
-                </div>
-                <div>
-                    <img data-u="image" src="../static/images/Slide_3.png" class="slider" />
-                </div>
-            </div>
-            
-            <div data-u="navigator" class="jssorb031" data-autocenter="1" data-scale="0.5" data-scale-bottom="0.75">
-                <div data-u="prototype" class="i">
-                    <svg viewBox="0 0 16000 16000" class="arrow-i1">
-                        <circle class="b" cx="8000" cy="8000" r="5800"></circle>
-                    </svg>
-                </div>
-            </div>
-
-            <div data-u="arrowleft" class="jssora051" id="arrow1" data-autocenter="2" data-scale="0.75" data-scale-left="0.75">
-                <svg viewBox="0 0 16000 16000" class="arrow-i1">
-                    <polyline class="a" points="11040,1920 4960,8000 11040,14080 "></polyline>
-                </svg>
-            </div>
-            <div data-u="arrowright" class="jssora051" id="arrow2" data-autocenter="2" data-scale="0.75" data-scale-right="0.75">
-                <svg viewBox="0 0 16000 16000" class="arrow-i1">
-                    <polyline class="a" points="4960,1920 11040,8000 4960,14080 "></polyline>
-                </svg>
-            </div>
-
+  <section class="wow fadeIn example no-padding no-transition slider-top">
+    <div class="slider_wrapper">
+      <div id="slider1_container">
+        <div data-u="loading" class="jssorl-009-spin">
+          <img
+            class="load-ico"
+            src="https://www.jssor.com/theme/svg/loading/static-svg/spin.svg"
+          />
         </div>
-    </div>
-    </section>
 
-    <div class="index_content">
-        <h2>Hola,</h2>
-        <p>
-            ¡Bienvenido a GPT Games! Aquí encontrarás los videojuegos más emocionantes y cautivadores del mercado. Nuestro amplio catálogo abarca todos los géneros y plataformas, ofreciéndote una experiencia de juego inigualable. No esperes más, explora nuestra selección y comienza a comprar ahora para sumergirte en emocionantes aventuras virtuales.
-            
-            En GPT Games, nos apasiona brindarte una experiencia de compra excepcional. Nuestro sitio web es fácil de navegar y seguro, para que puedas realizar tus compras con confianza. Además, contamos con un equipo de atención al cliente dedicado que estará encantado de ayudarte en cualquier consulta. Descubre la comodidad y emoción de comprar en GPT Games.
-            
-            Nos enorgullece trabajar en estrecha colaboración con los principales desarrolladores y editoriales de la industria para ofrecerte los títulos más recientes y populares. Desde juegos de acción llenos de adrenalina hasta cautivadoras historias de rol y desafiantes juegos de estrategia, tenemos algo para todos los jugadores. Sumérgete en un mundo de entretenimiento sin límites y disfruta de la emoción de los videojuegos en GPT Games.
-        </p>
-    </div>
-
-    <div class="back_pac1"></div>
-    <div class="pac_container">
-        <div class="pacman">
-            <div class="pacman-top"></div>
-            <div class="pacman-bottom"></div>
-            <div class="feed"></div>
+        <div data-u="slides" class="slides-i">
+          <div>
+            <img
+              data-u="image"
+              src="../static/images/Slide_1.png"
+              class="slider"
+            />
+          </div>
+          <div>
+            <img
+              data-u="image"
+              src="../static/images/Slide_2.png"
+              class="slider"
+            />
+          </div>
+          <div>
+            <img
+              data-u="image"
+              src="../static/images/Slide_3.png"
+              class="slider"
+            />
+          </div>
         </div>
+
+        <div
+          data-u="navigator"
+          class="jssorb031"
+          data-autocenter="1"
+          data-scale="0.5"
+          data-scale-bottom="0.75"
+        >
+          <div data-u="prototype" class="i">
+            <svg viewBox="0 0 16000 16000" class="arrow-i1">
+              <circle class="b" cx="8000" cy="8000" r="5800"></circle>
+            </svg>
+          </div>
+        </div>
+
+        <div
+          data-u="arrowleft"
+          class="jssora051"
+          id="arrow1"
+          data-autocenter="2"
+          data-scale="0.75"
+          data-scale-left="0.75"
+        >
+          <svg viewBox="0 0 16000 16000" class="arrow-i1">
+            <polyline
+              class="a"
+              points="11040,1920 4960,8000 11040,14080 "
+            ></polyline>
+          </svg>
+        </div>
+        <div
+          data-u="arrowright"
+          class="jssora051"
+          id="arrow2"
+          data-autocenter="2"
+          data-scale="0.75"
+          data-scale-right="0.75"
+        >
+          <svg viewBox="0 0 16000 16000" class="arrow-i1">
+            <polyline
+              class="a"
+              points="4960,1920 11040,8000 4960,14080 "
+            ></polyline>
+          </svg>
+        </div>
+      </div>
     </div>
-    <div class="back_pac2"></div>
+  </section>
+
+  <div class="index_content">
+    <h2>Hola,</h2>
+    <p>
+      ¡Bienvenido a GPT Games! Aquí encontrarás los videojuegos más emocionantes
+      y cautivadores del mercado. Nuestro amplio catálogo abarca todos los
+      géneros y plataformas, ofreciéndote una experiencia de juego inigualable.
+      No esperes más, explora nuestra selección y comienza a comprar ahora para
+      sumergirte en emocionantes aventuras virtuales. En GPT Games, nos apasiona
+      brindarte una experiencia de compra excepcional. Nuestro sitio web es
+      fácil de navegar y seguro, para que puedas realizar tus compras con
+      confianza. Además, contamos con un equipo de atención al cliente dedicado
+      que estará encantado de ayudarte en cualquier consulta. Descubre la
+      comodidad y emoción de comprar en GPT Games. Nos enorgullece trabajar en
+      estrecha colaboración con los principales desarrolladores y editoriales de
+      la industria para ofrecerte los títulos más recientes y populares. Desde
+      juegos de acción llenos de adrenalina hasta cautivadoras historias de rol
+      y desafiantes juegos de estrategia, tenemos algo para todos los jugadores.
+      Sumérgete en un mundo de entretenimiento sin límites y disfruta de la
+      emoción de los videojuegos en GPT Games.
+    </p>
+  </div>
+
+  <div class="back_pac1"></div>
+  <div class="pac_container">
+    <div class="pacman">
+      <div class="pacman-top"></div>
+      <div class="pacman-bottom"></div>
+      <div class="feed"></div>
+    </div>
+  </div>
+  <div class="back_pac2"></div>
 </div>
 {% endblock %}

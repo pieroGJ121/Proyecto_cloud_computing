@@ -191,7 +191,7 @@ class Oferta(db.Model):
     modified_at = db.Column(db.DateTime(timezone=True), nullable=True,
                             server_default=db.text("now()"))
 
-    def __init__(self, usuario_id, game_id ,price, plataforma):
+    def __init__(self, usuario_id, game_id, price, plataforma):
         self.usuario_id = usuario_id
         self.game_id = game_id
         self.price = price
@@ -214,4 +214,3 @@ class Oferta(db.Model):
         game_data = self.game.serialize()
         game_data["bought_at"] = self.created_at
         return game_data
-
