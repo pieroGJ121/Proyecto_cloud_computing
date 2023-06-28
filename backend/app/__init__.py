@@ -12,6 +12,7 @@ from flask_login import (
     logout_user,
     current_user)
 from .functionalities.validate_email import validar_correo
+from .functionalities.api import do_request_api
 from flask_cors import CORS
 from .models import (
     db,
@@ -298,9 +299,6 @@ def create_app(test_config=None):
 
         if selection["genre"] != "Todas":
             where = " where genre.name = " + selection["genre"]
-
-        if selection["publisher"] != "Todas":
-            where += " & publisher.name = " + selection["publisher"]
 
         if selection["platform"] != "Todas":
             where += " & involved_companies.company.name = " + selection["publisher"] + ";"
