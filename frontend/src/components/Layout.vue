@@ -49,4 +49,7 @@ export default {
 @import url("https://mdbootstrap.com/api/snippets/static/download/MDB5-Pro-Advanced_6.2.0/plugins/css/all.min.css");
 @import url("../css/main_parts/navbar.css");
 @import url("../css/main_parts/nav_extra.css");
+body {
+  font-family: "Lato", sans-serif;
+}
 </style>
