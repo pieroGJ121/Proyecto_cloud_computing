@@ -301,11 +301,9 @@ def create_app(test_config=None):
             where = " where genre.name = " + selection["genre"]
 
         if selection["platform"] != "Todas":
-            where += " & involved_companies.company.name = " + selection["publisher"] + ";"
-            id_platform = platform.query.filter_by(
-                platform_name=selection["platform"]).first().id
-            selected = selected.filter(game.game_publisher.has(
-                Game_publisher.game_platform.has(platform_id=id_platform)))
+            where = "where platform.name = " + selection["platform"]
+
+        where += "; "
 
             body += where
         if selection["name"] != "":
