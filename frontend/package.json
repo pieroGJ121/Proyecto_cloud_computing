@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@splidejs/splide": "^4.1.4",
+    "@splidejs/vue-splide": "^0.6.12",
+    "axios": "^1.4.0",
     "core-js": "^3.8.3",
     "jssor-slider": "^28.0.0",
     "vue": "^3.2.13",

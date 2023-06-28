@@ -40,9 +40,9 @@ def create_app(test_config=None):
     @app.route('/', methods=['GET'])
     def principal():
         if current_user.is_authenticated:
-            return render_template('index.html')
+            return jsonify({'success': True, 'user': current_user.serialize()}), 200
         else:
-            return redirect(url_for('login'))
+            return jsonify({'success': False, 'message': 'No hay usuario logueado'}), 200
 
     # Todo referente al login va aqui
 
@@ -530,7 +530,7 @@ def create_app(test_config=None):
     # Error handlers
     @app.errorhandler(401)
     def unauthorized(error):
-        return render_template('error401.html'), 401
+        return jsonify({'success': False, 'message': 'Unauthorized'}), 401
 
     @app.errorhandler(404)
     def page_not_found(error):

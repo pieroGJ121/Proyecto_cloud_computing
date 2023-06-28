@@ -31,6 +31,16 @@ class User(UserMixin):
         self.lastname = user.lastname
         self.bio = user.bio
 
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.firstname,
+            'lastname': self.lastname,
+            'email': self.email,
+            'bio': self.bio,
+            'password': self.password,
+        }
+
 
 # Logic to load the user
 @login_manager.user_loader

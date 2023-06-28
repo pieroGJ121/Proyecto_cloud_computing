@@ -44,12 +44,16 @@
 <script>
 import LayoutComponent from "../components/Layout.vue";
 import SliderComponent from "@/components/SliderComponent.vue";
+import { verifier_login } from "@/services/login.api";
 
 export default {
   name: "IndexView",
   components: {
     LayoutComponent,
     SliderComponent,
+  },
+  beforeCreate() {
+    verifier_login();
   },
 };
 </script>
