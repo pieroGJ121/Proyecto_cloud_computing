@@ -64,22 +64,11 @@ class Game(db.Model):
         return '<Game %r>' % (self.id)
 
     def serialize_basic(self):
-        fields = "fields name, first_release_year, genres.name, platforms.name, involved_companies.company.name, cover.image_id;"
-        body = fields + " where id = " + id + ";"
-        data = do_request_api(body, "games").json()[0]
-        return {
-            'id': self.id,
-            'api_id': self.api_id,
-            'name': data["name"],
-            'release_year': data["first_release_year"],
-            'genres': data["genres"],
-            'platforms': data["platforms"],
-            'summary': data["summary"],
-            'involved_companies': data["involved_companies"],
-            'cover': "https:" + data["cover"],
-            'created_at': self.created_at,
-            'modified_at': self.modified_at,
-        }
+        data = get_game_info_api(self.api_id)
+        data["id"] = id
+        data['created_at'] = self.created_at,
+        data['modified_at'] = self.modified_at,
+        return data
 
 
 class Usuario(db.Model):
@@ -165,7 +154,6 @@ class Compra(db.Model):
         return {
             'id': self.id,
             'usuario': self.usuario.serialize(),
-            'game': self.game.serialize(),
             'created_at': self.created_at,
             'modified_at': self.modified_at,
         }
@@ -206,7 +194,6 @@ class Oferta(db.Model):
         return {
             'id': self.id,
             'usuario': self.usuario.serialize(),
-            'game': self.game.serialize(),
             'created_at': self.created_at,
             'modified_at': self.modified_at,
         }
@@ -215,4 +202,3 @@ class Oferta(db.Model):
         game_data = self.game.serialize()
         game_data["bought_at"] = self.created_at
         return game_data
-

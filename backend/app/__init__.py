@@ -277,24 +277,20 @@ def create_app(test_config=None):
         genres = [g.serialize() for g in genre.query.all()]
         return jsonify({"success": True, 'elementos': genres}), 200
 
+
     @app.route('/platform_data', methods=['GET'])
     @login_required
     def get_platform():
         platforms = [p.serialize() for p in platform.query.all()]
         return jsonify({"success": True, 'elementos': platforms}), 200
 
-    @app.route('/publisher_data', methods=['GET'])
-    @login_required
-    def get_publisher():
-        publishers = [p.serialize() for p in Publisher.query.all()]
-        return jsonify({"success": True, 'elementos': publishers}), 200
 
     @app.route('/search_query', methods=['GET'])
     @login_required
     def do_search():
         selection = request.args.to_dict()
-        fields = "fields name, cover.image_id;"
-        body = fields + " limit 500;"
+        fields = "fields name, first_release_year, cover.image_id;"
+        body = fields + " limit 500; "
         where = ""
 
         if selection["genre"] != "Todas":
@@ -305,7 +301,7 @@ def create_app(test_config=None):
 
         where += "; "
 
-            body += where
+        body += where
         if selection["name"] != "":
             body = 'search "' + selection["name"] + '";'
 
