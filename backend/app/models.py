@@ -1,15 +1,13 @@
 from flask_sqlalchemy import SQLAlchemy
 import uuid
-import requests
-import secrets
 from datetime import datetime
-from .functionalities.api import do_request_api
+from .functionalities.api import get_game_info_api
 from config.local import config
-from flask_login import LoginManager, UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
+import sys
 
 
 db = SQLAlchemy()
-login_manager = LoginManager()
 
 
 def setup_db(app, database_path):
@@ -17,29 +15,6 @@ def setup_db(app, database_path):
     db.app = app
     db.init_app(app)
     db.create_all()
-    login_manager.init_app(db.app)
-    db.app.secret_key = secrets.token_hex(32)
-
-
-# Class for current user
-class User(UserMixin):
-    def __init__(self, user):
-        self.id = user.id
-        self.email = user.email
-        self.password = user.password
-        self.firstname = user.firstname
-        self.lastname = user.lastname
-        self.bio = user.bio
-
-
-# Logic to load the user
-@login_manager.user_loader
-def load_user(id):
-    usuario = Usuario.query.filter_by(id=id).first()
-    if usuario:
-        return User(usuario)
-    else:
-        return None
 
 
 # Models
@@ -79,7 +54,7 @@ class Usuario(db.Model):
     firstname = db.Column(db.String(80), nullable=False)
     lastname = db.Column(db.String(120), unique=False, nullable=False)
     email = db.Column(db.String(300), unique=True, nullable=False)
-    password = db.Column(db.String(300), unique=False, nullable=False)
+    password_hash = db.Column(db.String(400), nullable=False)
     bio = db.Column(db.Text, nullable=False)
 
     ofertas = db.relationship('Oferta', backref='usuario', lazy=True)
@@ -89,6 +64,17 @@ class Usuario(db.Model):
                            server_default=db.text("now()"))
     modified_at = db.Column(db.DateTime(timezone=True), nullable=True,
                             server_default=db.text("now()"))
+
+    @property
+    def password(self):
+        raise AttributeError('Password is not readable')
+
+    @password.setter
+    def password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def verify_password(self, password):
+        return check_password_hash(self.password_hash, password)
 
     def __init__(self, firstname, lastname, email, bio, password):
         self.firstname = firstname
@@ -101,6 +87,29 @@ class Usuario(db.Model):
     def __repr__(self):
         return '<Usuario %r %r>' % (self.firstname)
 
+    def insert(self):
+        try:
+            db.session.add(self)
+            db.session.commit()
+            user_created_id = self.id
+        except Exception as e:
+            print(sys.exc_info())
+            print('e: ', e)
+            db.session.rollback()
+        finally:
+            db.session.close()
+
+        return user_created_id
+
+    def delete(self):
+        try:
+            db.session.delete(self)
+            db.session.commit()
+        except Exception as e:
+            print(sys.exc_info())
+            print('e: ', e)
+            db.session.rollback()
+
     def serialize(self):
         return {
             'id': self.id,
@@ -108,7 +117,6 @@ class Usuario(db.Model):
             'lastname': self.lastname,
             'email': self.email,
             'bio': self.bio,
-            'password': self.password,
             'created_at': self.created_at,
             'modified_at': self.modified_at,
         }
@@ -118,14 +126,14 @@ class Usuario(db.Model):
                 self.compras]
 
     def get_games_being_sold(self):
-        ofertas_pendientes = []
-        ofertas_realizadas = []
+        ofertas_pending = []
+        ofertas_done = []
         for o in self.ofertas:
-            if o.realizada == True:
-                ofertas_realizadas.append(o.get_game())
+            if o.realizada is True:
+                ofertas_done.append(o.get_game())
             else:
-                ofertas_pendientes.append(o.get_game())
-        return [ofertas_pendientes, ofertas_realizadas]
+                ofertas_pending.append(o.get_game())
+        return {"pending": ofertas_pending, "done" : ofertas_done}
 
 
 class Compra(db.Model):
@@ -173,7 +181,7 @@ class Oferta(db.Model):
                            nullable=False)
     game_id = db.Column(db.Integer, db.ForeignKey('games.id'), nullable=False)
     price = db.Column(db.Integer, nullable=False)
-    plataforma = db.Column(db.String(36), nullable=False)
+    platform = db.Column(db.String(36), nullable=False)
 
     created_at = db.Column(db.DateTime(timezone=True), nullable=False,
                            server_default=db.text("now()"))
@@ -196,6 +204,8 @@ class Oferta(db.Model):
             'usuario': self.usuario.serialize(),
             'created_at': self.created_at,
             'modified_at': self.modified_at,
+            'price': self.price,
+            'platform': self.platform,
         }
 
     def get_game(self):
