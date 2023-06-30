@@ -9,8 +9,7 @@ from flask import (
 from flask_login import (
     login_user,
     login_required,
-    logout_user,
-    current_user)
+    logout_user, current_user)
 from .functionalities.validate_email import validar_correo
 from flask_cors import CORS
 from .models import (
@@ -34,15 +33,24 @@ def create_app(test_config=None):
     with app.app_context():
         app.config['UPLOAD_FOLDER'] = 'static/employees'
         setup_db(app, test_config['database_path'] if test_config else None)
-        CORS(app, origins='*')
+        CORS(app, origins=['http://localhost:8080'])
+
         migrate = Migrate(app, db)
+
+    @app.after_request
+    def after_request(response):
+        response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
+        response.headers.add('Access-Control-Allow-Methods',
+                             'GET,PATCH,POST,DELETE,OPTIONS')
+        response.headers.add('Access-Control-Max-Age', '10')
+        return response
 
     @app.route('/', methods=['GET'])
     def principal():
         if current_user.is_authenticated:
-            return jsonify({'success': True, 'user': current_user.serialize()}), 200
+            return jsonify({'success': True, 'user': current_user.is_authenticated}), 200
         else:
-            return jsonify({'success': False, 'message': 'No hay usuario logueado'}), 200
+            return jsonify({'success': False, 'message': 'User not authenticated'}), 200
 
     # Todo referente al login va aqui
 
@@ -62,6 +70,8 @@ def create_app(test_config=None):
             if user:
                 if user.email == email and user.password == password:
                     login_user(User(user), remember=True)
+                    print(current_user.is_authenticated)
+                    print(current_user.serialize())
                     return jsonify({'success': True,
                                     'message': 'Inicio de sesion correcto'}), 200
                 else:
@@ -77,7 +87,7 @@ def create_app(test_config=None):
     @login_required
     def logout():
         logout_user()
-        return redirect(url_for('login'))
+        return jsonify({'success': True, }), 200
 
     # Todo referente al "recuperar contrasenia" va aqui
 

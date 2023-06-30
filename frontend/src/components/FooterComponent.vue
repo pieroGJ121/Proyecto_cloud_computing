@@ -64,10 +64,11 @@
     </div>
   </div>
 </template>
-
 <script>
 export default {
   name: "FooterComponent",
 };
 </script>
-<style src="../css/main_parts/footer.css"></style>
+<style>
+@import url("../css/main_parts/footer.css");
+</style>

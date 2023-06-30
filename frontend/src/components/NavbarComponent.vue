@@ -12,6 +12,7 @@
 
         <div class="col-md-4">
           <form
+            @submit.prevent.stop="searchGame"
             class="d-flex input-group w-auto my-auto mb-3 mb-md-0"
             id="searchForm"
           >
@@ -21,6 +22,7 @@
               class="form-control rounded"
               placeholder="Busca aquí"
               id="SearchInput"
+              v-model="search"
             />
             <span class="input-group-text border-0 d-none d-lg-flex"
               ><i class="fas fa-search"></i
@@ -93,5 +95,26 @@
 <script>
 export default {
   name: "NavbarComponent",
+  data() {
+    return {
+      search: "",
+    };
+  },
+  methods: {
+    searchGame() {
+      if (this.search != "") {
+        console.log("Searching for: " + this.search);
+      }
+    },
+  },
 };
 </script>
+<style>
+@import url("https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css");
+@import url("https://mdbootstrap.com/api/snippets/static/download/MDB5-Pro-Advanced_6.2.0/css/mdb.min.css");
+@import url("https://mdbootstrap.com/api/snippets/static/download/MDB5-Pro-Advanced_6.2.0/plugins/css/all.min.css");
+@import url("../css/main_parts/navbar.css");
+@import url("../css/main_parts/nav_extra.css");
+@import url("../css/main_parts/nav_fixed.css");
+</style>

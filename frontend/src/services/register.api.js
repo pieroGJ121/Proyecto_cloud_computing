@@ -1,22 +1,16 @@
 import axios from "axios";
 const BASE_URL = "http://localhost:5002/";
 
-export const verifier_login = async () => {
-  try {
-    const { data } = await axios.get(BASE_URL);
-    console.log(data);
-  } catch (error) {
-    window.location.href = "/login";
-  }
-};
-
-export const login = async (email, password) => {
+export const register = async (name, lastname, bio, email, password) => {
   const formData = new FormData();
+  formData.append("name", name);
+  formData.append("lastname", lastname);
+  formData.append("bio", bio);
   formData.append("email", email);
   formData.append("password", password);
 
   try {
-    const { data } = await axios.post(BASE_URL + "login", formData);
+    const { data } = await axios.post(BASE_URL + "new_user", formData);
     if (data.success) {
       window.location.href = "/";
     }
@@ -31,16 +25,5 @@ export const login = async (email, password) => {
       message_error.innerHTML =
         "Lo sentimos, estamos experimentando problemas. Inténtelo de nuevo más tarde 😪";
     }
-  }
-};
-
-export const logout = async () => {
-  try {
-    const { data } = await axios.get(BASE_URL + "logout");
-    if (data.success) {
-      window.location.href = "/login";
-    }
-  } catch (error) {
-    console.log(error);
   }
 };

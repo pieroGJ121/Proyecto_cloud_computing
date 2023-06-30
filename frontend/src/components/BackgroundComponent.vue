@@ -13,4 +13,6 @@ export default {
   name: "BackgroundComponent",
 };
 </script>
-<style src="../css/main_parts/background.css"></style>
+<style>
+@import url("../css/main_parts/background.css");
+</style>

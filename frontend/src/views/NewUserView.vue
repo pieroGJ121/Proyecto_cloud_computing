@@ -5,7 +5,9 @@
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-md-6 text-center mb-5">
-              <h2 class="heading-section">Unete a una nueva experiencia</h2>
+              <h2 class="heading-section">
+                ¡Registrate ahora! Es gratis &#x1F911;
+              </h2>
             </div>
           </div>
           <div class="row justify-content-center">
@@ -17,15 +19,53 @@
                     <div class="w-100">
                       <h3 class="mb-4" id="message_error"></h3>
                       <h3 class="mb-4" style="color: whitesmoke">
-                        Iniciar sesión
+                        Registra tus datos aqui
                       </h3>
                     </div>
                   </div>
                   <form
-                    id="login_data"
+                    id="register_data"
                     class="signin-form"
-                    @submit.prevent.stop="log_in"
+                    @submit.prevent.stop="registerUser"
                   >
+                    <div class="form-group mt-3">
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="name"
+                        id="name"
+                        v-model="name"
+                        required
+                      />
+                      <label class="form-control-placeholder" for="name"
+                        >Nombre(s)</label
+                      >
+                    </div>
+                    <div class="form-group mt-3">
+                      <input
+                        type="text"
+                        class="form-control"
+                        name="lastname"
+                        id="lastname"
+                        v-model="lastname"
+                        required
+                      />
+                      <label class="form-control-placeholder" for="lastname"
+                        >Apellido
+                      </label>
+                    </div>
+                    <div class="form-group mt-3">
+                      <textarea
+                        class="form-control"
+                        name="bio"
+                        id="bio"
+                        v-model="bio"
+                        required
+                      ></textarea>
+                      <label class="form-control-placeholder" for="bio"
+                        >Biografía (Max. 50 Palabras)</label
+                      >
+                    </div>
                     <div class="form-group mt-3">
                       <input
                         type="text"
@@ -64,29 +104,10 @@
                         type="submit"
                         class="form-control btn btn-primary rounded submit px-3"
                       >
-                        ¡Empezemos!
+                        ¡Registrate ahora!
                       </button>
                     </div>
-                    <div class="form-group d-md-flex">
-                      <div class="w-100 text-md-flex">
-                        <a
-                          href="/password_recovery"
-                          class="forgot"
-                          style="color: #8d8d8d !important"
-                          >¿Olvidaste tu contraseña?</a
-                        >
-                      </div>
-                    </div>
                   </form>
-                  <p class="text-center">
-                    ¿Aún no eres miembro?
-                    <a
-                      data-toggle="tab"
-                      href="/new_user"
-                      style="color: #01d28e !important"
-                      >Registrate aquí</a
-                    >
-                  </p>
                 </div>
               </div>
             </div>
@@ -98,12 +119,19 @@
 </template>
 
 <script>
-import { login } from "@/services/login.api";
+import { no_resizable_textarea } from "@/js/login_functions";
+import { register } from "@/services/register.api";
 
 export default {
-  name: "LoginView",
+  name: "NewUserView",
+  mounted() {
+    no_resizable_textarea();
+  },
   data() {
     return {
+      name: "",
+      lastname: "",
+      bio: "",
       email: "",
       password: "",
       show_password: false,
@@ -127,8 +155,8 @@ export default {
         spanElement.classList.add("fa-eye");
       }
     },
-    log_in() {
-      login(this.email, this.password);
+    registerUser() {
+      register(this.name, this.lastname, this.bio, this.email, this.password);
     },
   },
 };

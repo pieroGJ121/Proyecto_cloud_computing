@@ -1,10 +1,10 @@
 <template>
   <LayoutComponent>
-    <template #MainContent>
+    <template #Content>
       <div class="main_body">
         <SliderComponent />
         <div class="index_content">
-          <h2>Hola,</h2>
+          <h2 style="color: whitesmoke">Hola,</h2>
           <p>
             ¡Bienvenido a GPT Games! Aquí encontrarás los videojuegos más
             emocionantes y cautivadores del mercado. Nuestro amplio catálogo
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import LayoutComponent from "../components/Layout.vue";
+import LayoutComponent from "@/components/Layout.vue";
 import SliderComponent from "@/components/SliderComponent.vue";
 import { verifier_login } from "@/services/login.api";
 
@@ -52,7 +52,7 @@ export default {
     LayoutComponent,
     SliderComponent,
   },
-  beforeCreate() {
+  mounted() {
     verifier_login();
   },
 };
