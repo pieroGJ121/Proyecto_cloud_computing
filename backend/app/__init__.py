@@ -387,28 +387,33 @@ def create_app(test_config=None):
         compra = True
         return jsonify({'success': True, 'message': 'Compra casi lista'})
 
-    @app.route('/new_oferta', methods=['POST'])
+    @app.route('/oferta', methods=['GET'])
+    @authorize
+    def obtain_ofertas_from_user():
+        current_user_id = request.headers["user_id"]
+        current_user = Usuario.query.get(current_user_id)
+        ofertas = current_user.get_games_being_sold()
+        return jsonify({'success': True,
+                        'ofertas_pending': ofertas["pending"],
+                        'ofertas_done': ofertas["done"],}), 200
+
+    @app.route('/oferta', methods=['POST'])
+    @authorize
     def new_oferta():
         returned_code = 200
         list_errors = []
         try:
-            body = request.form
-
-            if 'usuario_id' not in body:
-                list_errors.append('usuario_id is required')
-            else:
-                usuario_id = body['usuario_id']
+            current_user_id = request.headers["user_id"]
+            body = request.json
 
             if 'game_id' not in body:
                 list_errors.append('game_id is required')
             else:
                 game_id = body['game_id']
-            
             if 'price' not in body:
                 list_errors.append('price is required')
             else:
                 price = body['price']
-            
             if 'plataforma' not in body:
                 list_errors.append('plataforma is required')
             else:
@@ -417,11 +422,10 @@ def create_app(test_config=None):
             if len(list_errors) > 0:
                 returned_code = 400
             else:
-                oferta = Oferta(usuario_id, game_id ,price , plataforma )
+                oferta = Oferta(current_user_id, game_id, price, plataforma)
 
                 db.session.add(oferta)
                 db.session.commit()
-
         except:
             db.session.rollback()
             returned_code = 500
@@ -429,9 +433,12 @@ def create_app(test_config=None):
             db.session.close()
 
         if returned_code == 400:
-            return jsonify({'success': False, 'message': 'Error creating ofert', 'errors': list_errors}), returned_code
+            return jsonify({'success': False,
+                            'message': 'Error creating oferta',
+                            'errors': list_errors}), returned_code
         elif returned_code == 500:
-            return jsonify({'success': False, 'message': 'Error!'}), returned_code
+            return jsonify({'success': False,
+                            'message': 'Error!'}), returned_code
             # abort(returned_code)
         else:
             return jsonify({'success': True, 'message': 'Ofert Created successfully!'}), returned_code
@@ -455,6 +462,7 @@ def create_app(test_config=None):
         return jsonify({'success': True, 'ofertas': ofertas_list}), returned_code
 
     @app.route('/oferta/<id>', methods=['DELETE'])
+    @authorize
     def delete_oferta(id):
         returned_code = 200
         try:
@@ -471,61 +479,12 @@ def create_app(test_config=None):
         finally:
             db.session.close()
 
-        if returned_code != 200:
-            return jsonify({'success': False, 'message': 'Error deleting oferta'}), returned_code
+        if returned_code == 404:
+            return jsonify({'success': False,
+                            'message': 'There is no oferta'}), returned_code
         else:
             return jsonify({'success': True, 'message': 'Oferta deleted successfully'}), returned_code
 
-
-    @app.route('/oferta/<id>', methods=['PATCH'])
-    def update_oferta(id):
-        returned_code = 200
-        list_errors = []
-        try:
-            body = request.json
-
-            oferta = Oferta.query.get(id)
-            if not oferta:
-                return jsonify({'success': False, 'message': 'Oferta not found'}), 404
-
-
-            if 'realizada' in body:
-                oferta.realizada = body['realizada']
-
-            db.session.commit()
-
-        except:
-            db.session.rollback()
-            returned_code = 500
-        finally:
-            db.session.close()
-
-        if returned_code == 500:
-            # abort(returned_code)
-            return jsonify({'success': False, 'message': 'Error updating oferta'}), returned_code
-        else:
-            return jsonify({'success': True, 'message': 'Oferta updated successfully'}), returned_code
-    
-    @app.route('/checkout', methods=['GET'])
-    @login_required
-    def checkout():
-        global compra
-        if compra:
-            return render_template('wait.html')
-        else:
-            return redirect(url_for('principal'))
-
-    @app.route('/resume', methods=['GET'])
-    @login_required
-    def resume():
-        global compra
-        if compra:
-            compra = False
-            return render_template('resume.html')
-        else:
-            return redirect(url_for('principal'))
-
-    # Error handlers
     @app.errorhandler(401)
     def unauthorized(error):
         return jsonify({
