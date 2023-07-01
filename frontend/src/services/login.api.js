@@ -10,27 +10,16 @@ export const verifier_login = async () => {
   }
 };
 
-export const login = async (email, password) => {
-  const formData = new FormData();
-  formData.append("email", email);
-  formData.append("password", password);
-
+export const login = async (user) => {
   try {
-    const { data } = await axios.post(BASE_URL + "login", formData);
+    const { data } = await axios.post(BASE_URL + "login", user);
     if (data.success) {
       window.location.href = "/";
     }
   } catch (error) {
-    if (!error.response.data.success) {
-      const message_error = document.getElementById("message_error");
-      message_error.style.display = "block";
-      message_error.innerHTML = error.response.data.message;
-    } else {
-      const message_error = document.getElementById("message_error");
-      message_error.style.display = "block";
-      message_error.innerHTML =
-        "Lo sentimos, estamos experimentando problemas. Inténtelo de nuevo más tarde 😪";
-    }
+    const message_error = document.getElementById("message_error");
+    message_error.style.display = "block";
+    message_error.innerHTML = error.response.data.message;
   }
 };
 

@@ -32,7 +32,7 @@
                         class="form-control"
                         name="email"
                         id="email"
-                        v-model="email"
+                        v-model="user.email"
                         required
                       />
                       <label class="form-control-placeholder" for="email"
@@ -45,7 +45,7 @@
                         type="password"
                         class="form-control"
                         name="password"
-                        v-model="password"
+                        v-model="user.password"
                         required
                       />
                       <label
@@ -104,8 +104,10 @@ export default {
   name: "LoginView",
   data() {
     return {
-      email: "",
-      password: "",
+      user: {
+        email: "",
+        password: "",
+      },
       show_password: false,
     };
   },
@@ -128,7 +130,7 @@ export default {
       }
     },
     log_in() {
-      login(this.email, this.password);
+      login(this.user);
     },
   },
 };

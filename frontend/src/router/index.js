@@ -3,6 +3,7 @@ import IndexView from "../views/IndexView.vue";
 import LoginView from "../views/LoginView.vue";
 import LogoutView from "../views/LogoutView.vue";
 import NewUserView from "../views/NewUserView.vue";
+import RecoverUserView from "../views/RecoverUserView.vue";
 
 const routes = [
   {
@@ -28,6 +29,12 @@ const routes = [
     name: "new_user",
     meta: { title: "Unete a esta gran experiencia" },
     component: NewUserView,
+  },
+  {
+    path: "/password_recovery",
+    name: "password_recovery",
+    meta: { title: "Recupere su contraseña" },
+    component: RecoverUserView,
   },
 ];
 

@@ -34,7 +34,7 @@
                         class="form-control"
                         name="name"
                         id="name"
-                        v-model="name"
+                        v-model="user.name"
                         required
                       />
                       <label class="form-control-placeholder" for="name"
@@ -47,7 +47,7 @@
                         class="form-control"
                         name="lastname"
                         id="lastname"
-                        v-model="lastname"
+                        v-model="user.lastname"
                         required
                       />
                       <label class="form-control-placeholder" for="lastname"
@@ -59,7 +59,7 @@
                         class="form-control"
                         name="bio"
                         id="bio"
-                        v-model="bio"
+                        v-model="user.bio"
                         required
                       ></textarea>
                       <label class="form-control-placeholder" for="bio"
@@ -72,7 +72,7 @@
                         class="form-control"
                         name="email"
                         id="email"
-                        v-model="email"
+                        v-model="user.email"
                         required
                       />
                       <label class="form-control-placeholder" for="email"
@@ -85,7 +85,7 @@
                         type="password"
                         class="form-control"
                         name="password"
-                        v-model="password"
+                        v-model="user.password"
                         required
                       />
                       <label
@@ -129,11 +129,13 @@ export default {
   },
   data() {
     return {
-      name: "",
-      lastname: "",
-      bio: "",
-      email: "",
-      password: "",
+      user: {
+        name: "",
+        lastname: "",
+        bio: "",
+        email: "",
+        password: "",
+      },
       show_password: false,
     };
   },
@@ -156,7 +158,7 @@ export default {
       }
     },
     registerUser() {
-      register(this.name, this.lastname, this.bio, this.email, this.password);
+      register(this.user);
     },
   },
 };
