@@ -1,17 +1,10 @@
 from flask import (
     Flask,
-    render_template,
     jsonify,
     request,
-    redirect,
-    url_for,
     abort)
-from flask_login import (
-    login_user,
-    login_required,
-    logout_user,
-    current_user)
-from .functionalities.validate_email import validar_correo
+from .usuario_controler import usuarios_bp
+from .authentication import authorize
 from .functionalities.api import do_request_api
 from flask_cors import CORS
 from .models import (
@@ -20,8 +13,7 @@ from .models import (
     Game,
     Compra,
     Oferta,
-    setup_db,
-    User)
+    setup_db)
 from .functionalities.send_email import enviar_correo
 from flask_migrate import Migrate
 import os
@@ -30,226 +22,70 @@ compra = False
 
 
 def create_app(test_config=None):
-    app = Flask(__name__, template_folder='../templates',
-                static_folder='../static')
+    app = Flask(__name__)
     with app.app_context():
         app.config['UPLOAD_FOLDER'] = 'static/employees'
+        app.register_blueprint(usuarios_bp)
         setup_db(app, test_config['database_path'] if test_config else None)
         CORS(app, origins='*')
         migrate = Migrate(app, db)
 
-    @app.route('/', methods=['GET'])
-    def principal():
-        if current_user.is_authenticated:
-            return render_template('index.html')
-        else:
-            return redirect(url_for('login'))
+    # Todo referente a la pagina de "profile" va aqui
+    @app.route('/profile', methods=['GET'])
+    @authorize
+    def get_profile():
+        current_user_id = request.headers["user_id"]
+        current_user = Usuario.query.get(current_user_id)
+        return jsonify({"success": True,
+                        'user': current_user.serialize()}), 200
 
-    # Todo referente al login va aqui
+    @app.route('/profile', methods=['PATCH'])
+    @authorize
+    def change_profile():
+        current_user_id = request.headers["user_id"]
+        current_user = Usuario.query.get(current_user_id)
+        nombre = request.form['username']
+        apellido = request.form['lastname']
+        bio = request.form['bio']
+        password = request.form['password']
 
-    @app.route('/login', methods=['GET', 'POST'])
-    def login():
-        if request.method == 'GET':
-            if current_user.is_authenticated:
-                return redirect(url_for('principal'))
-            else:
-                return render_template('login.html')
+        current_user.firstname = nombre
+        current_user.lastname = apellido
+        current_user.bio = bio
+        current_user.password = password
 
-        elif request.method == 'POST':
-            email = request.form['email']
-            password = request.form['password']
-            # Buscar el usuario en la base de datos
-            user = Usuario.query.filter_by(email=email).first()
-            if user:
-                if user.email == email and user.password == password:
-                    login_user(User(user), remember=True)
-                    return jsonify({'success': True,
-                                    'message': 'Inicio de sesion correcto'}), 200
-                else:
-                    return jsonify({'success': False,
-                                    'message': 'Correo y/o contraseña incorrectos. Intente nuevamente &#128577;'}), 400
-            else:
-                return jsonify({'success': False,
-                                'message': 'Este usuario no está registrado &#128577;'}), 400
-        else:
-            abort(405)
-
-    @app.route('/logout', methods=['GET'])
-    @login_required
-    def logout():
-        logout_user()
-        return redirect(url_for('login'))
-
-    # Todo referente al "recuperar contrasenia" va aqui
-
-    @app.route('/data_recovery', methods=['POST'])
-    def data_recover():
-
-        email = request.form['email']
-        name = request.form['name']
-
-        # Buscar el usuario en la base de datos
-        user = Usuario.query.filter_by(email=email).first()
-        if user:
-            if email == user.email and name == user.firstname:
-                return jsonify({'success': True,
-                                'message': 'El usuario y nombre coinciden'}), 200
-            else:
-                return jsonify({'success': False,
-                                'message': 'Datos de acceso incorrectos. Intente nuevamente &#128577;'}), 400
-        else:
-            return jsonify({'success': False,
-                            'message': 'No hay ningún usuario registrado con esos datos &#128577;'}), 400
-
-    @app.route('/password_recovery', methods=['GET', 'POST'])
-    def recover_password():
-        if request.method == 'GET':
-            return render_template('recover_password.html')
-        elif request.method == 'POST':
-            password1 = request.form['password1']
-            password2 = request.form['password2']
-
-            if password1 == password2:
-                email = request.form['email']
-                user = Usuario.query.filter_by(email=email).first()
-                user.password = password1
-                db.session.commit()
-                return jsonify({'success': True,
-                                'message': 'Cambio de contraseña correcto'}), 200
-            else:
-                return jsonify({'success': False,
-                                'message': 'Las contraseñas no coinciden &#128577;'}), 400
-        else:
-            abort(405)
-
-    # Todo referente al "Nuevo usuario" va aqui
-
-    @app.route('/new_user', methods=['GET', 'POST'])
-    def new_user():
-        if request.method == 'GET':
-            return render_template('register.html')
-        elif request.method == 'POST':
-            name = request.form['name']
-            lastname = request.form['lastname']
-            bio = request.form['bio']
-            email = request.form['email']
-            password = request.form['password']
-
-            if validar_correo(email):
-                em = Usuario.query.filter_by(email=email).first()
-                if em:
-                    return jsonify({'success': False,
-                                    'message': 'Este correo ya está registrado &#128577;'}), 400
-                else:
-                    new_user = Usuario(name, lastname, email, bio, password)
-                    db.session.add(new_user)
-                    db.session.commit()
-                    login_user(User(new_user), remember=True)
-                    return jsonify({'success': True,
-                                    'message': 'El correo ingresado es válido &#128577;'}), 200
-            else:
-                return jsonify({'success': False,
-                                'message': 'El correo ingresado no es válido &#128577;'}), 400
-        else:
-            abort(405)
+        db.session.commit()
 
     # Todo referente a la pagina de "profile" va aqui
 
-    @app.route('/profile', methods=['GET'])
-    @login_required
-    def profile():
-        return render_template('user.html')
+    @app.route('/profile', methods=['DELETE'])
+    @authorize
+    def delete_profile():
+        current_user_id = request.headers["user_id"]
+        current_user = Usuario.query.get(current_user_id)
+        if current_user:
+            compras_eliminar = Compra.query.filter_by(
+                usuario_id=current_user.id).all()
+            [db.session.delete(i) for i in compras_eliminar]
 
-    @app.route('/profile_data', methods=['GET', 'PATCH', 'DELETE'])
-    @login_required
-    def get_profile():
-        user = Usuario.query.filter_by(email=current_user.email).first()
-        if request.method == 'GET':
-            return jsonify({"success": True, 'user': user.serialize()}), 200
-        elif request.method == 'PATCH':
-            nombre = request.form['username']
-            apellido = request.form['lastname']
-            bio = request.form['bio']
-            password = request.form['password']
+            ofertas_eliminar = Oferta.query.filter_by(
+                usuario_id=current_user.id).all()
+            [db.session.delete(i) for i in ofertas_eliminar]
 
-            user = Usuario.query.filter_by(email=current_user.email).first()
-
-            user.firstname = nombre
-            user.lastname = apellido
-            user.bio = bio
-            user.password = password
-
-            current_user.firstname = nombre
-            current_user.lastname = apellido
-            current_user.bio = bio
-            current_user.password = password
-
+            db.session.delete(current_user)
             db.session.commit()
-
-            return jsonify({'success': True, 'message': 'Usuario actualizado correctamente'}), 200
-        elif request.method == 'DELETE':
-            if user:
-                # Primero es necesario borrar las compras porque sino da error por la relacion existente
-                compras_eliminar = Compra.query.filter_by(
-                    usuario_id=user.id).all()
-                if compras_eliminar:
-                    for i in compras_eliminar:
-                        db.session.delete(i)
-                # Despues de borrar las compras recien se borra el usuario
-                db.session.delete(user)
-                db.session.commit()
-                logout_user()
-                return jsonify({'success': True,
-                                'message': 'El usuario se ha eliminado correctamete.'}), 200
-            else:
-                return jsonify({'success': False,
-                                'message': 'El usuario no se ha podido eliminar. Intentalo nuevamente'}), 500
+            return jsonify({'success': True,
+                            'message': 'El usuario se ha eliminado correctamete.'}), 200
         else:
-            abort(405)
-
-    # Todo referente a la pagina de "subir juegos" va aqui
-
-    @app.route('/upload_game', methods=['GET', 'POST'])
-    @login_required
-    def upload_game():
-        if request.method == 'GET':
-            return render_template('upload_game.html')
-        elif request.method == 'POST':
-            pass
-        else:
-            abort(405)
-
-    # Todo referente a la pagina de "juegos subidos por el usuario" va aqui
-
-    @app.route('/seller', methods=['GET', 'POST', 'PATCH', 'DELETE'])
-    @login_required
-    def update_game():
-        if request.method == 'GET':
-            return render_template('user_products.html')
-        elif request.method == 'POST':
-            pass
-        elif request.method == 'PATCH':
-            pass
-        elif request.method == 'DELETE':
-            pass
-        else:
-            abort(405)
-
-    # Todo referente a la pagina de "recuperar las ofertas de ventas del jugador" va aqui
-    @app.route('/info_user_game/<identificador>', methods=['GET'])
-    @login_required
-    def get_all_info_user_game(identificador):
-        if request.method == 'GET':
-            pass
-        else:
-            abort(405)
+            return jsonify({'success': False,
+                            'message': 'El usuario no se ha podido eliminar. Intentalo nuevamente'}), 500
 
     # Todo referente a la pagina de "videogame" va aqui
 
-    @app.route('/game_data/<identificador>', methods=['GET'])
-    @login_required
+    @app.route('/videogame/<identificador>', methods=['GET'])
+    @authorize
     def get_videogame(identificador):
-       game = 0
+        game = 0
         try:
             game = Game.query.get(identificador)
             if not game:
