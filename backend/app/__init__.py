@@ -265,31 +265,27 @@ def create_app(test_config=None):
         else:
             return jsonify({"success": True, 'game': game.serialized()}), 200
 
-    @app.route('/videogame', methods=['GET'])
-    def videogame():
-        return render_template('game.html')
-
     # Todo referente a la pagina de "search" va aqui
 
-    @app.route('/genre_data', methods=['GET'])
-    @login_required
-    def get_genre():
-        genres = [g.serialize() for g in genre.query.all()]
-        return jsonify({"success": True, 'elementos': genres}), 200
+    @app.route('/search/genres', methods=['GET'])
+    @authorize
+    def get_genres():
+        genres = do_request_api("fields name; limit 50;", "genres").json()
+        return genres
 
+    @app.route('/search/platforms', methods=['GET'])
+    @authorize
+    def get_platforms():
+        platforms = do_request_api("fields name; limit 200;",
+                                   "platforms").json()
+        return platforms
 
-    @app.route('/platform_data', methods=['GET'])
-    @login_required
-    def get_platform():
-        platforms = [p.serialize() for p in platform.query.all()]
-        return jsonify({"success": True, 'elementos': platforms}), 200
-
-
-    @app.route('/search_query', methods=['GET'])
-    @login_required
+    @app.route('/search/search_query', methods=['GET'])
+    @authorize
     def do_search():
         selection = request.args.to_dict()
         fields = "fields name, first_release_year, cover.image_id;"
+        path = "games"
         body = fields + " limit 500; "
         where = ""
 
@@ -309,8 +305,8 @@ def create_app(test_config=None):
         offset = 0
         selected = []
         while results - offset // 500 >= 0:
-            for i in do_request_api(body + "offset " + offset ";", path).json():
-                selected.extend(i)
+            b = body + "offset " + offset + ";"
+            selected.extend(do_request_api(b, path).json())
             offset += 500
 
         return jsonify({'success': True, 'games': selected}), 200
