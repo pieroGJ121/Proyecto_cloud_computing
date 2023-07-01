@@ -50,7 +50,7 @@ def create_app(test_config=None):
         if current_user.is_authenticated:
             return jsonify({'success': True, 'user': current_user.is_authenticated}), 200
         else:
-            return jsonify({'success': False, 'message': 'User not authenticated'}), 200
+            return jsonify({'success': False, 'message': 'User not authenticated'}), 400
 
     # Todo referente al login va aqui
 
@@ -63,8 +63,9 @@ def create_app(test_config=None):
                 return render_template('login.html')
 
         elif request.method == 'POST':
-            email = request.form['email']
-            password = request.form['password']
+
+            email = request.json['email']
+            password = request.json['password']
             # Buscar el usuario en la base de datos
             user = Usuario.query.filter_by(email=email).first()
             if user:
@@ -93,9 +94,8 @@ def create_app(test_config=None):
 
     @app.route('/data_recovery', methods=['POST'])
     def data_recover():
-
-        email = request.form['email']
-        name = request.form['name']
+        email = request.json['email']
+        name = request.json['name']
 
         # Buscar el usuario en la base de datos
         user = Usuario.query.filter_by(email=email).first()
@@ -115,11 +115,11 @@ def create_app(test_config=None):
         if request.method == 'GET':
             return render_template('recover_password.html')
         elif request.method == 'POST':
-            password1 = request.form['password1']
-            password2 = request.form['password2']
+            password1 = request.json['password1']
+            password2 = request.json['password2']
 
             if password1 == password2:
-                email = request.form['email']
+                email = request.json['email']
                 user = Usuario.query.filter_by(email=email).first()
                 user.password = password1
                 db.session.commit()
@@ -138,11 +138,11 @@ def create_app(test_config=None):
         if request.method == 'GET':
             return render_template('register.html')
         elif request.method == 'POST':
-            name = request.form['name']
-            lastname = request.form['lastname']
-            bio = request.form['bio']
-            email = request.form['email']
-            password = request.form['password']
+            name = request.json['name']
+            lastname = request.json['lastname']
+            bio = request.json['bio']
+            email = request.json['email']
+            password = request.json['password']
 
             if validar_correo(email):
                 em = Usuario.query.filter_by(email=email).first()
