@@ -528,14 +528,23 @@ def create_app(test_config=None):
     # Error handlers
     @app.errorhandler(401)
     def unauthorized(error):
-        return render_template('error401.html'), 401
+        return jsonify({
+            'success': False,
+            'message': 'Acceso no autorizado'
+        }), 401
 
     @app.errorhandler(404)
     def page_not_found(error):
-        return render_template('error404.html'), 404
+        return jsonify({
+            'success': False,
+            'message': 'Resource not found'
+        }), 404
 
     @app.errorhandler(405)
     def method_not_allowed(error):
-        return render_template('error405.html'), 405
+        return jsonify({
+            'success': False,
+            'message': 'Método no permitido'
+        }), 404
 
     return app
