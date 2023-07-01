@@ -315,42 +315,30 @@ def create_app(test_config=None):
 
         return jsonify({'success': True, 'games': selected}), 200
 
-    @app.route('/search', methods=['GET'])
-    @login_required
-    def search():
-        return render_template('search.html')
-
     # Todo referente a la pagina de "purchases" va aqui
-
-    @app.route('/purchases', methods=['GET'])
-    @login_required
-    def purchases():
-        return render_template('purchases.html')
-
-    @app.route('/games_purchased', methods=['GET'])
-    @login_required
+    @app.route('/compra', methods=['GET'])
+    @authorize
     def get_purchased_games():
-        user = Usuario.query.filter_by(email=current_user.email).first()
-        games_bought = user.get_games_bought()
+        current_user_id = request.headers["user_id"]
+        current_user = Usuario.query.get(current_user_id)
+        games_bought = current_user.get_games_bought()
         return jsonify({'success': True, 'games': games_bought,
-                        "user": user.serialize()})
+                        "user": current_user.serialize()})
 
-    @app.route('/compra_data/<identificador>', methods=['GET'])
-    @login_required
+    @app.route('/compra/<identificador>', methods=['GET'])
+    @authorize
     def get_compra(identificador):
-        user_id = Usuario.query.filter_by(email=current_user.email).first().id
-        purchase = Compra.query.filter_by(usuario_id=user_id,
+        current_user_id = request.headers["user_id"]
+        purchase = Compra.query.filter_by(usuario_id=current_user_id,
                                           game_id=identificador).first()
         return jsonify({'success': True, 'compra': purchase.serialize()})
 
-    @app.route('/new_compra/<identificador>', methods=['POST'])
-    @login_required
-    def add_compra(identificador):
-        game_id = game.query.filter_by(id=identificador).first().id
-
-        user_id = Usuario.query.filter_by(email=current_user.email).first().id
-
-        new_purchase = Compra(user_id, game_id)
+    @app.route('/compra/<identificador>', methods=['POST'])
+    @authorize
+    def add_compra(oferta_id):
+        current_user_id = request.headers["user_id"]
+        current_user = Usuario.query.get(current_user_id)
+        new_purchase = Compra(oferta_id, current_user_id)
 
         db.session.add(new_purchase)
         db.session.commit()
@@ -358,30 +346,12 @@ def create_app(test_config=None):
         purchase = Compra.query.filter_by(
             usuario_id=user_id, game_id=game_id).first()
 
-        enviar_correo(current_user.email, purchase.serialize()['game']['game_name'], 'Fecha: {}'.format(
-            purchase.created_at), 'ID de compra: {}'.format(purchase.id))
+        return jsonify({'success': True, 'compra': new_purchase.serialize()})
 
-        return jsonify({'success': True, 'compra': purchase.serialize()})
-
-    # Todo referente a comprar videogames va aqui
-
-    @app.route('/game_state/<identificador>', methods=['GET'])
-    @login_required
-    def is_game_bought(identificador):
-        user = Usuario.query.filter_by(email=current_user.email).first()
-        state = Compra.query.filter_by(usuario_id=user.id,
-                                       game_id=int(identificador)).first()
-
-        if state:
-            state = 1
-        else:
-            state = 0
-
-        return jsonify({"success": True,
-                        'is_bought': state}), 200
+    # Todo referente a comprar y hacer ofertas va aqui
 
     @app.route('/new_game', methods=['POST'])
-    @login_required
+    @authorize
     def buy_game():
         global compra
         compra = True
