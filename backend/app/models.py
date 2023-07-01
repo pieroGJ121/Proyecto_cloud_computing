@@ -24,7 +24,6 @@ class Game(db.Model):
     api_id = db.Column(db.Integer, nullable=False)
 
     ofertas = db.relationship('Oferta', backref='game', lazy=True)
-    compras = db.relationship('Compra', backref='game', lazy=True)
 
     created_at = db.Column(db.DateTime(timezone=True), nullable=False,
                            server_default=db.text("now()"))
@@ -133,7 +132,7 @@ class Usuario(db.Model):
                 ofertas_done.append(o.get_game())
             else:
                 ofertas_pending.append(o.get_game())
-        return {"pending": ofertas_pending, "done" : ofertas_done}
+        return {"pending": ofertas_pending, "done": ofertas_done}
 
 
 class Compra(db.Model):
@@ -141,34 +140,36 @@ class Compra(db.Model):
     id = db.Column(db.String(36), primary_key=True,
                    default=lambda: str(uuid.uuid4()),
                    server_default=db.text("uuid_generate_v4()"))
-    usuario_id = db.Column(db.String(36), db.ForeignKey('usuarios.id'),
-                           nullable=False)
-    game_id = db.Column(db.Integer, db.ForeignKey('games.id'), nullable=False)
+    user_id = db.Column(db.String(36), db.ForeignKey('usuarios.id'),
+                        nullable=False)
+    oferta_id = db.Column(db.String(36), db.ForeignKey('ofertas.id'),
+                          nullable=False)
 
     created_at = db.Column(db.DateTime(timezone=True), nullable=False,
                            server_default=db.text("now()"))
     modified_at = db.Column(db.DateTime(timezone=True), nullable=True,
                             server_default=db.text("now()"))
 
-    def __init__(self, usuario_id, game_id):
+    def __init__(self, oferta_id, usuario_id):
+        self.oferta_id = oferta_id
         self.usuario_id = usuario_id
-        self.game_id = game_id
         self.created_at = datetime.utcnow()
 
     def __repr__(self):
-        return '<Compra %r %r>' % (self.usuario_id, self.game_id)
+        return '<Compra %r %r>' % (self.oferta_id, self.user_id)
 
     def serialize(self):
         return {
             'id': self.id,
+            'oferta': self.oferta.serialize(),
             'usuario': self.usuario.serialize(),
             'created_at': self.created_at,
             'modified_at': self.modified_at,
         }
 
     def get_game(self):
-        game_data = self.game.serialize()
-        game_data["bought_at"] = self.created_at
+        game_data = self.oferta.game.serialize()
+        game_data["date"] = self.created_at
         return game_data
 
 
@@ -182,13 +183,14 @@ class Oferta(db.Model):
     game_id = db.Column(db.Integer, db.ForeignKey('games.id'), nullable=False)
     price = db.Column(db.Integer, nullable=False)
     platform = db.Column(db.String(36), nullable=False)
+    compra = db.relationship('Compra', backref='oferta', lazy=True)
 
     created_at = db.Column(db.DateTime(timezone=True), nullable=False,
                            server_default=db.text("now()"))
     modified_at = db.Column(db.DateTime(timezone=True), nullable=True,
                             server_default=db.text("now()"))
 
-    def __init__(self, usuario_id, game_id ,price, plataforma):
+    def __init__(self, usuario_id, game_id, price, plataforma):
         self.usuario_id = usuario_id
         self.game_id = game_id
         self.price = price
@@ -210,5 +212,5 @@ class Oferta(db.Model):
 
     def get_game(self):
         game_data = self.game.serialize()
-        game_data["bought_at"] = self.created_at
+        game_data["date"] = self.created_at
         return game_data
