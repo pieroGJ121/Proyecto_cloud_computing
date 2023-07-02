@@ -13,3 +13,19 @@ def do_request_api(body, path):
 
     response = requests.post(url, headers=headers, data=body)
     return response
+
+
+def get_game_info_api(id):
+    fields = "fields name, first_release_year, genres.name, platforms.name, involved_companies.company.name, cover.image_id;"
+    body = fields + " where id = " + id + ";"
+    data = do_request_api(body, "games").json()[0]
+    return {
+        'api_id': id,
+        'name': data["name"],
+        'release_year': data["first_release_year"],
+        'genres': data["genres"],
+        'platforms': data["platforms"],
+        'summary': data["summary"],
+        'involved_companies': data["involved_companies"],
+        'cover': "https:" + data["cover"],
+    }
