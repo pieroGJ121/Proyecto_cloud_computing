@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { toFormData } from "axios";
 const BASE_URL = "http://localhost:5002/";
 
 export const verifier_login = async () => {
@@ -6,13 +6,14 @@ export const verifier_login = async () => {
     const { data } = await axios.get(BASE_URL);
     console.log(data);
   } catch (error) {
-    window.location.href = "/login";
+    console.log(error.response.data);
+    //window.location.href = "/login";
   }
 };
 
 export const login = async (user) => {
   try {
-    const { data } = await axios.post(BASE_URL + "login", user);
+    const { data } = await axios.post(BASE_URL + "login", toFormData(user));
     if (data.success) {
       window.location.href = "/";
     }

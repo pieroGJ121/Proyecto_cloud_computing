@@ -42,19 +42,19 @@
 
         <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
           <li class="ms-3">
-            <a class="text-body-secondary" href="#"
+            <a class="text-body-secondary" href="https://twitter.com/"
               ><svg class="bi" width="24" height="24">
                 <use xlink:href="#twitter"></use></svg
             ></a>
           </li>
           <li class="ms-3">
-            <a class="text-body-secondary" href="#"
+            <a class="text-body-secondary" href="https://www.instagram.com/"
               ><svg class="bi" width="24" height="24">
                 <use xlink:href="#instagram"></use></svg
             ></a>
           </li>
           <li class="ms-3">
-            <a class="text-body-secondary" href="#"
+            <a class="text-body-secondary" href="https://www.facebook.com/"
               ><svg class="bi" width="24" height="24">
                 <use xlink:href="#facebook"></use></svg
             ></a>

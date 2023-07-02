@@ -4,6 +4,7 @@ import LoginView from "../views/LoginView.vue";
 import LogoutView from "../views/LogoutView.vue";
 import NewUserView from "../views/NewUserView.vue";
 import RecoverUserView from "../views/RecoverUserView.vue";
+import ProfileView from "../views/ProfileView.vue";
 
 const routes = [
   {
@@ -36,6 +37,12 @@ const routes = [
     meta: { title: "Recupere su contraseña" },
     component: RecoverUserView,
   },
+  {
+    path: "/profile",
+    name: "profile",
+    meta: { title: "Perfil del usuario" },
+    component: ProfileView,
+  },
 ];
 
 const router = createRouter({
@@ -44,7 +51,6 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  console.log(to);
   document.title = to.meta.title;
   next();
 });

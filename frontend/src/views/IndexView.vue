@@ -52,7 +52,7 @@ export default {
     LayoutComponent,
     SliderComponent,
   },
-  mounted() {
+  async mounted() {
     verifier_login();
   },
 };
