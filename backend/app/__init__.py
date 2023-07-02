@@ -64,8 +64,8 @@ def create_app(test_config=None):
 
         elif request.method == 'POST':
 
-            email = request.json['email']
-            password = request.json['password']
+            email = request.form['email']
+            password = request.form['password']
             # Buscar el usuario en la base de datos
             user = Usuario.query.filter_by(email=email).first()
             if user:
@@ -176,10 +176,10 @@ def create_app(test_config=None):
         if request.method == 'GET':
             return jsonify({"success": True, 'user': user.serialize()}), 200
         elif request.method == 'PATCH':
-            nombre = request.form['username']
-            apellido = request.form['lastname']
-            bio = request.form['bio']
-            password = request.form['password']
+            nombre = request.json['username']
+            apellido = request.json['lastname']
+            bio = request.json['bio']
+            password = request.json['password']
 
             user = Usuario.query.filter_by(email=current_user.email).first()
 
