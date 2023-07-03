@@ -130,19 +130,20 @@ def create_app(test_config=None):
             where = " where genre.name = " + selection["genre"]
 
         if selection["platform"] != "Todas":
-            where = "where platform.name = " + selection["platform"]
-
-        where += "; "
+            if where == "":
+                where = "where platform.name = " + selection["platform"] + ";"
+            else:
+                where += " && platform.name = " + selection["platform"] + ";"
 
         body += where
         if selection["name"] != "":
-            body = 'search "' + selection["name"] + '";'
+            body = ' search "' + selection["name"] + '";'
 
-        results = do_request_api(body, path + "/count")
+        results = do_request_api(body, path + "/count").json()["count"]
         offset = 0
         selected = []
-        while results - offset // 500 >= 0:
-            b = body + "offset " + offset + ";"
+        while (results - offset) // 500 >= 0:
+            b = body + " offset " + offset + ";"
             selected.extend(do_request_api(b, path).json())
             offset += 500
 
