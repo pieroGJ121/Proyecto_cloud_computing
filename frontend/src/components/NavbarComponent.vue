@@ -102,8 +102,15 @@ export default {
   },
   methods: {
     searchGame() {
-      if (this.search != "") {
-        console.log("Searching for: " + this.search);
+      if (this.search !== "") {
+        const queryParams = new URLSearchParams({
+          name: this.search,
+          genre: "Todas",
+          platform: "Todas",
+        });
+
+        const url = `/search?${queryParams.toString()}`;
+        window.location.href = url;
       }
     },
   },

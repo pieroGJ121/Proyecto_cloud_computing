@@ -1,5 +1,5 @@
 import axios from "axios";
-const BASE_URL = "http://localhost:5002/profile_data";
+const BASE_URL = "http://localhost:5002/profile";
 
 export const getUserData = async (user) => {
   try {

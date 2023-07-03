@@ -5,6 +5,7 @@ import LogoutView from "../views/LogoutView.vue";
 import NewUserView from "../views/NewUserView.vue";
 import RecoverUserView from "../views/RecoverUserView.vue";
 import ProfileView from "../views/ProfileView.vue";
+import SearchView from "../views/SearchView.vue";
 
 const routes = [
   {
@@ -42,6 +43,12 @@ const routes = [
     name: "profile",
     meta: { title: "Perfil del usuario" },
     component: ProfileView,
+  },
+  {
+    path: "/search",
+    name: "search",
+    meta: { title: "Resultados de la busqueda" },
+    component: SearchView,
   },
 ];
 

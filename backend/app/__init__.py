@@ -105,20 +105,20 @@ def create_app(test_config=None):
     # Todo referente a la pagina de "search" va aqui
 
     @app.route('/search/genres', methods=['GET'])
-    @authorize
+    # @authorize
     def get_genres():
         genres = do_request_api("fields name; limit 50;", "genres").json()
         return genres
 
     @app.route('/search/platforms', methods=['GET'])
-    @authorize
+    # @authorize
     def get_platforms():
         platforms = do_request_api("fields name; limit 200;",
                                    "platforms").json()
         return platforms
 
     @app.route('/search/search_query', methods=['GET'])
-    @authorize
+    # @authorize
     def do_search():
         selection = request.args.to_dict()
         fields = "fields name, first_release_year, cover.image_id;"
