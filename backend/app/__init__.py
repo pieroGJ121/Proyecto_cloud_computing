@@ -120,19 +120,19 @@ def create_app(test_config=None):
     @authorize
     def do_search():
         selection = request.args.to_dict()
-        fields = "fields name, first_release_year, cover.image_id;"
+        fields = "fields name, first_release_date, cover.image_id;"
         path = "games"
         body = fields + " limit 500; "
         where = ""
 
         if selection["genre"] != "Todas":
-            where = " where genre.name = " + selection["genre"]
+            where = " where genre = " + selection["genre"]
 
         if selection["platform"] != "Todas":
             if where == "":
-                where = "where platform.name = " + selection["platform"] + ";"
+                where = "where platforms = " + selection["platform"] + ";"
             else:
-                where += " && platform.name = " + selection["platform"] + ";"
+                where += " && platforms.name = " + selection["platform"] + ";"
 
         body += where
         if selection["name"] != "":
