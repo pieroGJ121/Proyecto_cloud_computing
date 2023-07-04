@@ -88,7 +88,7 @@ def create_app(test_config=None):
     def get_videogame(identificador):
         game = 0
         try:
-            game = Game.query.get(identificador)
+            game = get_game_info_api(identificador)
             if not game:
                 returned_code = 404
         except Exception as e:
@@ -100,7 +100,7 @@ def create_app(test_config=None):
         if returned_code != 200:
             abort(returned_code)
         else:
-            return jsonify({"success": True, 'game': game.serialized()}), 200
+            return jsonify({"success": True, 'game': game}), 200
 
     # Todo referente a la pagina de "search" va aqui
 
