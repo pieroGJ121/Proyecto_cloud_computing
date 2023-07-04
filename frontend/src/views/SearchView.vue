@@ -12,7 +12,18 @@
         {{ "Resultados para la busqueda: " + search }}
       </h2>
       <div class="main_container_games">
-        <div class="container_games" id="container_games"></div>
+        <div class="container_games" id="container_games">
+          <div
+            class="item_game"
+            v-for="juego in games"
+            :key="juego.game.api_id"
+            @click="getVideogame(juego.game.api_id)"
+          >
+            <img :src="juego.game.cover" :alt="juego.game.name" />
+            <h4 style="color: white">{{ juego.game.name }}</h4>
+            <p>Publicado en: {{ juego.game.release_year }}</p>
+          </div>
+        </div>
       </div>
       <h3 class="search_results_counter" id="search_results_counter">
         {{
@@ -57,6 +68,9 @@ export default {
   methods: {
     async updateGames() {
       this.games = await getGames();
+    },
+    getVideogame(id) {
+      console.log(id);
     },
   },
 };
