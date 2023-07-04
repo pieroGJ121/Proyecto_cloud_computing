@@ -5,7 +5,7 @@ from flask import (
     abort)
 from .usuario_controler import usuarios_bp
 from .authentication import authorize
-from .functionalities.api import do_request_api
+from .functionalities.api import do_request_api, get_game_info_api
 from flask_cors import CORS
 from .models import (
     db,
@@ -84,9 +84,10 @@ def create_app(test_config=None):
     # Todo referente a la pagina de "videogame" va aqui
 
     @app.route('/videogame/<identificador>', methods=['GET'])
-    @authorize
+    # @authorize
     def get_videogame(identificador):
         game = 0
+        returned_code = 200
         try:
             game = get_game_info_api(identificador)
             if not game:
@@ -143,7 +144,7 @@ def create_app(test_config=None):
         offset = 0
         selected = []
         while (results - offset) // 500 >= 0:
-            b = body + " offset " + offset + ";"
+            b = body + " offset " + str(offset) + ";"
             selected.extend(do_request_api(b, path).json())
             offset += 500
 
@@ -178,7 +179,7 @@ def create_app(test_config=None):
         db.session.commit()
 
         purchase = Compra.query.filter_by(
-            usuario_id=user_id, game_id=game_id).first()
+            usuario_id=current_user_id, game_id=game_id).first()
 
         return jsonify({'success': True, 'compra': new_purchase.serialize()})
 
