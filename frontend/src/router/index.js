@@ -6,6 +6,9 @@ import NewUserView from "../views/NewUserView.vue";
 import RecoverUserView from "../views/RecoverUserView.vue";
 import ProfileView from "../views/ProfileView.vue";
 import SearchView from "../views/SearchView.vue";
+import VideogameView from "../views/VideogameView.vue";
+import CheckoutView from "../views/CheckoutView.vue";
+import ResumePurchaseView from "../views/ResumePurchaseView.vue";
 
 const routes = [
   {
@@ -49,6 +52,24 @@ const routes = [
     name: "search",
     meta: { title: "Resultados de la busqueda" },
     component: SearchView,
+  },
+  {
+    path: "/videogame",
+    name: "videogame",
+    meta: { title: "Detalles del videojuego" },
+    component: VideogameView,
+  },
+  {
+    path: "/checkout",
+    name: "checkout",
+    meta: { title: "Compra casi lista..." },
+    component: CheckoutView,
+  },
+  {
+    path: "/resume",
+    name: "resume",
+    meta: { title: "Gracias por su compra" },
+    component: ResumePurchaseView,
   },
 ];
 

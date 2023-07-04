@@ -37,19 +37,23 @@
 }
 #synopsis {
     margin-top: 30px;
-    color: whitesmoke;
     align-items: center;
     justify-content: center;
 }
 
 #synopsis h2{
+    color: whitesmoke;
     font-size: 30px;
     font-weight: bold;
+}
+#synopsis p{
+    color: #d8d8d8;
 }
 #game_info {
     margin-bottom: 20px;
 }
 #game_name {
+    color: whitesmoke;
     font-weight: bold;
     font-size: 30px;
     margin-bottom: 10px;

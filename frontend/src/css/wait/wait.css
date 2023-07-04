@@ -12,9 +12,7 @@
     margin: 5px;
     text-align: center;
 }
-.hero{
-    display: none;
-}
+
 @keyframes spin {
     from {
       transform: rotate(0);

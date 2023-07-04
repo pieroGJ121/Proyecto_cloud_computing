@@ -49,7 +49,7 @@ export const getGames = async () => {
   return [];
 };
 
-const getGameData = async (id) => {
+export const getGameData = async (id) => {
   try {
     const { data } = await axios.get(VIDEOGAME_URL + id);
     return data;

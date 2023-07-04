@@ -59,7 +59,6 @@ export default {
   async mounted() {
     //verifier_login();
     const params = new URLSearchParams(window.location.search);
-
     this.search = params.get("name") || "";
     this.games = await getGames();
     this.s_platforms = await getPlatforms();
@@ -70,7 +69,7 @@ export default {
       this.games = await getGames();
     },
     getVideogame(id) {
-      console.log(id);
+      window.location.href = `/videogame?id=${id}`;
     },
   },
 };
