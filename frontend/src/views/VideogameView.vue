@@ -28,13 +28,19 @@
                 {{ game_platform }}
               </div>
             </div>
-            <div class="buy_button" id="buy_container">
-              <button id="buy_button_b" @click="buyGame">Comprar ahora</button>
+            <div id="offers_container">
+              <h4>Ofertas disponibles</h4>
+              <div class="offer-card">
+                <div class="seller">Vendedor: Pedro Santiago</div>
+                <div class="price">S/. 20</div>
+              </div>
+              <div id="buy_message" v-if="this.offers.length === 0">
+                No hay ofertas disponibles para este título 😓
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <div id="buy_message"></div>
     </template>
   </LayoutComponent>
 </template>
@@ -66,6 +72,7 @@ export default {
       game_platform: "Getting data...",
       game_synopsis: "Getting data...",
       game_image: "Getting data...",
+      offers: [],
     };
   },
   async mounted() {

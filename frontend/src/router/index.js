@@ -9,6 +9,7 @@ import SearchView from "../views/SearchView.vue";
 import VideogameView from "../views/VideogameView.vue";
 import CheckoutView from "../views/CheckoutView.vue";
 import ResumePurchaseView from "../views/ResumePurchaseView.vue";
+import PurchasesView from "../views/PurchasesView.vue";
 
 const routes = [
   {
@@ -70,6 +71,12 @@ const routes = [
     name: "resume",
     meta: { title: "Gracias por su compra" },
     component: ResumePurchaseView,
+  },
+  {
+    path: "/purchases",
+    name: "purchases",
+    meta: { title: "Tus juegos" },
+    component: PurchasesView,
   },
 ];
 

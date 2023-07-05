@@ -30,10 +30,8 @@
     justify-content: center;
 }
 #game_image img {
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
-    height: auto;
+    width: 50%;
+    height: 50%;
 }
 #synopsis {
     margin-top: 30px;
@@ -90,12 +88,56 @@
 .buy_button button:hover {
     filter: brightness(1.1);
 }
+#offers_container{
+    margin-top: 10px;
+}
+#offers_container h4{
+    color: whitesmoke;
+    font-weight: bold;
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+.offer-card {
+    display: flex;
+    flex-wrap: wrap;
+    background: rgb(29, 129, 0);
+    background: linear-gradient(90deg, rgba(29, 129, 0, 1) 0%, rgba(183, 184, 0, 1) 100%);
+    background-size: 200% 200%;
+    animation: movimiento 10s ease infinite;
+    margin-top: 20px;
+    padding: 15px 25px;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 10px;
+    border: #ffffff 2px solid;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .seller {
+    color: #fff;
+    flex-grow: 1;
+    font-weight: normal;
+    font-size: 30px;
+  }
+  
+  .price {
+    color: #fff;
+    white-space: nowrap;
+    font-weight: bold;
+    font-size: 40px;
+  }
+.offer-card:hover {
+    filter: brightness(1.1);
+}
+
 #buy_message{
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 50px;
-    color: green;
+    color: rgb(255, 230, 0);
     font-size: 40px;
 }
 @media (max-width: 768px) {

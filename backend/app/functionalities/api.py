@@ -28,5 +28,5 @@ def get_game_info_api(id):
         'platforms': [i["name"] for i in data["platforms"]],
         'summary': data["summary"],
         'involved_companies': [i["company"]["name"] for i in data["involved_companies"]],
-        'cover': "https://images.igdb.com/igdb/image/upload/t_thumb/" + data["cover"]["image_id"] + ".jpg",
+        'cover': "https://images.igdb.com/igdb/image/upload/t_1080p/" + data["cover"]["image_id"] + ".jpg",
     }
