@@ -119,3 +119,60 @@ def delete_user(user_id):
         return jsonify({
             'success': True
         })
+
+
+@usuarios_bp.route('/usuarios', methods=['GET'])
+def login():
+    error_lists = []
+    returned_code = 201
+    try:
+        body = request.get_json()
+
+        if 'email' not in body:
+            error_lists.append('email is required')
+        else:
+            email = body.get('email')
+
+        if 'password' not in body:
+            error_lists.append('password is required')
+        else:
+            password = body.get('password')
+
+        usuario_db = Usuario.query.filter(Usuario.email == email).first()
+
+        if usuario_db is not None:
+            if usuario_db.verify_password(password):
+                token = jwt.encode({
+                    'usuario_created_id': usuario_db.id,
+                    'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=60)
+                }, config['SECRET_KEY'], config['ALGORYTHM'])
+            else:
+                error_lists.append(
+                    "The password doesn't matches the saved password")
+
+        else:
+            error_lists.append(
+                'There is no usuario with that email')
+
+        if len(error_lists) > 0:
+            returned_code = 400
+
+    except Exception as e:
+        print('e: ', e)
+        returned_code = 500
+
+    if returned_code == 400:
+        return jsonify({
+            'success': False,
+            'errors': error_lists,
+            'message': 'Error creating a new usuario'
+        })
+    elif returned_code != 201:
+        abort(returned_code)
+    else:
+        return jsonify({
+            'success': True,
+            'token': token,
+            'usuario_id': usuario_db.id,
+        }), returned_code
+
