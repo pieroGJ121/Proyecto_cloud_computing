@@ -5,7 +5,11 @@ const VIDEOGAME_URL = "http://localhost:5002/videogame/";
 
 export const getGenres = async () => {
   try {
-    const { data } = await axios.get(BASE_URL + "genres");
+    const { data } = await axios.get(BASE_URL + "genres", {
+      headers: {
+        "X-ACCESS-TOKEN": sessionStorage.getItem("token"),
+      },
+    });
     return data;
   } catch (error) {
     console.error(error.response.data);
@@ -15,7 +19,11 @@ export const getGenres = async () => {
 
 export const getPlatforms = async () => {
   try {
-    const { data } = await axios.get(BASE_URL + "platforms");
+    const { data } = await axios.get(BASE_URL + "platforms", {
+      headers: {
+        "X-ACCESS-TOKEN": sessionStorage.getItem("token"),
+      },
+    });
     return data;
   } catch (error) {
     console.error(error.response.data);
@@ -27,7 +35,12 @@ export const getGames = async () => {
   const url = new URL(window.location.href);
   try {
     const { data: games = {} } = await axios.get(
-      BASE_URL + "search_query" + url.search
+      BASE_URL + "search_query" + url.search,
+      {
+        headers: {
+          "X-ACCESS-TOKEN": sessionStorage.getItem("token"),
+        },
+      }
     );
 
     let resultsApi = games.games;
@@ -51,7 +64,11 @@ export const getGames = async () => {
 
 export const getGameData = async (id) => {
   try {
-    const { data } = await axios.get(VIDEOGAME_URL + id);
+    const { data } = await axios.get(VIDEOGAME_URL + id, {
+      headers: {
+        "X-ACCESS-TOKEN": sessionStorage.getItem("token"),
+      },
+    });
     return data;
   } catch (error) {
     console.error("Error al buscar datos del juego", id);

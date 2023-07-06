@@ -42,7 +42,8 @@
               <span
                 class="badge rounded-pill badge-notification"
                 id="counter_purchases_cart"
-              ></span>
+                >{{ Purchases.length }}</span
+              >
             </a>
             <!-- Marketplace dashboard -->
             <a class="text-reset me-3" href="/seller">
@@ -93,12 +94,17 @@
   </div>
 </template>
 <script>
+import { getCompras } from "../services/userResources.api";
 export default {
   name: "NavbarComponent",
   data() {
     return {
       search: "",
+      Purchases: [],
     };
+  },
+  async mounted() {
+    this.Purchases = await getCompras();
   },
   methods: {
     searchGame() {

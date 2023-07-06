@@ -43,6 +43,11 @@ textarea:focus {
     font-size: medium; 
     display: none;
 }
+#message_error_create{
+    color: red; 
+    font-size: medium; 
+    display: block;
+}
 #message_error2{
     color: red; 
     font-size: medium; 

@@ -26,7 +26,7 @@
                         class="form-control"
                         name="username"
                         id="name"
-                        v-model="user.username"
+                        v-model="user.name"
                         required
                       />
                       <label class="form-control-placeholder" for="name"
@@ -81,7 +81,6 @@
                         class="form-control"
                         name="password"
                         v-model="user.password"
-                        required
                       />
                       <label
                         class="form-control-placeholder"
@@ -154,7 +153,7 @@ import {
   updateUserData,
   deleteUser,
 } from "@/services/manageUserData.api";
-//import { verifier_login } from "@/services/login.api";
+import { verifier_login } from "@/services/login.api";
 
 export default {
   name: "ProfileView",
@@ -162,15 +161,14 @@ export default {
     LayoutComponent,
   },
   async mounted() {
-    this.user = await getUserData();
-    console.log(this.user.username);
+    await verifier_login();
+    this.user = await getUserData(this.user);
     no_resizable_textarea();
-    //verifier_login();
   },
   data() {
     return {
       user: {
-        username: "",
+        name: "",
         lastname: "",
         email: "",
         bio: "",

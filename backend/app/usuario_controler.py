@@ -16,14 +16,12 @@ from config.local import config
 
 usuarios_bp = Blueprint('/usuarios', __name__)
 
-
-@usuarios_bp.route('/usuarios', methods=['POST'])
+@usuarios_bp.route('/create', methods=['POST'])
 def create_user():
     error_lists = []
     returned_code = 201
     try:
-        body = request.get_json()
-
+        body = request.json
         if 'name' not in body:
             error_lists.append('Name is required')
         else:
@@ -57,27 +55,28 @@ def create_user():
         user_db = Usuario.query.filter(Usuario.email == email).first()
 
         if user_db is not None:
-            if user_db.email == email:
-                error_lists.append(
-                    'An account with this email already exists')
-            if validar_correo(email):
-                error_lists.append('The email is not valid')
-            if len(password) < 8:
-                error_lists.append('Password must have at least 8 characters')
+            error_lists.append(
+                    'Este correo ya está registrado 🙄')
+        else:
+            if not validar_correo(email):
+                error_lists.append('El correo no es válido 😕') 
+            if len(password) < 8 or len(confirmationPassword) < 8:
+                error_lists.append('La contraseña debe tener por lo menos 8 caracteres 🙁')
             if password != confirmationPassword:
                 error_lists.append(
-                    'password and confirmationPassword does not match')
+                    'Las contraseñas no coinciden 😣')
 
         if len(error_lists) > 0:
             returned_code = 400
         else:
             user = Usuario(name, lastname, email, bio, password)
-            user_created_id = user.insert()
-
+            user_created_id = user.insert() 
+            print('user_created_id: ', user_created_id)
             token = jwt.encode({
                 'user_created_id': user_created_id,
                 'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
             }, config['SECRET_KEY'], config['ALGORYTHM'])
+            print('token: ', token)
 
     except Exception as e:
         print('e: ', e)
@@ -121,20 +120,20 @@ def delete_user(user_id):
         })
 
 
-@usuarios_bp.route('/usuarios', methods=['GET'])
+@usuarios_bp.route('/login', methods=['POST'])
 def login():
     error_lists = []
     returned_code = 201
     try:
-        body = request.get_json()
+        body = request.json
 
         if 'email' not in body:
-            error_lists.append('email is required')
+            error_lists.append('Se necesita un correo válido')
         else:
             email = body.get('email')
 
         if 'password' not in body:
-            error_lists.append('password is required')
+            error_lists.append('Se necesita una contraseña válida')
         else:
             password = body.get('password')
 
@@ -148,11 +147,11 @@ def login():
                 }, config['SECRET_KEY'], config['ALGORYTHM'])
             else:
                 error_lists.append(
-                    "The password doesn't matches the saved password")
+                    "El correo o la contraseña no son correctos 🙁")
 
         else:
             error_lists.append(
-                'There is no usuario with that email')
+                'No hay un usuario registrado con ese correo 😣')
 
         if len(error_lists) > 0:
             returned_code = 400
@@ -165,7 +164,7 @@ def login():
         return jsonify({
             'success': False,
             'errors': error_lists,
-            'message': 'Error creating a new usuario'
+            'message': 'Error login a new user'
         })
     elif returned_code != 201:
         abort(returned_code)
@@ -175,4 +174,3 @@ def login():
             'token': token,
             'usuario_id': usuario_db.id,
         }), returned_code
-

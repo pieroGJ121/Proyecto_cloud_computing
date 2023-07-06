@@ -31,39 +31,54 @@ def create_app(test_config=None):
 
         migrate = Migrate(app, db)
 
+    # Verificar si el usuario esta logeado
+
+    @app.route('/verifier_login', methods=['GET'])
+    @authorize
+    def verify_login():
+        return jsonify({"success": True}), 200
+
     # Todo referente a la pagina de "profile" va aqui
     @app.route('/profile', methods=['GET'])
     @authorize
     def get_profile():
-        current_user_id = request.headers["user_id"]
-        current_user = Usuario.query.get(current_user_id)
+        current_user_id = request.headers["user-id"]
+        current_user = Usuario.query.filter_by(id=current_user_id).first()
         return jsonify({"success": True,
                         'user': current_user.serialize()}), 200
 
     @app.route('/profile', methods=['PATCH'])
     @authorize
     def change_profile():
-        current_user_id = request.headers["user_id"]
-        current_user = Usuario.query.get(current_user_id)
-        nombre = request.form['username']
-        apellido = request.form['lastname']
-        bio = request.form['bio']
-        password = request.form['password']
+        body = request.json
+        current_user_id = request.headers["user-id"]
+        current_user = Usuario.query.filter_by(id=current_user_id).first()
+        nombre = body['name']
+        apellido = body['lastname']
+        bio = body['bio']
+        password = body['password']
+
+        if len(password) < 8 and len(password) != 0:
+            return jsonify({"success": False, "message": "La contraseña debe tener al menos 8 caracteres"}), 200
+
+        if len(password) != 0:
+            current_user.password = password
 
         current_user.firstname = nombre
         current_user.lastname = apellido
         current_user.bio = bio
-        current_user.password = password
 
         db.session.commit()
+
+        return jsonify({"success": True, "message": "El usuario se ha actualizado correctamente"}), 200
 
     # Todo referente a la pagina de "profile" va aqui
 
     @app.route('/profile', methods=['DELETE'])
     @authorize
     def delete_profile():
-        current_user_id = request.headers["user_id"]
-        current_user = Usuario.query.get(current_user_id)
+        current_user_id = request.headers["user-id"]
+        current_user = Usuario.query.filter_by(id=current_user_id).first()
         if current_user:
             compras_eliminar = Compra.query.filter_by(
                 usuario_id=current_user.id).all()
@@ -84,7 +99,7 @@ def create_app(test_config=None):
     # Todo referente a la pagina de "videogame" va aqui
 
     @app.route('/videogame/<identificador>', methods=['GET'])
-    # @authorize
+    @authorize
     def get_videogame(identificador):
         game = 0
         returned_code = 200
@@ -106,20 +121,20 @@ def create_app(test_config=None):
     # Todo referente a la pagina de "search" va aqui
 
     @app.route('/search/genres', methods=['GET'])
-    # @authorize
+    @authorize
     def get_genres():
         genres = do_request_api("fields name; limit 50;", "genres").json()
         return genres
 
     @app.route('/search/platforms', methods=['GET'])
-    # @authorize
+    @authorize
     def get_platforms():
         platforms = do_request_api("fields name; limit 200;",
                                    "platforms").json()
         return platforms
 
     @app.route('/search/search_query', methods=['GET'])
-    # @authorize
+    @authorize
     def do_search():
         selection = request.args.to_dict()
         fields = "fields name, first_release_date, cover.image_id;"
@@ -154,8 +169,8 @@ def create_app(test_config=None):
     @app.route('/compra', methods=['GET'])
     @authorize
     def get_purchased_games():
-        current_user_id = request.headers["user_id"]
-        current_user = Usuario.query.get(current_user_id)
+        current_user_id = request.headers["user-id"]
+        current_user = Usuario.query.filter_by(id=current_user_id).first()
         games_bought = current_user.get_games_bought()
         return jsonify({'success': True, 'games': games_bought,
                         "user": current_user.serialize()})
@@ -163,7 +178,7 @@ def create_app(test_config=None):
     @app.route('/compra/<identificador>', methods=['GET'])
     @authorize
     def get_compra(identificador):
-        current_user_id = request.headers["user_id"]
+        current_user_id = request.headers["user-id"]
         purchase = Compra.query.filter_by(usuario_id=current_user_id,
                                           game_id=identificador).first()
         return jsonify({'success': True, 'compra': purchase.serialize()})
@@ -171,8 +186,8 @@ def create_app(test_config=None):
     @app.route('/compra/<identificador>', methods=['POST'])
     @authorize
     def add_compra(oferta_id):
-        current_user_id = request.headers["user_id"]
-        current_user = Usuario.query.get(current_user_id)
+        current_user_id = request.headers["user-id"]
+        current_user = Usuario.query.filter_by(id=current_user_id).first()
         new_purchase = Compra(oferta_id, current_user_id)
 
         db.session.add(new_purchase)
@@ -195,8 +210,8 @@ def create_app(test_config=None):
     @app.route('/oferta', methods=['GET'])
     @authorize
     def obtain_ofertas_from_user():
-        current_user_id = request.headers["user_id"]
-        current_user = Usuario.query.get(current_user_id)
+        current_user_id = request.headers["user-id"]
+        current_user = Usuario.query.filter_by(id=current_user_id).first()
         ofertas = current_user.get_games_being_sold()
         return jsonify({'success': True,
                         'ofertas_pending': ofertas["pending"],
@@ -208,7 +223,7 @@ def create_app(test_config=None):
         returned_code = 200
         list_errors = []
         try:
-            current_user_id = request.headers["user_id"]
+            current_user_id = request.headers["user-id"]
             body = request.json
 
             if 'game_id' not in body:
@@ -249,6 +264,7 @@ def create_app(test_config=None):
             return jsonify({'success': True, 'message': 'Ofert Created successfully!'}), returned_code
 
     @app.route('/ofertas', methods=['GET'])
+    @authorize
     def get_ofertas():
         returned_code = 200
         ofertas_list = []
@@ -309,6 +325,6 @@ def create_app(test_config=None):
         return jsonify({
             'success': False,
             'message': 'Método no permitido'
-        }), 404
+        }), 405
 
     return app

@@ -129,8 +129,8 @@ export default {
         spanElement.classList.add("fa-eye");
       }
     },
-    log_in() {
-      login(this.user);
+    async log_in() {
+      await login(this.user);
     },
   },
 };

@@ -53,7 +53,7 @@ export default {
     SliderComponent,
   },
   async mounted() {
-    verifier_login();
+    await verifier_login();
   },
 };
 </script>

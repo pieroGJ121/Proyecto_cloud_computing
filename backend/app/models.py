@@ -86,7 +86,7 @@ class Usuario(db.Model):
         self.created_at = datetime.utcnow()
 
     def __repr__(self):
-        return '<Usuario %r %r>' % (self.firstname)
+        return '<Usuario %r %r>' % (self.firstname, self.lastname)
 
     def insert(self):
         try:

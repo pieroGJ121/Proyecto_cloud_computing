@@ -5,7 +5,7 @@
 import { logout } from "@/services/login.api";
 export default {
   name: "LogoutView",
-  async mounted() {
+  async created() {
     logout();
   },
 };

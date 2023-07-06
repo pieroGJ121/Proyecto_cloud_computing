@@ -17,7 +17,14 @@
                 <div class="login-wrap p-4 p-md-5">
                   <div class="d-flex">
                     <div class="w-100">
-                      <h3 class="mb-4" id="message_error"></h3>
+                      <h3
+                        v-for="(error, index) in errors"
+                        :key="index"
+                        class="mb-4"
+                        id="message_error_create"
+                      >
+                        {{ error }}
+                      </h3>
                       <h3 class="mb-4" style="color: whitesmoke">
                         Registra tus datos aqui
                       </h3>
@@ -81,22 +88,44 @@
                     </div>
                     <div class="form-group">
                       <input
-                        id="password-field"
+                        id="password-field1"
                         type="password"
                         class="form-control"
-                        name="password"
-                        v-model="user.password"
+                        name="password1"
                         required
+                        v-model="user.password"
                       />
                       <label
                         class="form-control-placeholder"
-                        for="password-field"
-                        >Contraseña</label
+                        for="password-field1"
+                        >Nueva contraseña</label
                       >
                       <span
-                        toggle="#password-field"
+                        toggle="#password-field1"
+                        id="tpassword1"
                         class="fa fa-fw fa-eye field-icon toggle-password"
-                        @click="togglePassword"
+                        @click="togglePassword(1)"
+                      ></span>
+                    </div>
+                    <div class="form-group">
+                      <input
+                        id="password-field2"
+                        type="password"
+                        class="form-control"
+                        name="password2"
+                        required
+                        v-model="user.confirmationPassword"
+                      />
+                      <label
+                        class="form-control-placeholder"
+                        for="password-field2"
+                        >Confirme la contraseña</label
+                      >
+                      <span
+                        toggle="#password-field2"
+                        id="tpassword2"
+                        class="fa fa-fw fa-eye field-icon toggle-password"
+                        @click="togglePassword(2)"
                       ></span>
                     </div>
                     <div class="form-group">
@@ -135,30 +164,44 @@ export default {
         bio: "",
         email: "",
         password: "",
+        confirmationPassword: "",
       },
-      show_password: false,
+      show_password1: false,
+      show_password2: false,
+      errors: [],
     };
   },
   methods: {
-    togglePassword() {
-      this.show_password = !this.show_password;
+    togglePassword(n) {
+      let spanElement = document.getElementById("tpassword" + n);
+      let password_field = document.getElementById("password-field" + n);
 
-      let spanElement = document.querySelector(".toggle-password");
-
-      let password_field = document.getElementById("password-field");
-
-      if (this.show_password) {
-        password_field.setAttribute("type", "text");
-        spanElement.classList.remove("fa-eye");
-        spanElement.classList.add("fa-eye-slash");
+      if (n == 1) {
+        this.show_password1 = !this.show_password1;
+        if (this.show_password1) {
+          password_field.setAttribute("type", "text");
+          spanElement.classList.remove("fa-eye");
+          spanElement.classList.add("fa-eye-slash");
+        } else {
+          password_field.setAttribute("type", "password");
+          spanElement.classList.remove("fa-eye-slash");
+          spanElement.classList.add("fa-eye");
+        }
       } else {
-        password_field.setAttribute("type", "password");
-        spanElement.classList.remove("fa-eye-slash");
-        spanElement.classList.add("fa-eye");
+        this.show_password2 = !this.show_password2;
+        if (this.show_password2) {
+          password_field.setAttribute("type", "text");
+          spanElement.classList.remove("fa-eye");
+          spanElement.classList.add("fa-eye-slash");
+        } else {
+          password_field.setAttribute("type", "password");
+          spanElement.classList.remove("fa-eye-slash");
+          spanElement.classList.add("fa-eye");
+        }
       }
     },
-    registerUser() {
-      register(this.user);
+    async registerUser() {
+      this.errors = await register(this.user);
     },
   },
 };

@@ -1,9 +1,17 @@
 import axios from "axios";
 const BASE_URL = "http://localhost:5002/profile";
 
-export const getUserData = async (user) => {
+export const getUserData = async () => {
+  const headers = {
+    "Content-Type": "application/json",
+    "X-ACCESS-TOKEN": sessionStorage.getItem("token"),
+    "user-id": sessionStorage.getItem("user_id"),
+  };
+  const config = {
+    headers: headers,
+  };
   try {
-    const { data } = await axios.get(BASE_URL, user);
+    const { data } = await axios.get(BASE_URL, config);
     if (data.success) {
       return data.user;
     }
@@ -11,7 +19,7 @@ export const getUserData = async (user) => {
     console.log(error.response.data);
   }
   return {
-    username: "",
+    name: "",
     lastname: "",
     email: "",
     bio: "",
@@ -20,17 +28,26 @@ export const getUserData = async (user) => {
 };
 
 export const updateUserData = async (user) => {
+  const headers = {
+    "Content-Type": "application/json",
+    "X-ACCESS-TOKEN": sessionStorage.getItem("token"),
+    "user-id": sessionStorage.getItem("user_id"),
+  };
+  const config = {
+    headers: headers,
+  };
   const message_error = document.getElementById("message_error");
   try {
-    const { data } = await axios.patch(BASE_URL, user);
+    const { data } = await axios.patch(BASE_URL, user, config);
     if (data.success) {
       message_error.style.display = "none";
       window.location.href = "/";
+    } else {
+      message_error.style.display = "block";
+      message_error.innerHTML = data.message;
     }
   } catch (error) {
-    message_error.style.display = "block";
-    message_error.innerHTML = error.response.data.message;
-    console.log(error);
+    console.log(error.response);
   }
 };
 
