@@ -226,3 +226,48 @@ def data_recovery():
             'success': True,
             'message': "El usuario y nombre coinciden",
         }), returned_code
+
+
+@usuarios_bp.route('/usuarios/password', methods=['PATCH'])
+def recover_password():
+    returned_code = 200
+    error_lists = []
+
+    try:
+        body = request.get_json()
+
+        if 'password1' not in body:
+            error_lists.append('Password is required')
+        else:
+            password1 = body.get('password1')
+
+        if 'password2' not in body:
+            error_lists.append('Confirmation password  is required')
+        else:
+            password2 = body.get('password2')
+
+        if password1 == password2:
+            email = body.get['email']
+            user = Usuario.query.filter_by(email=email).first()
+            user.change_password(password1)
+        else:
+            error_lists.append("The passwords need to match")
+
+        if len(error_lists) > 0:
+            returned_code = 400
+    except Exception as e:
+        print('\te: ', e)
+        returned_code = 500
+
+    if returned_code == 400:
+        return jsonify({
+            'success': False,
+            'errors': error_lists,
+            'message': 'Error when changing password'
+        })
+    elif returned_code != 200:
+        abort(returned_code)
+    else:
+        return jsonify({
+            'success': True,
+            'message': 'Cambio de contraseña exitoso'}), 200
