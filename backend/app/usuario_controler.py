@@ -176,3 +176,54 @@ def login():
             'usuario_id': usuario_db.id,
         }), returned_code
 
+
+@usuarios_bp.route('/usuarios/data', methods=['GET'])
+def data_recovery():
+
+    error_lists = []
+    returned_code = 201
+    try:
+        body = request.get_json()
+
+        if 'email' not in body:
+            error_lists.append('email is required')
+        else:
+            email = body.get('email')
+
+        if 'name' not in body:
+            error_lists.append('name is required')
+        else:
+            name = body.get('name')
+
+        usuario_db = Usuario.query.filter(Usuario.email == email).first()
+
+        if usuario_db is not None:
+            if email != usuario_db.email or name != usuario_db.firstname:
+                returned_code = 400
+                error_lists.append(
+                    "Datos de acceso incorrectos. Intente nuevamente &#128577;")
+        else:
+            returned_code = 400
+            error_lists.append(
+                "No hay ningún usuario registrado con esos datos &#128577;")
+
+        if len(error_lists) > 0:
+            returned_code = 400
+
+    except Exception as e:
+        print('e: ', e)
+        returned_code = 500
+
+    if returned_code == 400:
+        return jsonify({
+            'success': False,
+            'errors': error_lists,
+            'message': 'Error recovering data of usuario'
+        })
+    elif returned_code != 201:
+        abort(returned_code)
+    else:
+        return jsonify({
+            'success': True,
+            'message': "El usuario y nombre coinciden",
+        }), returned_code
