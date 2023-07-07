@@ -271,3 +271,19 @@ def recover_password():
         return jsonify({
             'success': True,
             'message': 'Cambio de contraseña exitoso'}), 200
+
+
+@usuarios_bp.errorhandler(404)
+def page_not_found(error):
+    return jsonify({
+        'success': False,
+        'message': 'Resource not found'
+    }), 404
+
+
+@usuarios_bp.errorhandler(405)
+def method_not_allowed(error):
+    return jsonify({
+        'success': False,
+        'message': 'Método no permitido'
+    }), 404
