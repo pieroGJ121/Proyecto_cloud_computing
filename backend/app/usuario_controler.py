@@ -178,22 +178,22 @@ def login():
         }), returned_code
 
 
-@usuarios_bp.route('/usuarios/data', methods=['GET'])
+@usuarios_bp.route('/usuarios/data', methods=['POST'])
 def data_recovery():
     error_lists = []
     returned_code = 201
     try:
-        body = request.get_json()
+        body = request.json
 
         if 'email' not in body:
             error_lists.append('email is required')
         else:
-            email = body.get('email')
+            email = body['email']
 
         if 'name' not in body:
             error_lists.append('name is required')
         else:
-            name = body.get('name')
+            name = body['name']
 
         usuario_db = Usuario.query.filter(Usuario.email == email).first()
 
@@ -235,24 +235,28 @@ def recover_password():
     error_lists = []
 
     try:
-        body = request.get_json()
+        body = request.json
 
         if 'password1' not in body:
             error_lists.append('Password is required')
         else:
-            password1 = body.get('password1')
+            password1 = body['password1']
 
         if 'password2' not in body:
             error_lists.append('Confirmation password  is required')
         else:
-            password2 = body.get('password2')
+            password2 = body['password2']
+
+        if len(password1) < 8 or len(password2) < 8:
+            error_lists.append(
+                'La contraseña debe tener al menos 8 caracteres 😴')
 
         if password1 == password2:
-            email = body.get['email']
+            email = body['email']
             user = Usuario.query.filter_by(email=email).first()
             user.change_password(password1)
         else:
-            error_lists.append("The passwords need to match")
+            error_lists.append("Las contraseñas no coinciden 🙁")
 
         if len(error_lists) > 0:
             returned_code = 400
