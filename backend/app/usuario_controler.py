@@ -16,6 +16,7 @@ from config.local import config
 
 usuarios_bp = Blueprint('/usuarios', __name__)
 
+
 @usuarios_bp.route('/create', methods=['POST'])
 def create_user():
     error_lists = []
@@ -56,12 +57,13 @@ def create_user():
 
         if user_db is not None:
             error_lists.append(
-                    'Este correo ya está registrado 🙄')
+                'Este correo ya está registrado 🙄')
         else:
             if not validar_correo(email):
-                error_lists.append('El correo no es válido 😕') 
+                error_lists.append('El correo no es válido 😕')
             if len(password) < 8 or len(confirmationPassword) < 8:
-                error_lists.append('La contraseña debe tener por lo menos 8 caracteres 🙁')
+                error_lists.append(
+                    'La contraseña debe tener por lo menos 8 caracteres 🙁')
             if password != confirmationPassword:
                 error_lists.append(
                     'Las contraseñas no coinciden 😣')
@@ -70,7 +72,7 @@ def create_user():
             returned_code = 400
         else:
             user = Usuario(name, lastname, email, bio, password)
-            user_created_id = user.insert() 
+            user_created_id = user.insert()
             print('user_created_id: ', user_created_id)
             token = jwt.encode({
                 'user_created_id': user_created_id,
@@ -174,3 +176,115 @@ def login():
             'token': token,
             'usuario_id': usuario_db.id,
         }), returned_code
+
+
+@usuarios_bp.route('/usuarios/data', methods=['GET'])
+def data_recovery():
+    error_lists = []
+    returned_code = 201
+    try:
+        body = request.get_json()
+
+        if 'email' not in body:
+            error_lists.append('email is required')
+        else:
+            email = body.get('email')
+
+        if 'name' not in body:
+            error_lists.append('name is required')
+        else:
+            name = body.get('name')
+
+        usuario_db = Usuario.query.filter(Usuario.email == email).first()
+
+        if usuario_db is not None:
+            if email != usuario_db.email or name != usuario_db.firstname:
+                returned_code = 400
+                error_lists.append(
+                    "Datos de acceso incorrectos. Intente nuevamente &#128577;")
+        else:
+            returned_code = 400
+            error_lists.append(
+                "No hay ningún usuario registrado con esos datos &#128577;")
+
+        if len(error_lists) > 0:
+            returned_code = 400
+
+    except Exception as e:
+        print('e: ', e)
+        returned_code = 500
+
+    if returned_code == 400:
+        return jsonify({
+            'success': False,
+            'errors': error_lists,
+            'message': 'Error recovering data of usuario'
+        })
+    elif returned_code != 201:
+        abort(returned_code)
+    else:
+        return jsonify({
+            'success': True,
+            'message': "El usuario y nombre coinciden",
+        }), returned_code
+
+
+@usuarios_bp.route('/usuarios/password', methods=['PATCH'])
+def recover_password():
+    returned_code = 200
+    error_lists = []
+
+    try:
+        body = request.get_json()
+
+        if 'password1' not in body:
+            error_lists.append('Password is required')
+        else:
+            password1 = body.get('password1')
+
+        if 'password2' not in body:
+            error_lists.append('Confirmation password  is required')
+        else:
+            password2 = body.get('password2')
+
+        if password1 == password2:
+            email = body.get['email']
+            user = Usuario.query.filter_by(email=email).first()
+            user.change_password(password1)
+        else:
+            error_lists.append("The passwords need to match")
+
+        if len(error_lists) > 0:
+            returned_code = 400
+    except Exception as e:
+        print('\te: ', e)
+        returned_code = 500
+
+    if returned_code == 400:
+        return jsonify({
+            'success': False,
+            'errors': error_lists,
+            'message': 'Error when changing password'
+        })
+    elif returned_code != 200:
+        abort(returned_code)
+    else:
+        return jsonify({
+            'success': True,
+            'message': 'Cambio de contraseña exitoso'}), 200
+
+
+@usuarios_bp.errorhandler(404)
+def page_not_found(error):
+    return jsonify({
+        'success': False,
+        'message': 'Resource not found'
+    }), 404
+
+
+@usuarios_bp.errorhandler(405)
+def method_not_allowed(error):
+    return jsonify({
+        'success': False,
+        'message': 'Método no permitido'
+    }), 404

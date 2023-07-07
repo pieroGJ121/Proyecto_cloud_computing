@@ -77,6 +77,10 @@ class Usuario(db.Model):
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+    def change_password(self, password):
+        self.password = password
+        db.session.commit()
+
     def __init__(self, firstname, lastname, email, bio, password):
         self.firstname = firstname
         self.lastname = lastname
@@ -123,17 +127,17 @@ class Usuario(db.Model):
         }
 
     def get_games_bought(self):
-        return [compra.get_game() for compra in
+        return [compra.get_data_with_game() for compra in
                 self.compras]
 
-    def get_games_being_sold(self):
+    def get_data_with_games_being_sold(self):
         ofertas_pending = []
         ofertas_done = []
         for o in self.ofertas:
             if o.realizada is True:
-                ofertas_done.append(o.get_game())
+                ofertas_done.append(o.get_data_with_game())
             else:
-                ofertas_pending.append(o.get_game())
+                ofertas_pending.append(o.get_data_with_game())
         return {"pending": ofertas_pending, "done": ofertas_done}
 
 
@@ -169,10 +173,11 @@ class Compra(db.Model):
             'modified_at': self.modified_at,
         }
 
-    def get_game(self):
-        game_data = self.oferta.game.serialize()
-        game_data["date"] = self.created_at
-        return game_data
+    def get_data_with_game(self):
+        data = self.serialize()
+        game_data = self.game.serialize()
+        data["game"] = game_data
+        return data
 
 
 class Oferta(db.Model):
@@ -215,10 +220,11 @@ class Oferta(db.Model):
             'platform': self.platform,
         }
 
-    def get_game(self):
+    def get_data_with_game(self):
+        data = self.serialize()
         game_data = self.game.serialize()
-        game_data["date"] = self.created_at
-        return game_data
+        data["game"] = game_data
+        return data
 
     def has_compra(self):
         if len(self.compra) == 0:
