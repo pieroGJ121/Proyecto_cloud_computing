@@ -179,7 +179,6 @@ def login():
 
 @usuarios_bp.route('/usuarios/data', methods=['GET'])
 def data_recovery():
-
     error_lists = []
     returned_code = 201
     try:

@@ -77,6 +77,10 @@ class Usuario(db.Model):
     def verify_password(self, password):
         return check_password_hash(self.password_hash, password)
 
+    def change_password(self, password):
+        self.password = password
+        db.session.commit()
+
     def __init__(self, firstname, lastname, email, bio, password):
         self.firstname = firstname
         self.lastname = lastname
