@@ -55,7 +55,7 @@ def create_app(test_config=None):
 
         db.session.commit()
 
-    # Todo referente a la pagina de "profile" va aqui
+        return jsonify({'success': True, 'message': 'Usuario actualizado correctamente'}), 200
 
     @app.route('/profile', methods=['DELETE'])
     @authorize
@@ -175,8 +175,8 @@ def create_app(test_config=None):
         db.session.add(new_purchase)
         db.session.commit()
 
-        purchase = Compra.query.filter_by(
-            usuario_id=user_id, game_id=game_id).first()
+        enviar_correo(current_user.email, new_purchase.serialize()['game']['game_name'], 'Fecha: {}'.format(
+            new_purchase.created_at), 'ID de compra: {}'.format(new_purchase.id))
 
         return jsonify({'success': True, 'compra': new_purchase.serialize()})
 
@@ -243,25 +243,7 @@ def create_app(test_config=None):
                             'message': 'Error!'}), returned_code
             # abort(returned_code)
         else:
-            return jsonify({'success': True, 'message': 'Ofert Created successfully!'}), returned_code
-
-    @app.route('/ofertas', methods=['GET'])
-    def get_ofertas():
-        returned_code = 200
-        ofertas_list = [] 
-        try : 
-            ofertas = Oferta.query.all()
-            ofertas_list = [oferta.serialize() for oferta in ofertas]
-            if not ofertas_list:
-                returned_code = 404     
-        
-        except Exception as e:
-            returned_code = 500
-        
-        if returned_code != 200:
-            abort(returned_code)
-        
-        return jsonify({'success': True, 'ofertas': ofertas_list}), returned_code
+            return jsonify({'success': True, 'message': 'Oferta Created successfully!'}), returned_code
 
     @app.route('/oferta/<id>', methods=['DELETE'])
     @authorize
