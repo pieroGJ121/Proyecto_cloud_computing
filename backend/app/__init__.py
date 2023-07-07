@@ -5,7 +5,7 @@ from flask import (
     abort)
 from .usuario_controler import usuarios_bp
 from .authentication import authorize
-from .functionalities.api import do_request_api
+from .functionalities.api import do_request_api, get_game_info_api
 from flask_cors import CORS
 from .models import (
     db,
@@ -16,7 +16,6 @@ from .models import (
     setup_db)
 from .functionalities.send_email import enviar_correo
 from flask_migrate import Migrate
-import os
 
 compra = False
 
