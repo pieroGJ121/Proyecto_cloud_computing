@@ -2,7 +2,6 @@
 
 <div align="center">
   <a href="https://github.com/Fabrizzio20k/Proyecto_DBP">
-    <img src="static/logo/logo_2.png" alt="hex board" width="300" height="100">
   </a>
   <h1>👾 GPT VIDEOGAMES 👾</h1>
   
