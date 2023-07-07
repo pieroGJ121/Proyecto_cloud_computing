@@ -51,7 +51,7 @@ textarea:focus {
 #message_error2{
     color: red; 
     font-size: medium; 
-    display: none;
+    display: block;
 }
 #password_changer{
     display: none;

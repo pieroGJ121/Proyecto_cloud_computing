@@ -12,7 +12,7 @@ export const validateData = async (user) => {
   const text_change = document.getElementById("text_change");
 
   try {
-    const { data } = await axios.post(BASE_URL + "data_recovery", user);
+    const { data } = await axios.post(BASE_URL + "usuarios/data", user);
     if (data.success) {
       message_error.style.display = "none";
       password_changer.style.display = "block";
@@ -22,25 +22,28 @@ export const validateData = async (user) => {
       name.disabled = true;
       text_email.innerHTML = "";
       text_name.innerHTML = "";
+    } else {
+      message_error.style.display = "block";
+      password_changer.style.display = "none";
+      message_error.innerHTML = data.errors;
+      text_change.style.display = "none";
     }
   } catch (error) {
-    message_error.style.display = "block";
-    password_changer.style.display = "none";
-    message_error.innerHTML = error.response.data.message;
-    text_change.style.display = "none";
+    console.log(error.response);
   }
 };
 
 export const resetPassword = async (user) => {
-  const message_error = document.getElementById("message_error2");
   try {
-    const { data } = await axios.post(BASE_URL + "password_recovery", user);
+    const { data } = await axios.patch(BASE_URL + "usuarios/password", user);
     if (data.success) {
-      message_error.style.display = "none";
       window.location.href = "/login";
+    } else {
+      return data.errors;
     }
   } catch (error) {
-    message_error.style.display = "block";
-    message_error.innerHTML = error.response.data.message;
+    console.log(error.response);
   }
+
+  return [];
 };

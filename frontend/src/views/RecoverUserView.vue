@@ -71,7 +71,14 @@
                   </form>
                   <div class="d-flex">
                     <div class="w-100">
-                      <h3 class="mb-4" id="message_error2"></h3>
+                      <h3
+                        v-for="(error, index) in errors"
+                        :key="index"
+                        class="mb-4"
+                        id="message_error2"
+                      >
+                        {{ error }}
+                      </h3>
                       <h3 class="mb-4" id="text_change">
                         Ahora puede cambiar su contraseña
                       </h3>
@@ -168,6 +175,7 @@ export default {
       },
       show_password1: false,
       show_password2: false,
+      errors: [],
     };
   },
   methods: {
@@ -199,11 +207,11 @@ export default {
         }
       }
     },
-    checkData() {
-      validateData(this.user);
+    async checkData() {
+      await validateData(this.user);
     },
-    changePassword() {
-      resetPassword(this.user);
+    async changePassword() {
+      this.errors = await resetPassword(this.user);
     },
   },
 };

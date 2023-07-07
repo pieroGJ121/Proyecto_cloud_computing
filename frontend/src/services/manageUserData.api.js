@@ -37,8 +37,14 @@ export const updateUserData = async (user) => {
     headers: headers,
   };
   const message_error = document.getElementById("message_error");
+  const user_data = {
+    name: user.name,
+    lastname: user.lastname,
+    bio: user.bio,
+    password: user.password || "",
+  };
   try {
-    const { data } = await axios.patch(BASE_URL, user, config);
+    const { data } = await axios.patch(BASE_URL, user_data, config);
     if (data.success) {
       message_error.style.display = "none";
       window.location.href = "/";
