@@ -73,7 +73,9 @@ export default {
       window.location.href = "/checkout?id=" + id;
     },
     sellProduct() {
-      console.log("Redirecting to endpoint");
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get("id");
+      window.location.href = "/sell?id=" + id;
     },
   },
   data() {

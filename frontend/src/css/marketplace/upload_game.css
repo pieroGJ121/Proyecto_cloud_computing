@@ -1,109 +1,119 @@
-.container_form_game {
+.container_form_game_sell {
     max-width: 800px;
     margin: 0 auto;
     padding: 30px;
     background-color: transparent;
     color: whitesmoke;
   }
-
-.container_form_game h1 {
+  
+  .container_form_game_sell h1 {
     text-align: center;
     margin-bottom: 30px;
     font-weight: lighter;
-}
-
-.game_form_game {
+  }
+  
+  .game_form_game_sell {
     border: 1px solid #ccc;
     border-radius: 10px;
     padding: 20px;
-    background: rgb(0,42,51);
-    background: linear-gradient(0deg, rgba(0,42,51,1) 0%, rgba(0,22,66,1) 100%);
+    background: rgb(0, 42, 51);
+    background: linear-gradient(0deg, rgba(0, 42, 51, 1) 0%, rgba(0, 22, 66, 1) 100%);
     display: flex;
     flex-wrap: wrap;
-}
-
-.columna {
+  }
+  
+  .columna-sell {
     flex-basis: 50%;
     min-width: 200px;
+  }
+  
+.message-image-sell{
+    color: #ffffff;
+    font-size: 25px;
+    font-weight: lighter;
+    margin-bottom: 10px;
+    text-align: center;
 }
 
-.form_group_game {
+  .form_group_game_sell {
     margin-bottom: 20px;
     padding: 10px;
-}
-
-.form_group_game input:focus {
-    background: #24283B;
+  }
+  
+  .form_group_game_sell input:focus {
+    background: #24283b;
     color: white;
-}
-
-label {
-    font-weight: bold;
+  }
+  
+  .label-sell{
+    font-weight: bolder;    
     color: #01d28e;
     font-size: 13px;
-}
+  }
   
-.form_control_game {
+  .form_control_game_sell {
     width: 100%;
     padding: 10px;
     border: 1px solid transparent;
     border-radius: 5px;
-    background: #24283B;
+    background: #24283b;
     color: #8f8f8f;
     transition: border-color 0.2s ease;
-}
-
-.form_control_game:focus {
+  }
+  
+  .form_control_game_sell:focus {
     outline: none;
     border: 1px solid #01d28e !important;
-}
-
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-  display: none;
-}
-input[type="date"]::-webkit-calendar-picker-indicator {
+  }
+  
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    display: none;
+  }
+  
+  input[type="date"]::-webkit-calendar-picker-indicator {
     filter: invert(1);
   }
-
-.custom-select select option {
-    background-color: #24283B;
+  
+  .custom-select-sell select option {
+    background-color: #24283b;
     color: #ffffff;
     border-radius: 25px;
-}
-
-#synopsis {
-    min-height  : 150px;
+  }
+  
+  #synopsis_sell {
+    min-height: 150px;
     resize: none;
-}
-
-#synopsis:focus {
+  }
+  
+  #synopsis_sell:focus {
     color: white;
-}
-
-.image-section {
+  }
+  
+  .image-section-sell {
     flex-basis: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-}
-.columna2{
+  }
+  
+  .columna2-sell {
     flex-basis: 50%;
     min-width: 200px;
     min-height: 200px;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.image-section .form_group_game {
-    margin-bottom: 0;
-}
+  }
   
-.image-preview {
+  .image-section-sell .form_group_game_sell {
+    margin-bottom: 0;
+  }
+  
+.image-preview-sell {
     width: 240px;
     height: 320px;
     border-radius: 10px;
@@ -113,60 +123,44 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden; /* Para recortar la imagen si es necesario */
 }
-
-#preview-image {
+  
+.image-preview-sell img {
     max-width: 100%;
     max-height: 100%;
 }
-
-.image-preview h3{
+  
+  .image-preview-sell h3 {
     color: #ffffff;
     font-size: 20px;
     text-align: center;
     font-weight: 10px;
     margin: 0;
     padding: 0;
-}
-#prev{
-    display: block;
-}
-
-#response{
+  }
+  
+  #response-sell {
     margin-top: 30px;
     font-size: 20px;
     display: block;
     color: red;
     display: none;
-}
-
-.custom-upload-btn {
-    padding: 10px 20px;
-    border: 1px solid #01d28e;
-    border-radius: 5px;
-    background-color: #051025;
-    color: #fff;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
+  }
   
-.custom-upload-btn:hover {
-    background-color: #1e2a41;
-}
-  
-.submit_button{
+  .submit_button_sell {
     flex-basis: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     margin-top: 30px;
-}
-
-.btn {
+  }
+  
+  .btn-sell {
     padding: 20px 40px;
     border-radius: 5px;
-    background-color: #24283B;
+    background-color: #24283b;
     color: #fff;
     cursor: pointer;
     transition: background-color 0.2s ease;
@@ -175,16 +169,16 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     font-weight: bold;
     border: 2px solid #01d28e;
     outline: none;
-}
+  }
   
-.btn:hover {
+  .btn-sell:hover {
     border: 2px solid #01d28e;
     background-color: #393e5a;
-    box-shadow: none;
+    box-shadow:none;
     outline: none;
-}
-
-@keyframes zoom {
+  }
+  
+  @keyframes zoom-effect {
     0%,
     100% {
       transform: scale(1);
@@ -195,12 +189,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
   
   .zoom-effect {
-    animation: zoom 1s infinite;
+    animation: zoom-effect 1s infinite;
   }
   
-@media screen and (max-width: 768px) {
-    .columna {
-        flex-basis: 100%;
+  @media screen and (max-width: 768px) {
+    .columna-sell {
+      flex-basis: 100%;
     }
-}
+  }
+  
     
