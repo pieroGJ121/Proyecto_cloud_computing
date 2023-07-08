@@ -231,10 +231,10 @@ def create_app(test_config=None):
                 list_errors.append('price is required')
             else:
                 price = body['price']
-            if 'plataforma' not in body:
+            if 'platform' not in body:
                 list_errors.append('plataforma is required')
             else:
-                plataforma = body['plataforma']
+                plataforma = body['platform']
 
             if len(list_errors) > 0:
                 returned_code = 400
@@ -243,9 +243,10 @@ def create_app(test_config=None):
 
                 db.session.add(oferta)
                 db.session.commit()
-        except:
+        except Exception as e:
             db.session.rollback()
             returned_code = 500
+            print(e)
         finally:
             db.session.close()
 

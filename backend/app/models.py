@@ -200,11 +200,11 @@ class Oferta(db.Model):
     modified_at = db.Column(db.DateTime(timezone=True), nullable=True,
                             server_default=db.text("now()"))
 
-    def __init__(self, usuario_id, game_id, price, plataforma):
+    def __init__(self, usuario_id, game_id, price, platform):
         self.usuario_id = usuario_id
         self.game_id = game_id
         self.price = price
-        self.plataforma = plataforma
+        self.platform = platform
         self.created_at = datetime.utcnow()
 
     def __repr__(self):
