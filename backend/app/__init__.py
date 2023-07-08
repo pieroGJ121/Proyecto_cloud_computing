@@ -226,7 +226,14 @@ def create_app(test_config=None):
             if 'game_id' not in body:
                 list_errors.append('game_id is required')
             else:
-                game_id = body['game_id']
+                game_api_id = body['game_id']
+                game = Game.query.filter_by(api_id=game_api_id).first()
+                if not game:
+                    game = Game(game_api_id)
+                    db.session.add(game)
+                    db.session.commit()
+                game_id = game.id
+
             if 'price' not in body:
                 list_errors.append('price is required')
             else:
