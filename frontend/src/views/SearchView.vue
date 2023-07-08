@@ -40,7 +40,7 @@
 import LayoutComponent from "@/components/Layout.vue";
 import NavbarSearchComponent from "@/components/NavbarSearchComponent.vue";
 import { getGenres, getPlatforms, getGames } from "@/services/search.api";
-//import { verifier_login } from "@/services/login.api";
+import { verifier_login } from "@/services/login.api";
 
 export default {
   name: "SearchView",
@@ -57,7 +57,7 @@ export default {
     };
   },
   async mounted() {
-    //verifier_login();
+    await verifier_login();
     const params = new URLSearchParams(window.location.search);
     this.search = params.get("name") || "";
     this.games = await getGames();

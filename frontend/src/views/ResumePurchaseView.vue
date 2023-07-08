@@ -35,7 +35,7 @@
 <script>
 import LayoutComponent from "@/components/Layout.vue";
 import { getGameData } from "@/services/search.api";
-//import { verifier_login } from "@/services/login.api";
+import { verifier_login } from "@/services/login.api";
 
 export default {
   name: "ResumePurchaseView",
@@ -43,12 +43,12 @@ export default {
     LayoutComponent,
   },
   async mounted() {
+    await verifier_login();
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get("id");
     const { game } = await getGameData(id);
     this.purchase_game = game.name;
     this.purchase_image = game.cover;
-    //verifier_login();
   },
   data() {
     return {

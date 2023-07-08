@@ -41,6 +41,17 @@
           </div>
         </div>
       </div>
+      <div class="sell-card">
+        <div class="sell-card-overlay"></div>
+        <div class="sell-card-content">
+          <div class="sell-card-text">
+            <h3>¿Quieres vender este juego?</h3>
+          </div>
+          <div class="sell-card-button">
+            <button @click="sellProduct">¡Vender ahora!</button>
+          </div>
+        </div>
+      </div>
     </template>
   </LayoutComponent>
 </template>
@@ -48,7 +59,7 @@
 <script>
 import LayoutComponent from "@/components/Layout.vue";
 import { getGameData } from "@/services/search.api";
-//import { verifier_login } from "@/services/login.api";
+import { verifier_login } from "@/services/login.api";
 
 export default {
   name: "VideogameView",
@@ -60,6 +71,9 @@ export default {
       const urlParams = new URLSearchParams(window.location.search);
       const id = urlParams.get("id");
       window.location.href = "/checkout?id=" + id;
+    },
+    sellProduct() {
+      console.log("Redirecting to endpoint");
     },
   },
   data() {
@@ -76,6 +90,7 @@ export default {
     };
   },
   async mounted() {
+    await verifier_login();
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get("id");
     const { game } = await getGameData(id);
@@ -90,8 +105,6 @@ export default {
     this.game_platform = this.game_platform.join(", ");
     this.game_synopsis = game.summary;
     this.game_image = game.cover;
-
-    //verifier_login();
   },
 };
 </script>

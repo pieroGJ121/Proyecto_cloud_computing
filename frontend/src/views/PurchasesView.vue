@@ -27,7 +27,7 @@
 
 <script>
 import LayoutComponent from "@/components/Layout.vue";
-//import { verifier_login } from "@/services/login.api";
+import { verifier_login } from "@/services/login.api";
 
 export default {
   name: "PurchasesView",
@@ -41,7 +41,7 @@ export default {
     };
   },
   async mounted() {
-    //verifier_login();
+    await verifier_login();
   },
 };
 </script>
