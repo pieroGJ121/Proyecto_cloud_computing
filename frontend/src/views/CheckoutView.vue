@@ -18,7 +18,7 @@
 
 <script>
 import LayoutComponent from "@/components/Layout.vue";
-//import { verifier_login } from "@/services/login.api";
+import { verifier_login } from "@/services/login.api";
 
 export default {
   name: "IndexView",
@@ -26,7 +26,7 @@ export default {
     LayoutComponent,
   },
   async mounted() {
-    //verifier_login();
+    verifier_login();
     setTimeout(() => {
       window.location.href = "/resume" + window.location.search;
     }, 5000);

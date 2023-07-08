@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import IndexView from "../views/IndexView.vue";
 import LoginView from "../views/LoginView.vue";
-import LogoutView from "../views/LogoutView.vue";
 import NewUserView from "../views/NewUserView.vue";
 import RecoverUserView from "../views/RecoverUserView.vue";
 import ProfileView from "../views/ProfileView.vue";
@@ -23,12 +22,6 @@ const routes = [
     name: "login",
     meta: { title: "Inicia aquí y ahora" },
     component: LoginView,
-  },
-  {
-    path: "/logout",
-    name: "logout",
-    meta: { title: "Esperamos verte pronto :)" },
-    component: LogoutView,
   },
   {
     path: "/new_user",

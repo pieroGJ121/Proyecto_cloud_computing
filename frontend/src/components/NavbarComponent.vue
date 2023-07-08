@@ -51,12 +51,6 @@
                 ><i class="fa-solid fa-shop" style="color: #ffffff"></i
               ></span>
             </a>
-            <!-- Upload a new game -->
-            <a class="text-reset me-3" href="/upload_game">
-              <span
-                ><i class="fa-solid fa-upload" style="color: #ffffff"></i
-              ></span>
-            </a>
             <!-- User -->
             <div class="dropdown">
               <a
@@ -83,7 +77,7 @@
                   <a class="dropdown-item" href="/profile">Mi perfil</a>
                 </li>
                 <li>
-                  <a class="dropdown-item" href="/logout">Cerrar sesión</a>
+                  <a class="dropdown-item" @click="logOut">Cerrar sesión</a>
                 </li>
               </ul>
             </div>
@@ -95,6 +89,7 @@
 </template>
 <script>
 import { getCompras } from "../services/userResources.api";
+import { logout } from "../services/login.api";
 export default {
   name: "NavbarComponent",
   data() {
@@ -118,6 +113,9 @@ export default {
         const url = `/search?${queryParams.toString()}`;
         window.location.href = url;
       }
+    },
+    async logOut() {
+      logout();
     },
   },
 };
