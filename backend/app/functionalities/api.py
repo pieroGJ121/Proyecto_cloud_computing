@@ -18,7 +18,8 @@ def do_request_api(body, path):
 
 def get_game_info_api(id):
     fields = "fields summary, name, first_release_date, genres.name, platforms.name, involved_companies.company.name, cover.image_id;"
-    body = fields + " where id = " + id + ";"
+    print("id: ", id)
+    body = fields + " where id = " + str(id) + ";"
     data = do_request_api(body, "games").json()[0]
     return {
         'api_id': id,

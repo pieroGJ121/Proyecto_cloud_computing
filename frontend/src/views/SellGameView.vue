@@ -105,7 +105,7 @@
             <div class="columna2-sell">
               <div class="form_group_game_sell">
                 <h3 class="message-image-sell">
-                  La imagen que acompañara a la oferta se motrará aquí:
+                  La imagen que acompañara a la oferta se mostrará aquí:
                 </h3>
               </div>
             </div>
