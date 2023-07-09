@@ -39,7 +39,7 @@ class Game(db.Model):
     def __repr__(self):
         return '<Game %r>' % (self.id)
 
-    def serialize_basic(self):
+    def serialize(self):
         data = get_game_info_api(self.api_id)
         data["id"] = id
         data['created_at'] = self.created_at,
@@ -133,7 +133,7 @@ class Usuario(db.Model):
         return [compra.get_data_with_game() for compra in
                 self.compras]
 
-    def get_data_with_games_being_sold(self):
+    def get_games_being_sold(self):
         ofertas_pending = []
         ofertas_done = []
         for o in self.ofertas:

@@ -215,7 +215,7 @@ def create_app(test_config=None):
     def obtain_ofertas_from_user():
         current_user_id = request.headers["user-id"]
         current_user = Usuario.query.filter_by(id=current_user_id).first()
-        ofertas = current_user.get_data_with_games_being_sold()
+        ofertas = current_user.get_games_being_sold()
         return jsonify({'success': True,
                         'ofertas_pending': ofertas["pending"],
                         'ofertas_done': ofertas["done"], }), 200
