@@ -21,7 +21,7 @@ import LayoutComponent from "@/components/Layout.vue";
 import { verifier_login } from "@/services/login.api";
 
 export default {
-  name: "IndexView",
+  name: "CheckoutView",
   components: {
     LayoutComponent,
   },

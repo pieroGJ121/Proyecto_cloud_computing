@@ -136,7 +136,7 @@ import { getGameData } from "@/services/search.api";
 import { createSale, confirmarVenta } from "@/services/seller.api";
 
 export default {
-  name: "IndexView",
+  name: "SellGameView",
   components: {
     LayoutComponent,
   },
