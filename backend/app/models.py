@@ -194,6 +194,7 @@ class Oferta(db.Model):
     compra = db.relationship('Compra', backref='oferta', lazy=True)
     game_id = db.Column(db.String(36), db.ForeignKey(
         'games.id'), nullable=False)
+    realizada = db.Column(db.Boolean(), nullable=False, default=False)
 
     price = db.Column(db.Integer, nullable=False)
     platform = db.Column(db.String(36), nullable=False)
