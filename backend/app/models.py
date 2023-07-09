@@ -23,7 +23,7 @@ class Game(db.Model):
     id = db.Column(db.String(36), primary_key=True,
                    default=lambda: str(uuid.uuid4()),
                    server_default=db.text("uuid_generate_v4()"))
-    api_id = db.Column(db.Integer, nullable=False)
+    api_id = db.Column(db.String(30), nullable=False)
 
     ofertas = db.relationship('Oferta', backref='game', lazy=True)
 
