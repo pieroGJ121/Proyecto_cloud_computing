@@ -73,3 +73,20 @@ export const createSale = async (sellData) => {
     console.log(error.response);
   }
 };
+
+export const getSales = async () => {
+  const headers = {
+    "Content-Type": "application/json",
+    "X-ACCESS-TOKEN": sessionStorage.getItem("token"),
+    "user-id": sessionStorage.getItem("user_id"),
+  };
+  const config = {
+    headers: headers,
+  };
+  try {
+    const { data } = await axios.get(BASE_URL + "oferta", config);
+    console.log(data);
+  } catch (error) {
+    console.log(error.response);
+  }
+};

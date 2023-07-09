@@ -10,6 +10,7 @@ import CheckoutView from "../views/CheckoutView.vue";
 import ResumePurchaseView from "../views/ResumePurchaseView.vue";
 import PurchasesView from "../views/PurchasesView.vue";
 import SellGameView from "../views/SellGameView.vue";
+import MarketplaceView from "../views/MarketplaceView.vue";
 
 const routes = [
   {
@@ -77,6 +78,12 @@ const routes = [
     name: "sell",
     meta: { title: "Vende ahora y recibe hasta el 95% de la venta final" },
     component: SellGameView,
+  },
+  {
+    path: "/marketplace",
+    name: "marketplace",
+    meta: { title: "Centro de ventas del usuario" },
+    component: MarketplaceView,
   },
 ];
 

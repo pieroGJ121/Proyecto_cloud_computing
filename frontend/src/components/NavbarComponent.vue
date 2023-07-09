@@ -46,7 +46,7 @@
               >
             </a>
             <!-- Marketplace dashboard -->
-            <a class="text-reset me-3" href="/seller">
+            <a class="text-reset me-3" href="/marketplace">
               <span
                 ><i class="fa-solid fa-shop" style="color: #ffffff"></i
               ></span>
