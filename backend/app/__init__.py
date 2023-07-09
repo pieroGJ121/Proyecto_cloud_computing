@@ -173,7 +173,7 @@ def create_app(test_config=None):
     @authorize
     def get_purchased_games():
         current_user_id = request.headers["user-id"]
-        current_user = Usuario.query.filter_by(id=current_user_id).first()
+        current_user = Usuario.query.get(current_user_id)
         games_bought = current_user.get_games_bought()
         return jsonify({'success': True, 'games': games_bought,
                         "user": current_user.serialize()})

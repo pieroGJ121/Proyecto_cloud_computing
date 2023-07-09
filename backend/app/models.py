@@ -41,7 +41,7 @@ class Game(db.Model):
 
     def serialize(self):
         data = get_game_info_api(self.api_id)
-        data["id"] = id
+        data["id"] = self.id
         data['created_at'] = self.created_at,
         data['modified_at'] = self.modified_at,
         return data
