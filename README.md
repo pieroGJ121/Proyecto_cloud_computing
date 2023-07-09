@@ -95,44 +95,21 @@ Para cargar las bases de datos se ejecuta:
 
 ### Rutas
 
-- @app.route('/', methods=['GET'])
-  Esta ruta se ejecuta para poder ingresar a la aplicación.
+|    Rutas            |    Método |  Función |
+|--------------------:|----------:|---------:|
+|                 "/" |       GET | Ingresar a la aplicación |
+|            "/login" | GET; POST | Redirigir a la vista principal e iniciar sesión |
+|           "/logout" |       GET | Cerrar sesión |
+|"/password_recovery" |       GET | Reestablecer contraseña |
+|    "/data_recovery" |       GET | Recuperar datos |
+|  "/password_change" |      POST | Cambiar la contraseña |
+|         "/new_user" |       GET | Agregar nuevo usuario
 
-  - En caso de que se loguee, se renderiza a la vista index
-  - En caso de que no esté logueado, se redirecciona a la ruta login
 
-- @app.route('/login', methods=['GET', 'POST'])
-  Si ya está logueado, te va a redirigir a la vista principal
-  Y en caso no lo esté, te renderiza a la vista login:
 
-  - Primero va a requrir el correo y la contraseña del usuario.
-  - Se busca el primer usuario que coincida con el email puesto en el formulario
-  - De ahí, si el usuario existe y es correcto, retorna un mensaje de inicio de sesión correcto.
-  - Si el ususario en incorrecto, retorna un mensaje de correo y/o contraseña incorrectos.
-  - Y, si es que el ususario no existe, te retorna un mensaje de ususario no registrado.
 
-- @app.route('/logout', methods=['GET'])
-  Esta ruta sirve para cerrar sesión y te redirige a la página de login.
-- @app.route('/password_recovery', methods=['GET'])
-  Esta ruta sirve para cambiar de contraseña.
-- @app.route('/data_recovery', methods=['POST'])
-  Esta ruta sirve para recuperar datos.
 
-  - Primero pones los datos que quieres recuperar en el formulario (nombre e email)
-  - De ahí, se buscan en la base de datos:
-  - Si coinciden, te manda el mensaje de que todo coincide
-  - Si no coinciden, te manda el mensaje de intentar de nuevo
-  - Y si el ususario no existe, te manda el mensaje que no hay ususario registrado
 
-- @app.route('/password_change', methods=['POST'])
-  Esta ruta sirve para reestablecer la contraseña
-
-  - Primero te pide que ingreses la contraseña nueva y la vuelvas a escribir en otro cambio
-  - Si las contraseñas coinciden, te manda un mensaje de cambio exitoso
-  - Si no coinciden, te manda una mensaje indicando que no coinciden
-
-- @app.route('/new_user', methods=['GET'])
-  Esta ruta sirve para agregar un nuevo ususario y te renderiza a la vista register
 
 - @app.route('/new_user', methods=['POST'])
   Esta ruta sirve para agregar la info del nuevo usuario a registrar
@@ -210,9 +187,6 @@ Para cargar las bases de datos se ejecuta:
 ### API
 
 La API que se está utilizando se llama IGDB.com, el cual sirve para obtener información sobre videojuegos individuales y poder realizar búsquedas de videojuegos.
-
-
-
 
 ### Hosts
 
