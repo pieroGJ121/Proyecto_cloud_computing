@@ -46,6 +46,9 @@ class Game(db.Model):
         data['modified_at'] = self.modified_at,
         return data
 
+    def get_ofertas(self):
+        return [oferta.serialize() for oferta in self.ofertas]
+
 
 class Usuario(db.Model):
     __tablename__ = 'usuarios'

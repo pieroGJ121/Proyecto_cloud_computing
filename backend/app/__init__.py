@@ -100,10 +100,15 @@ def create_app(test_config=None):
     def get_videogame(identificador):
         game = 0
         returned_code = 200
+        ofertas = []
         try:
             game = get_game_info_api(identificador)
             if not game:
                 returned_code = 404
+            else:
+                game_db = Game.query.filter_by(api_id=identificador).first()
+                if game_db:
+                    ofertas = game_db.get_ofertas()
         except Exception as e:
             db.session.rollback()
             returned_code = 500
@@ -113,7 +118,8 @@ def create_app(test_config=None):
         if returned_code != 200:
             abort(returned_code)
         else:
-            return jsonify({"success": True, 'game': game}), 200
+            return jsonify({"success": True, 'game': game,
+                            "ofertas": ofertas}), 200
 
     # Todo referente a la pagina de "search" va aqui
 
