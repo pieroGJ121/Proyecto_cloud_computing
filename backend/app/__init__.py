@@ -42,7 +42,7 @@ def create_app(test_config=None):
     @authorize
     def get_profile():
         current_user_id = request.headers["user-id"]
-        current_user = Usuario.query.filter_by(id=current_user_id).first()
+        current_user = Usuario.query.get(current_user_id)
         return jsonify({"success": True,
                         'user': current_user.serialize()}), 200
 
@@ -51,7 +51,7 @@ def create_app(test_config=None):
     def change_profile():
         body = request.json
         current_user_id = request.headers["user-id"]
-        current_user = Usuario.query.filter_by(id=current_user_id).first()
+        current_user = Usuario.query.get(current_user_id)
         nombre = body['name']
         apellido = body['lastname']
         bio = body['bio']
@@ -75,7 +75,7 @@ def create_app(test_config=None):
     @authorize
     def delete_profile():
         current_user_id = request.headers["user-id"]
-        current_user = Usuario.query.filter_by(id=current_user_id).first()
+        current_user = Usuario.query.get(current_user_id)
         if current_user:
             compras_eliminar = Compra.query.filter_by(
                 usuario_id=current_user.id).all()
@@ -190,7 +190,7 @@ def create_app(test_config=None):
     @authorize
     def add_compra(oferta_id):
         current_user_id = request.headers["user-id"]
-        current_user = Usuario.query.filter_by(id=current_user_id).first()
+        current_user = Usuario.query.get(current_user_id)
         new_purchase = Compra(oferta_id, current_user_id)
 
         db.session.add(new_purchase)
@@ -214,7 +214,7 @@ def create_app(test_config=None):
     @authorize
     def obtain_ofertas_from_user():
         current_user_id = request.headers["user-id"]
-        current_user = Usuario.query.filter_by(id=current_user_id).first()
+        current_user = Usuario.query.get(current_user_id)
         ofertas = current_user.get_games_being_sold()
         return jsonify({'success': True,
                         'ofertas_pending': ofertas["pending"],
