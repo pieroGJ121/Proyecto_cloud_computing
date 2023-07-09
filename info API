@@ -26,6 +26,7 @@ de la Universidad de Ingeniería y Tecnología 💙🤍. Esperemos les guste. �
         <li><a href="#librerías-framworks-y-plugins">Librerías, Frameworks y Plugins</a></li>
         <li><a href="#script">Script</a></li>
         <li><a href="#rutas">Rutas</a></li>
+        <li><a href="#api">API</a></li>
         <li><a href="#hosts">Hosts</a></li>
         <li><a href="#manejo-de-errores-http">Manejo de Errores HTTP</a></li>
         <li><a href="#ejecución-del-sistema">Ejecución del Sistema</a></li>
@@ -205,6 +206,13 @@ Para cargar las bases de datos se ejecuta:
   Esta ruta sirve para ver el resumen de la compra
   - Si la compra aun no se realizó, te renderiza al resumen
   - Si la compra se realiza, te redirecciona a la página principal
+
+### API
+
+La API que se está utilizando se llama IGDB.com, el cual sirve para obtener información sobre videojuegos individuales y poder realizar búsquedas de videojuegos.
+
+
+
 
 ### Hosts
 
