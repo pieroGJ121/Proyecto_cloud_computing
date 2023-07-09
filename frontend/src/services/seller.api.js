@@ -22,6 +22,23 @@ export const confirmarVenta = () => {
   });
 };
 
+const confirmationOffer = () => {
+  return new Promise((resolve) => {
+    Swal.fire({
+      title: "Confirmación de venta",
+      text: "Tu oferta de este juego se ha realizado con éxito",
+      icon: "success",
+      showCancelButton: false,
+      confirmButtonColor: "#01d28e",
+      confirmButtonText: "Okey",
+      background: "#24283b",
+      color: "white",
+    }).then((result) => {
+      resolve(result);
+    });
+  });
+};
+
 export const createSale = async (sellData) => {
   const headers = {
     "Content-Type": "application/json",
@@ -33,7 +50,25 @@ export const createSale = async (sellData) => {
   };
   try {
     const { data } = await axios.post(BASE_URL + "oferta", sellData, config);
-    console.log(data);
+    if (data.success) {
+      const result = await confirmationOffer();
+      if (result.isConfirmed) {
+        window.location.href = "/";
+      } else {
+        window.location.href = "/";
+      }
+    } else {
+      Swal.fire({
+        title: "Error",
+        text: data.message,
+        icon: "error",
+        showCancelButton: false,
+        confirmButtonColor: "#d33",
+        confirmButtonText: "Okey :(",
+        background: "#24283b",
+        color: "white",
+      });
+    }
   } catch (error) {
     console.log(error.response);
   }
