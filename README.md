@@ -95,14 +95,15 @@ Para cargar las bases de datos se ejecuta:
 
 ### Rutas
 
-|Rutas | Método | Función |
-| "/"  | GET    | Ingresar a la aplicación |
-|"/login" | GET Y POST | Redirigir a la vista principal e iniciar sesión |
-|"/logout" | GET | Cerrar sesión |
-|"/password_recovery" | GET | Reestablecer contraseña |
-|"/data_recovery" | GET | Recuperar datos |
-|"/password_change" | POST | Cambiar la contraseña |
-|"/new_user" | GET | Agregar nuevo usuario
+|    Rutas            |    Método |  Función |
+|--------------------:|----------:|---------:|
+|                 "/" |       GET | Ingresar a la aplicación |
+|            "/login" | GET; POST | Redirigir a la vista principal e iniciar sesión |
+|           "/logout" |       GET | Cerrar sesión |
+|"/password_recovery" |       GET | Reestablecer contraseña |
+|    "/data_recovery" |       GET | Recuperar datos |
+|  "/password_change" |      POST | Cambiar la contraseña |
+|         "/new_user" |       GET | Agregar nuevo usuario
 
 
 
