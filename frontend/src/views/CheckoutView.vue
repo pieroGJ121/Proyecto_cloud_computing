@@ -19,7 +19,7 @@
 <script>
 import LayoutComponent from "@/components/Layout.vue";
 import { verifier_login } from "@/services/login.api";
-import { comprarJuego } from "@/services/buy.api";
+import { comprarJuego, compraExitosa, compraFallida } from "@/services/buy.api";
 
 export default {
   name: "CheckoutView",
@@ -31,7 +31,24 @@ export default {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get("id");
     if (id) {
-      await comprarJuego(id);
+      const res = await comprarJuego(id);
+      if (res.success) {
+        const result = await compraExitosa();
+        if (result.isConfirmed) {
+          window.location.href =
+            "/resume?id=" + res.compra.id + "&compra=exitosa";
+        } else {
+          window.location.href =
+            "/resume?id=" + res.compra.id + "&compra=exitosa";
+        }
+      } else {
+        const result = await compraFallida();
+        if (result.isConfirmed) {
+          window.location.href = "/";
+        } else {
+          window.location.href = "/";
+        }
+      }
     } else {
       window.location.href = "/";
     }
