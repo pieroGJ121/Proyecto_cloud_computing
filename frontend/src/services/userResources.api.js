@@ -13,10 +13,10 @@ export const getCompras = async () => {
 
   try {
     const { data } = await axios.get(BASE_URL, config);
-    return data.games;
+    return data;
   } catch (error) {
     console.log(error);
   }
 
-  return [];
+  return {};
 };

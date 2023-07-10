@@ -2,7 +2,11 @@
   <LayoutComponent>
     <template #Content>
       <h2 class="search_text_p" id="welcome_text">
-        {{ user_name }}, estos son los juegos que has comprado:
+        {{
+          user_name
+            ? `${user_name}, estos son los juegos que has comprado:`
+            : "Getting data, please wait..."
+        }}
       </h2>
       <div class="main_container_games">
         <div class="container_games" id="container_games">
@@ -10,11 +14,12 @@
             class="item_game"
             v-for="juego in games"
             :key="juego.game.api_id"
-            @click="getVideogame(juego.game.api_id)"
           >
             <img :src="juego.game.cover" :alt="juego.game.name" />
             <h4 style="color: white">{{ juego.game.name }}</h4>
             <p>Publicado en: {{ juego.game.release_year }}</p>
+            <p>Vendedor: {{ juego.game.release_year }}</p>
+            <p>Precio: {{ juego.game.release_year }}</p>
           </div>
         </div>
       </div>
@@ -28,6 +33,8 @@
 <script>
 import LayoutComponent from "@/components/Layout.vue";
 import { verifier_login } from "@/services/login.api";
+import { getCompras } from "@/services/userResources.api";
+import { getUserData } from "@/services/manageUserData.api";
 
 export default {
   name: "PurchasesView",
@@ -42,6 +49,11 @@ export default {
   },
   async mounted() {
     await verifier_login();
+    const user = await getUserData();
+    this.user_name = user.name;
+    const data = await getCompras();
+    console.log(data);
+    this.games = data.games;
   },
 };
 </script>

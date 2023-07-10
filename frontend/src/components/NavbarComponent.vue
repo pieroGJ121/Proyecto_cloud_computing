@@ -99,7 +99,8 @@ export default {
     };
   },
   async mounted() {
-    this.Purchases = await getCompras();
+    const data = await getCompras();
+    this.Purchases = data.games;
   },
   methods: {
     searchGame() {
