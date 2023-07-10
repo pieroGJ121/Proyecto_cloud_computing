@@ -11,6 +11,7 @@ import ResumePurchaseView from "../views/ResumePurchaseView.vue";
 import PurchasesView from "../views/PurchasesView.vue";
 import SellGameView from "../views/SellGameView.vue";
 import MarketplaceView from "../views/MarketplaceView.vue";
+import UpdateOfferView from "../views/UpdateOfferView.vue";
 
 const routes = [
   {
@@ -84,6 +85,12 @@ const routes = [
     name: "marketplace",
     meta: { title: "Centro de ventas del usuario" },
     component: MarketplaceView,
+  },
+  {
+    path: "/offer",
+    name: "offer",
+    meta: { title: "Actualiza tu oferta" },
+    component: UpdateOfferView,
   },
 ];
 
