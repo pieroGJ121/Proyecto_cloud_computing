@@ -16,6 +16,7 @@ from .models import (
     setup_db)
 from .functionalities.send_email import enviar_correo
 from flask_migrate import Migrate
+import datetime
 
 compra = False
 
@@ -167,7 +168,8 @@ def create_app(test_config=None):
             offset += 500
 
         for i in selected:
-            i["release_year"] = datetime.utcfromtimestamp(i["first_release_date"]).strftime('%d-%m-%Y')
+            i["release_year"] = datetime.utcfromtimestamp(
+                i["first_release_date"]).strftime('%d-%m-%Y')
 
         return jsonify({'success': True, 'games': selected}), 200
 
