@@ -2,7 +2,8 @@ import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
-def enviar_correo(destinatario,titulo,fecha,id_compra):
+
+def enviar_correo(destinatario, titulo, fecha, id_compra, link_image, precio):
     # Configuración del servidor SMTP de Gmail
     smtp_server = 'smtp.gmail.com'
     smtp_port = 587
@@ -46,19 +47,20 @@ def enviar_correo(destinatario,titulo,fecha,id_compra):
 
             <div class="order-details">
                 <div class="image" id="game_image">
-                    <img src="https://i.ibb.co/VvXpQYP/Formato-de-Videojuego.jpg" alt="Game Image">
+                    <img src="{}" alt="Game Image">
                 </div>
                 <div class="info">
                     <div class="title" id="game_title">{}</div>
                     <div class="purchase-date" id="purchase_date">Fecha de compra: {}</div>
                     <div class="order-id" id="order_id">ID de compra: {}</div>
+                    <div class="price" id="price">S/. {}</div>
                 </div>
             </div>
         </div>
     </div>
     </body>
     </html>
-    """.format(titulo, fecha, id_compra)
+    """.format(link_image, titulo, fecha, id_compra, precio)
 
     # Adjuntar el contenido HTML al mensaje
     message.attach(MIMEText(html_content, 'html'))

@@ -196,18 +196,19 @@ def create_app(test_config=None):
         if "id" not in body:
             return jsonify({'success': False, 'message': 'No se ha enviado el id del juego'}), 400
         else:
-            oferta_id = body["id"]
-            new_purchase = Compra(oferta_id, current_user_id)
-            db.session.add(new_purchase)
-            oferta = Oferta.query.get(oferta_id)
-            oferta.realizada = True
-            db.session.commit()
-            enviar_correo(current_user.email,
-                          new_purchase.get_data_with_game()['game']['game_name'],
-                          'Fecha: {}'.format(
-                              new_purchase.created_at),
-                          'ID de compra: {}'.format(new_purchase.id))
-            return jsonify({'success': True, 'compra': new_purchase.serialize()})
+            try:
+                oferta_id = body["id"]
+                new_purchase = Compra(oferta_id, current_user_id)
+                db.session.add(new_purchase)
+                oferta = Oferta.query.get(oferta_id)
+                oferta.realizada = True
+                db.session.commit()
+                enviar_correo(current_user.email, new_purchase.get_data_with_game()['game']['name'], new_purchase.created_at.strftime(
+                    "%d/%m/%Y, %H:%M:%S"), new_purchase.id, new_purchase.get_data_with_game()['game']['cover'], new_purchase.get_data_with_game()['oferta']['price'])
+                return jsonify({'success': True, 'compra': new_purchase.serialize(), 'juego': new_purchase.get_data_with_game()}), 200
+            except Exception as e:
+                db.session.rollback()
+                return jsonify({'success': False, 'message': 'No se ha podido realizar la compra'}), 500
 
     # Todo referente a comprar y hacer ofertas va aqui
 
