@@ -34,7 +34,7 @@
 
 <script>
 import LayoutComponent from "@/components/Layout.vue";
-import { getGameData } from "@/services/search.api";
+import { getPurchaseData } from "@/services/search.api";
 import { verifier_login } from "@/services/login.api";
 
 export default {
@@ -46,9 +46,10 @@ export default {
     await verifier_login();
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get("id");
-    const { game } = await getGameData(id);
-    this.purchase_game = game.name;
-    this.purchase_image = game.cover;
+    const purchase = await getPurchaseData(id);
+    console.log(purchase);
+    //this.purchase_game = game.name;
+    //this.purchase_image = game.cover;
   },
   data() {
     return {

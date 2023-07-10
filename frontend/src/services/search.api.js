@@ -2,6 +2,7 @@ import axios from "axios";
 
 const BASE_URL = "http://localhost:5002/search/";
 const VIDEOGAME_URL = "http://localhost:5002/videogame/";
+const COMPRA_URL = "http://localhost:5002/compra/";
 
 export const getGenres = async () => {
   try {
@@ -67,6 +68,21 @@ export const getGameData = async (id) => {
     const { data } = await axios.get(VIDEOGAME_URL + id, {
       headers: {
         "X-ACCESS-TOKEN": sessionStorage.getItem("token"),
+      },
+    });
+    return data;
+  } catch (error) {
+    console.error("Error al buscar datos del juego", id);
+  }
+  return {};
+};
+
+export const getPurchaseData = async (id) => {
+  try {
+    const { data } = await axios.get(COMPRA_URL + id, {
+      headers: {
+        "X-ACCESS-TOKEN": sessionStorage.getItem("token"),
+        "user-id": sessionStorage.getItem("user_id"),
       },
     });
     return data;
