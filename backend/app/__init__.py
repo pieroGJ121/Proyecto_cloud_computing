@@ -188,10 +188,10 @@ def create_app(test_config=None):
 
     @app.route('/compra/<identificador>', methods=['POST'])
     @authorize
-    def add_compra(oferta_id):
+    def add_compra(identificador):
         current_user_id = request.headers["user-id"]
         current_user = Usuario.query.get(current_user_id)
-        new_purchase = Compra(oferta_id, current_user_id)
+        new_purchase = Compra(identificador, current_user_id)
 
         db.session.add(new_purchase)
         db.session.commit()
