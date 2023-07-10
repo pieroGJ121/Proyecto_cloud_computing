@@ -178,7 +178,7 @@ class Compra(db.Model):
 
     def get_data_with_game(self):
         data = self.serialize()
-        game_data = self.game.serialize()
+        game_data = self.oferta.game.serialize()
         data["game"] = game_data
         return data
 
@@ -218,10 +218,11 @@ class Oferta(db.Model):
         return {
             'id': self.id,
             'usuario': self.usuario.serialize(),
-            'created_at': self.created_at,
-            'modified_at': self.modified_at,
             'price': self.price,
             'platform': self.platform,
+            'realizada': self.realizada,
+            'created_at': self.created_at,
+            'modified_at': self.modified_at,
         }
 
     def get_data_with_game(self):
