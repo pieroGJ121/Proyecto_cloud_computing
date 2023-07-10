@@ -46,6 +46,7 @@ export default {
     await verifier_login();
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get("id");
+    console.log(id);
     const purchase = await getPurchaseData(id);
     console.log(purchase);
     //this.purchase_game = game.name;

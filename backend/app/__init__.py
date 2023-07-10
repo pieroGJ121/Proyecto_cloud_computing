@@ -181,9 +181,10 @@ def create_app(test_config=None):
     @authorize
     def get_compra(identificador):
         current_user_id = request.headers["user-id"]
-        purchase = Compra.query.filter_by(oferta_id=identificador).first()
+        purchase = Compra.query.filter_by(id=identificador).first()
+        print(purchase)
         if purchase:
-            if purchase.usuario_id == current_user_id:
+            if purchase.user_id == current_user_id:
                 return jsonify({'success': True,
                                 'compra': purchase.get_data_with_game()}), 200
             else:
