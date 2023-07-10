@@ -129,8 +129,12 @@ export default {
     this.game_synopsis = game.game.summary;
     this.game_image = game.game.cover;
     let prev_offers = game.ofertas;
+    console.log(prev_offers);
     for (let i = 0; i < prev_offers.length; i++) {
-      if (prev_offers[i].usuario.id !== sessionStorage.getItem("user_id")) {
+      if (
+        (prev_offers[i].usuario.id !== sessionStorage.getItem("user_id")) &
+        !prev_offers[i].realizada
+      ) {
         this.offers.push(prev_offers[i]);
       }
     }

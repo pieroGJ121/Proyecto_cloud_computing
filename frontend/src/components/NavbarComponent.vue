@@ -42,7 +42,7 @@
               <span
                 class="badge rounded-pill badge-notification"
                 id="counter_purchases_cart"
-                >{{ Purchases.length }}</span
+                >{{ Purchases.length > 9 ? "+9" : Purchases.length }}</span
               >
             </a>
             <!-- Marketplace dashboard -->
