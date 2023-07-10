@@ -366,6 +366,13 @@ def create_app(test_config=None):
             'message': 'Acceso no autorizado'
         }), 401
 
+    @app.errorhandler(403)
+    def unauthorizedresource(error):
+        return jsonify({
+            'success': False,
+            'message': "You don't have permission to access this resource"
+        }), 403
+
     @app.errorhandler(404)
     def page_not_found(error):
         return jsonify({
