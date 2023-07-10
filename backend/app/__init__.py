@@ -186,7 +186,7 @@ def create_app(test_config=None):
                                           game_id=identificador).first()
         return jsonify({'success': True, 'compra': purchase.serialize()})
 
-    @app.route('/compra/<identificador>', methods=['POST'])
+    @app.route('/compra/<oferta_id>', methods=['POST'])
     @authorize
     def add_compra(oferta_id):
         current_user_id = request.headers["user-id"]
