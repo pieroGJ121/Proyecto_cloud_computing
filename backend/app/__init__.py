@@ -175,8 +175,7 @@ def create_app(test_config=None):
         current_user_id = request.headers["user-id"]
         current_user = Usuario.query.get(current_user_id)
         games_bought = current_user.get_games_bought()
-        return jsonify({'success': True, 'games': games_bought,
-                        "user": current_user.serialize()})
+        return jsonify({'success': True, 'games': games_bought}), 200
 
     @app.route('/compra/<identificador>', methods=['GET'])
     @authorize
