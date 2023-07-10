@@ -22,6 +22,25 @@ export const confirmarVenta = () => {
   });
 };
 
+export const confirmarCompra = () => {
+  return new Promise((resolve) => {
+    Swal.fire({
+      title: "Confirmación de compra",
+      text: "¿Estás seguro de que quieres comprar este juego?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#01d28e",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "¡Si, lo quiero!",
+      cancelButtonText: "Ya no",
+      background: "#24283b",
+      color: "white",
+    }).then((result) => {
+      resolve(result);
+    });
+  });
+};
+
 export const confirmarActualizacionVenta = () => {
   return new Promise((resolve) => {
     Swal.fire({
@@ -108,9 +127,9 @@ export const createSale = async (sellData) => {
     if (data.success) {
       const result = await confirmationOffer();
       if (result.isConfirmed) {
-        window.location.href = "/";
+        window.location.href = "/marketplace";
       } else {
-        window.location.href = "/";
+        window.location.href = "/marketplace";
       }
     } else {
       Swal.fire({

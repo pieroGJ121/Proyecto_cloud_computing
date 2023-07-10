@@ -26,7 +26,7 @@ def authorize(f):
 
         try:
             jwt.decode(token, config['SECRET_KEY'], config['ALGORYTHM'])
-            #print('\tdecode token: ', data)
+            # print('\tdecode token: ', data)
         except Exception as e:
             print('e: ', e)
             print('sys.exc_info(): ', sys.exc_info())

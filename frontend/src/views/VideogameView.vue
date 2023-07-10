@@ -30,9 +30,23 @@
             </div>
             <div id="offers_container">
               <h4>Ofertas disponibles</h4>
-              <div class="offer-card">
-                <div class="seller">Vendedor: Pedro Santiago</div>
-                <div class="price">S/. 20</div>
+              <div
+                class="offer-card"
+                v-for="offer in offers"
+                :key="offer.id"
+                @click="buyGame(offer.id)"
+              >
+                <div class="seller">
+                  Vendedor: {{ offer.usuario.name }}
+                  {{ offer.usuario.lastname }}
+                </div>
+                <div class="price">S/. {{ offer.price }}</div>
+                <div class="date-publish">
+                  Fecha de publicación: {{ formatDate(offer.modified_at) }}
+                </div>
+                <div class="platform-publish">
+                  Plataforma: {{ offer.platform }}
+                </div>
               </div>
               <div id="buy_message" v-if="this.offers.length === 0">
                 No hay ofertas disponibles para este título 😓
@@ -60,6 +74,7 @@
 import LayoutComponent from "@/components/Layout.vue";
 import { getGameData } from "@/services/search.api";
 import { verifier_login } from "@/services/login.api";
+import { confirmarCompra } from "@/services/seller.api";
 
 export default {
   name: "VideogameView",
@@ -67,15 +82,21 @@ export default {
     LayoutComponent,
   },
   methods: {
-    async buyGame() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const id = urlParams.get("id");
-      window.location.href = "/checkout?id=" + id;
+    async buyGame(id) {
+      const result = await confirmarCompra(id);
+      if (result.isConfirmed) {
+        window.location.href = "/checkout?id=" + id;
+      }
     },
     sellProduct() {
       const urlParams = new URLSearchParams(window.location.search);
       const id = urlParams.get("id");
       window.location.href = "/sell?id=" + id;
+    },
+    formatDate(dateString) {
+      const fecha = new Date(dateString);
+      const options = { year: "numeric", month: "long", day: "numeric" };
+      return fecha.toLocaleDateString(undefined, options);
     },
   },
   data() {
@@ -95,18 +116,24 @@ export default {
     await verifier_login();
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get("id");
-    const { game } = await getGameData(id);
-    this.game_id = game.api_id;
-    this.game_name = game.name;
-    this.game_year = game.release_year;
-    this.game_genre = game.genres;
+    const game = await getGameData(id);
+    this.game_id = game.game.api_id;
+    this.game_name = game.game.name;
+    this.game_year = game.game.release_year;
+    this.game_genre = game.game.genres;
     this.game_genre = this.game_genre.join(", ");
-    this.game_publisher = game.involved_companies;
+    this.game_publisher = game.game.involved_companies;
     this.game_publisher = this.game_publisher.join(", ");
-    this.game_platform = game.platforms;
+    this.game_platform = game.game.platforms;
     this.game_platform = this.game_platform.join(", ");
-    this.game_synopsis = game.summary;
-    this.game_image = game.cover;
+    this.game_synopsis = game.game.summary;
+    this.game_image = game.game.cover;
+    let prev_offers = game.ofertas;
+    for (let i = 0; i < prev_offers.length; i++) {
+      if (prev_offers[i].usuario.id !== sessionStorage.getItem("user_id")) {
+        this.offers.push(prev_offers[i]);
+      }
+    }
   },
 };
 </script>

@@ -51,8 +51,6 @@
           </div>
         </div>
       </div>
-      {{ sales }}
-      {{ pending }}
     </template>
   </LayoutComponent>
 </template>
