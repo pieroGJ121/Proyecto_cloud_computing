@@ -120,13 +120,16 @@
     flex-grow: 1;
     font-weight: normal;
     font-size: 30px;
+    width: 50%;
   }
   
   .price {
+    width: 50%;
     color: #fff;
     white-space: nowrap;
     font-weight: bold;
     font-size: 40px;
+    text-align: right;
   }
 .offer-card:hover {
     filter: brightness(1.1);

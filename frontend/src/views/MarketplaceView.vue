@@ -50,6 +50,45 @@
             </div>
           </div>
         </div>
+
+        <div class="row-market" v-for="sale in sales" :key="sale.id">
+          <div class="column-market-image">
+            <div class="image-container-market">
+              <img :src="sale.game.cover" alt="Image" />
+            </div>
+          </div>
+          <div class="column-market-content">
+            <h2 class="venta">Estado de venta: Vendido</h2>
+            <h2 class="nombre">Nombre del juego: {{ sale.game.name }}</h2>
+            <div class="form_group_game_market">
+              <label for="price" class="label-market">PRECIO - S/</label>
+              <input
+                type="number"
+                id="price_market"
+                class="form_control_game_market"
+                :value="sale.price"
+                required
+                disabled
+              />
+            </div>
+            <div class="form_group_game_market">
+              <label for="platforms" class="label-market">PLATAFORMAS</label>
+              <div class="custom-select-market">
+                <input
+                  type="text"
+                  id="platform_market"
+                  class="form_control_game_market"
+                  :value="sale.platform"
+                  required
+                  disabled
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <h1 v-if="showMessage">
+          Aún no has publicado ningun juego. ¿Por qué no hacerlo ahora? 😎
+        </h1>
       </div>
     </template>
   </LayoutComponent>
@@ -73,6 +112,7 @@ export default {
     return {
       sales: [],
       pending: [],
+      showMessage: false,
     };
   },
   async mounted() {
@@ -80,6 +120,9 @@ export default {
     const data = await getSales();
     this.sales = data.ofertas_done;
     this.pending = data.ofertas_pending;
+    if (this.sales.length === 0 && this.pending.length === 0) {
+      this.showMessage = true;
+    }
   },
   methods: {
     async deleteOffer(id) {
