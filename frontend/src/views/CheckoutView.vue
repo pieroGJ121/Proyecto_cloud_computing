@@ -19,6 +19,7 @@
 <script>
 import LayoutComponent from "@/components/Layout.vue";
 import { verifier_login } from "@/services/login.api";
+import { comprarJuego } from "@/services/buy.api";
 
 export default {
   name: "CheckoutView",
@@ -26,10 +27,14 @@ export default {
     LayoutComponent,
   },
   async mounted() {
-    verifier_login();
-    setTimeout(() => {
-      window.location.href = "/resume" + window.location.search;
-    }, 5000);
+    await verifier_login();
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get("id");
+    if (id) {
+      await comprarJuego(id);
+    } else {
+      window.location.href = "/";
+    }
   },
 };
 </script>
