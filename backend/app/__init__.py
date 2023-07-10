@@ -196,11 +196,17 @@ def create_app(test_config=None):
         if "id" not in body:
             return jsonify({'success': False, 'message': 'No se ha enviado el id del juego'}), 400
         else:
-            new_purchase = Compra(body["id"], current_user_id)
+            oferta_id = body["id"]
+            new_purchase = Compra(oferta_id, current_user_id)
             db.session.add(new_purchase)
+            oferta = Oferta.query.get(oferta_id)
+            oferta.realizada = True
             db.session.commit()
-            enviar_correo(current_user.email, new_purchase.get_data_with_game()['game']['game_name'], 'Fecha: {}'.format(
-                new_purchase.created_at), 'ID de compra: {}'.format(new_purchase.id))
+            enviar_correo(current_user.email,
+                          new_purchase.get_data_with_game()['game']['game_name'],
+                          'Fecha: {}'.format(
+                              new_purchase.created_at),
+                          'ID de compra: {}'.format(new_purchase.id))
             return jsonify({'success': True, 'compra': new_purchase.serialize()})
 
     # Todo referente a comprar y hacer ofertas va aqui
