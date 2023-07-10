@@ -220,6 +220,20 @@ def create_app(test_config=None):
                         'ofertas_pending': ofertas["pending"],
                         'ofertas_done': ofertas["done"], }), 200
 
+    @app.route('/oferta/<identificador>', methods=['GET'])
+    @authorize
+    def get_oferta(identificador):
+        current_user_id = request.headers["user-id"]
+        current_user = Usuario.query.get(current_user_id)
+        oferta = Oferta.query.filter_by(id=identificador).first()
+        if oferta:
+            if oferta.usuario_id == current_user_id:
+                return jsonify({'success': True, 'oferta': oferta.serialize(), 'game': oferta.get_data_with_game()}), 200
+            else:
+                abort(403)
+        else:
+            abort(404)
+
     @app.route('/oferta', methods=['POST'])
     @authorize
     def new_oferta():
@@ -273,6 +287,44 @@ def create_app(test_config=None):
             # abort(returned_code)
         else:
             return jsonify({'success': True, 'message': 'Oferta Created successfully!'}), returned_code
+
+    @app.route('/oferta/<id>', methods=['PATCH'])
+    @authorize
+    def update_oferta(id):
+        returned_code = 200
+        list_errors = []
+        try:
+            oferta = Oferta.query.get(id)
+            if not oferta:
+                returned_code = 404
+            else:
+                body = request.json
+                if 'price' in body:
+                    price = body['price']
+                    oferta.price = price
+                if 'platform' in body:
+                    plataforma = body['platform']
+                    oferta.platform = plataforma
+                db.session.commit()
+
+        except:
+            db.session.rollback()
+            returned_code = 500
+        finally:
+            db.session.close()
+
+        if returned_code == 404:
+            return jsonify({'success': False,
+                            'message': 'There is no oferta'}), returned_code
+        elif returned_code == 400:
+            return jsonify({'success': False,
+                            'message': 'Error updating oferta',
+                            'errors': list_errors}), returned_code
+        elif returned_code == 500:
+            return jsonify({'success': False,
+                            'message': 'Error!'}), returned_code
+        else:
+            return jsonify({'success': True, 'message': 'Oferta updated successfully'}), returned_code
 
     @app.route('/oferta/<id>', methods=['DELETE'])
     @authorize
