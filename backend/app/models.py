@@ -161,7 +161,7 @@ class Compra(db.Model):
 
     def __init__(self, oferta_id, usuario_id):
         self.oferta_id = oferta_id
-        self.usuario_id = usuario_id
+        self.user_id = usuario_id
         self.created_at = datetime.utcnow()
 
     def __repr__(self):

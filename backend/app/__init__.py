@@ -186,20 +186,22 @@ def create_app(test_config=None):
                                           game_id=identificador).first()
         return jsonify({'success': True, 'compra': purchase.serialize()})
 
-    @app.route('/compra/<identificador>', methods=['POST'])
+    @app.route('/compra', methods=['POST'])
     @authorize
-    def add_compra(identificador):
+    def add_compra():
+        body = request.json
         current_user_id = request.headers["user-id"]
-        current_user = Usuario.query.get(current_user_id)
-        new_purchase = Compra(identificador, current_user_id)
+        current_user = Usuario.query.filter_by(id=current_user_id).first()
 
-        db.session.add(new_purchase)
-        db.session.commit()
-
-        enviar_correo(current_user.email, new_purchase.serialize()['game']['game_name'], 'Fecha: {}'.format(
-            new_purchase.created_at), 'ID de compra: {}'.format(new_purchase.id))
-
-        return jsonify({'success': True, 'compra': new_purchase.serialize()})
+        if "id" not in body:
+            return jsonify({'success': False, 'message': 'No se ha enviado el id del juego'}), 400
+        else:
+            new_purchase = Compra(body["id"], current_user_id)
+            db.session.add(new_purchase)
+            db.session.commit()
+            enviar_correo(current_user.email, new_purchase.get_data_with_game()['game']['game_name'], 'Fecha: {}'.format(
+                new_purchase.created_at), 'ID de compra: {}'.format(new_purchase.id))
+            return jsonify({'success': True, 'compra': new_purchase.serialize()})
 
     # Todo referente a comprar y hacer ofertas va aqui
 
