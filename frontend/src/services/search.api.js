@@ -41,7 +41,7 @@ export const getGames = async () => {
         headers: {
           "X-ACCESS-TOKEN": sessionStorage.getItem("token"),
         },
-      },
+      }
     );
 
     let results = games.games;
