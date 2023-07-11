@@ -16,7 +16,7 @@ from .models import (
     setup_db)
 from .functionalities.send_email import enviar_correo
 from flask_migrate import Migrate
-import datetime
+from datetime import datetime
 
 compra = False
 
