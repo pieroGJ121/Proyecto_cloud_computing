@@ -141,7 +141,7 @@ def create_app(test_config=None):
     @authorize
     def do_search():
         selection = request.args.to_dict()
-        fields = "fields name, first_release_date, cover.image_id;"
+        fields = "fields name, first_release_date, cover.image_id, involved_companies;"
         path = "games"
         body = fields + " limit 500; "
         where = ""
@@ -169,7 +169,7 @@ def create_app(test_config=None):
 
         valid = []
         for i in selected:
-            if "first_release_date" in i.keys() and "cover" in i.keys():
+            if "first_release_date" in i.keys() and "cover" in i.keys() and "involved_companies" in i.keys():
                 current = {"release_year": datetime.utcfromtimestamp(i["first_release_date"]).strftime('%d-%m-%Y'),
                            "name": i["name"],
                            "api_id": i["id"],
