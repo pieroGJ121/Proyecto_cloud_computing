@@ -126,6 +126,10 @@ Para ejecutar el sistema se tiene que correr server.py
 
 [Modelo entidad-relación de la base de datos implementada](extra/Diagrama.png)
 
+
+![diagrama de clases](https://github.com/Fabrizzio20k/Proyecto_DBP/blob/main/extra/Diagrama.png?raw=true)
+
+
 ### Equipo 
 
 |    Fabricio Vilchez    |    Piero Guerrero    |    Manuel Silva    |    Ariana Vega    |
