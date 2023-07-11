@@ -2,16 +2,7 @@ import axios from "axios";
 const BASE_URL = "http://localhost:5002/";
 
 export const verifier_login = async () => {
-  try {
-    const { data } = await axios.get(BASE_URL + "verifier_login", {
-      headers: {
-        "X-ACCESS-TOKEN": sessionStorage.getItem("token"),
-      },
-    });
-    if (!data.success) {
-      window.location.href = "/login";
-    }
-  } catch (error) {
+  if (sessionStorage.getItem("token") === null) {
     window.location.href = "/login";
   }
 };
