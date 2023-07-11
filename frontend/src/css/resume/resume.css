@@ -40,16 +40,19 @@ h1 {
     flex-wrap: wrap;
 }
 
-.order-details .image {
-    flex-basis: 100px;
+.image-resume {
+    flex-basis: 150px;
     margin-right: 20px;
     margin-bottom: 20px;
+    border: 2px solid white;
+    border-radius: 5px;
+    overflow: hidden;
 }
 
-.order-details .image img {
+.image-resume img {
     width: 100%;
-    height: auto;
-    border-radius: 5px;
+    height: 100%;
+    object-fit: cover;
 }
 
 .order-details .info {

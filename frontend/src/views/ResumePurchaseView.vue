@@ -13,13 +13,28 @@
           </div>
 
           <div class="order-details">
-            <div class="image" id="game_image">
+            <div class="image-resume">
               <img :src="purchase_image" :alt="purchase_game" />
             </div>
             <div class="info">
               <div class="title" id="game_title">{{ purchase_game }}</div>
               <div class="purchase-date" id="purchase_date">
-                Fecha de compra: {{ purchase_date }}
+                Fecha de compra:
+                {{
+                  purchase_date
+                    ? formatear_fecha(purchase_date)
+                    : "Getting data..."
+                }}
+              </div>
+              <div class="purchase-date" id="purchase_date">
+                Vendedor: {{ purchase_vendor_name }}
+                {{ purchase_vendor_last_name }}
+              </div>
+              <div class="purchase-date" id="purchase_date">
+                Plataforma: {{ purchase_platform }}
+              </div>
+              <div class="purchase-date" id="purchase_date">
+                Precio: S/. {{ purchase_price }}
               </div>
               <div class="order-id" id="order_id">
                 ID de compra: {{ purchase_id }}
@@ -34,7 +49,7 @@
 
 <script>
 import LayoutComponent from "@/components/Layout.vue";
-import { getPurchaseData } from "@/services/search.api";
+import { getPurchaseData, formatearFecha } from "@/services/search.api";
 import { verifier_login } from "@/services/login.api";
 
 export default {
@@ -46,19 +61,32 @@ export default {
     await verifier_login();
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get("id");
-    console.log(id);
     const purchase = await getPurchaseData(id);
-    console.log(purchase);
-    //this.purchase_game = game.name;
-    //this.purchase_image = game.cover;
+    this.purchase_game = purchase.compra.game.name;
+    this.purchase_image = purchase.compra.game.cover;
+    this.purchase_date = purchase.compra.created_at;
+    this.purchase_id = purchase.compra.id;
+    this.purchase_vendor_name = purchase.compra.oferta.usuario.name;
+    this.purchase_vendor_last_name = purchase.compra.oferta.usuario.lastname;
+    this.purchase_platform = purchase.compra.oferta.plataform;
+    this.purchase_price = purchase.compra.oferta.price;
   },
   data() {
     return {
       purchase_game: "Getting data...",
-      purchase_date: "Getting data...",
+      purchase_date: "",
       purchase_id: "Getting data...",
       purchase_image: "Getting data...",
+      purchase_vendor_name: "Getting data...",
+      purchase_vendor_last_name: "Getting data...",
+      purchase_price: "Getting data...",
+      purchase_platform: "Getting data...",
     };
+  },
+  methods: {
+    formatear_fecha(fecha) {
+      return formatearFecha(fecha);
+    },
   },
 };
 </script>

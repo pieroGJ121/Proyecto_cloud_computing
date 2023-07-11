@@ -91,3 +91,20 @@ export const getPurchaseData = async (id) => {
   }
   return {};
 };
+
+export const formatearFecha = (fechaString) => {
+  const fecha = new Date(fechaString);
+
+  const opciones = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    timeZone: "UTC",
+  };
+
+  const formatoFecha = fecha.toLocaleString("es-ES", opciones);
+  return formatoFecha;
+};
