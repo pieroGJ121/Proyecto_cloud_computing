@@ -41,19 +41,11 @@ export const getGames = async () => {
         headers: {
           "X-ACCESS-TOKEN": sessionStorage.getItem("token"),
         },
-      }
+      },
     );
 
-    let resultsApi = games.games;
-    let results = [];
-
-    resultsApi.forEach((game) => {
-      results.push(getGameData(game.id));
-    });
-
-    results = await Promise.all(results);
-
-    results = results.filter((objeto) => Object.keys(objeto).length !== 0);
+    let results = games.games;
+    console.log(results);
 
     return results;
   } catch (error) {

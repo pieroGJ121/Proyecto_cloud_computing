@@ -15,13 +15,13 @@
         <div class="container_games" id="container_games">
           <div
             class="item_game"
-            v-for="juego in games"
-            :key="juego.game.api_id"
-            @click="getVideogame(juego.game.api_id)"
+            v-for="game in games"
+            :key="game.api_id"
+            @click="getVideogame(game.api_id)"
           >
-            <img :src="juego.game.cover" :alt="juego.game.name" />
-            <h4 style="color: white">{{ juego.game.name }}</h4>
-            <p>Publicado en: {{ juego.game.release_year }}</p>
+            <img :src="game.cover" :alt="game.name" />
+            <h4 style="color: white">{{ game.name }}</h4>
+            <p>Publicado en: {{ game.release_year }}</p>
           </div>
         </div>
       </div>
