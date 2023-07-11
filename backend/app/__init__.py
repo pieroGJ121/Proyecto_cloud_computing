@@ -31,13 +31,6 @@ def create_app(test_config=None):
 
         migrate = Migrate(app, db)
 
-    # Verificar si el usuario esta logeado
-
-    @app.route('/verifier_login', methods=['GET'])
-    @authorize
-    def verify_login():
-        return jsonify({"success": True}), 200
-
     # Todo referente a la pagina de "profile" va aqui
     @app.route('/profile', methods=['GET'])
     @authorize
@@ -228,13 +221,6 @@ def create_app(test_config=None):
                 return jsonify({'success': False, 'message': 'No se ha podido realizar la compra'}), 500
 
     # Todo referente a comprar y hacer ofertas va aqui
-
-    @app.route('/new_game', methods=['POST'])
-    @authorize
-    def buy_game():
-        global compra
-        compra = True
-        return jsonify({'success': True, 'message': 'Compra casi lista'})
 
     @app.route('/oferta', methods=['GET'])
     @authorize
