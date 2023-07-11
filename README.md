@@ -132,7 +132,7 @@ Para ejecutar el sistema se tiene que correr server.py
 
 ### Equipo 
 
-|    Fabricio Vilchez    |    Piero Guerrero    |    Manuel Silva    |    Ariana Vega    |
+|    Fabrizzio Vilchez    |    Piero Guerrero    |    Manuel Silva    |    Ariana Vega    |
 | ----------- | ----------- | ----------- | ----------- |
 | ![](https://avatars.githubusercontent.com/u/115495332?v=4) | ![](https://avatars.githubusercontent.com/u/102132128?s=400&v=4) | ![](https://avatars.githubusercontent.com/u/78549698?v=4) | ![](https://avatars.githubusercontent.com/u/88595171?v=4) |
 | [github.com/Fabrizzio20k](https://github.com/Fabrizzio20k) | [github.com/pieroGJ121](https://github.com/JLeandroJM). | [github.com/Manueljsilva](https://github.com/Manueljsilva) | [github.com/ArianaVega](https://github.com/ArianaVega)  |
