@@ -30,6 +30,7 @@ de la Universidad de Ingeniería y Tecnología 💙🤍. Esperemos les guste. �
         <li><a href="#manejo-de-errores-http">Manejo de Errores HTTP</a></li>
         <li><a href="#ejecución-del-sistema">Ejecución del Sistema</a></li>
         <li><a href="#recursos-extra">Recursos extra</a></li>
+        <li><a href="#equipo">Equipo</a></li>
       </ul>
     </a></li>
   </ol>
@@ -124,3 +125,11 @@ Para ejecutar el sistema se tiene que correr server.py
 ### Recursos extra
 
 [Modelo entidad-relación de la base de datos implementada](extra/Diagrama.png)
+
+### Equipo 
+
+|    Fabricio Vilchez    |    Piero Guerrero    |    Manuel Silva    |    Ariana Vega    |
+| ----------- | ----------- | ----------- | ----------- |
+| ![](https://avatars.githubusercontent.com/u/115495332?v=4) | ![](https://avatars.githubusercontent.com/u/102132128?s=400&v=4) | ![](https://avatars.githubusercontent.com/u/78549698?v=4) | ![](https://avatars.githubusercontent.com/u/88595171?v=4) |
+| [github.com/Fabrizzio20k](https://github.com/Fabrizzio20k) | [github.com/pieroGJ121](https://github.com/JLeandroJM). | [github.com/Manueljsilva](https://github.com/Manueljsilva) | [github.com/ArianaVega](https://github.com/ArianaVega)  |
+
