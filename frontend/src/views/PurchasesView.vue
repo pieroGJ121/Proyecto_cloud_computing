@@ -18,7 +18,10 @@
             <img :src="juego.game.cover" :alt="juego.game.name" />
             <h4 style="color: white">{{ juego.game.name }}</h4>
             <p>Publicado en: {{ juego.game.release_year }}</p>
-            <p>Vendedor: {{ juego.oferta.usuario.name }}</p>
+            <p>
+              Vendedor: {{ juego.oferta.usuario.name }}
+              {{ juego.oferta.usuario.lastname }}
+            </p>
             <p>Precio: S/. {{ juego.oferta.price }}</p>
             <p>Plataforma: {{ juego.oferta.platform }}</p>
           </div>

@@ -27,7 +27,7 @@ def create_app(test_config=None):
         app.config['UPLOAD_FOLDER'] = 'static/employees'
         app.register_blueprint(usuarios_bp)
         setup_db(app, test_config['database_path'] if test_config else None)
-        CORS(app, origins=['http://localhost:8080'])
+        CORS(app, origins=['http://localhost:8080', 'http://localhost:8081'])
 
         migrate = Migrate(app, db)
 
