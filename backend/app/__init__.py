@@ -157,7 +157,7 @@ def create_app(test_config=None):
 
         body += where
         if selection["name"] != "":
-            body = ' search "' + selection["name"] + '";'
+            body += ' search "' + selection["name"] + '";'
 
         results = do_request_api(body, path + "/count").json()["count"]
         offset = 0
@@ -167,11 +167,17 @@ def create_app(test_config=None):
             selected.extend(do_request_api(b, path).json())
             offset += 500
 
+        valid = []
         for i in selected:
-            i["release_year"] = datetime.utcfromtimestamp(
-                i["first_release_date"]).strftime('%d-%m-%Y')
+            if "first_release_date" in i.keys() and "cover" in i.keys():
+                current = {"release_year": datetime.utcfromtimestamp(i["first_release_date"]).strftime('%d-%m-%Y'),
+                           "name": i["name"],
+                           "api_id": i["id"],
+                           "cover": "https://images.igdb.com/igdb/image/upload/t_1080p/" + i["cover"]["image_id"] + ".jpg",
+                           }
+                valid.append(current)
 
-        return jsonify({'success': True, 'games': selected}), 200
+        return jsonify({'success': True, 'games': valid}), 200
 
     # Todo referente a la pagina de "purchases" va aqui
     @app.route('/compra', methods=['GET'])
