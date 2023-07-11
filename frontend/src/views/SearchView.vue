@@ -61,8 +61,10 @@ export default {
     const params = new URLSearchParams(window.location.search);
     this.search = params.get("name") || "";
     this.games = await getGames();
-    this.s_platforms = await getPlatforms();
-    this.s_genres = await getGenres();
+    let platform_request = await getPlatforms();
+    this.s_platforms = platform_request.data;
+    let genre_request = await getGenres();
+    this.s_genres = genre_request.data;
   },
   methods: {
     async updateGames() {
