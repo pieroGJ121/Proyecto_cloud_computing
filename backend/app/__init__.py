@@ -117,18 +117,15 @@ def create_app(test_config=None):
 
     # Todo referente a la pagina de "search" va aqui
 
-    @app.route('/search/genres', methods=['GET'])
+    @app.route('/search/<tipo>', methods=['GET'])
     @authorize
-    def get_genres():
-        genres = do_request_api("fields name; limit 50;", "genres").json()
-        return genres
-
-    @app.route('/search/platforms', methods=['GET'])
-    @authorize
-    def get_platforms():
-        platforms = do_request_api("fields name; limit 200;",
-                                   "platforms").json()
-        return platforms
+    def get_data_tipo(tipo):
+        if tipo == "genres" or tipo == "platforms":
+            data_tipo = do_request_api("fields name; limit 200;", tipo).json()
+            return jsonify({"success": True,
+                            "data": data_tipo}), 200
+        else:
+            abort(405)
 
     @app.route('/search/search_query', methods=['GET'])
     @authorize
