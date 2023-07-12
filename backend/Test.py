@@ -67,4 +67,4 @@ class ProyectTests(unittest.TestCase):
         self.assertEqual(data['success'], True)
 
     def tearDown(self):
-        self.client.delete('/usuarios/{}'.format(self.user_id))
+        self.client.delete('/usuarios/' + self.user_id)
