@@ -251,10 +251,39 @@ class ProyectTests(unittest.TestCase):
         self.assertTrue(data['message'])
 
     def test_oferta_patch_success(self):
-        pass    #manuel
+        self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
+        response = self.client.post('/oferta', headers=self.headers,
+                                    json=self.new_oferta)
+        data = json.loads(response.data)
+        oferta_id = data["id"]
 
-    def test_oferta_delete_success(self):
-        pass    #manuel
+        temp_oferta = self.new_oferta
+        temp_oferta["price"] = 100
+        response = self.client.patch('/oferta/' + oferta_id, headers=self.headers,
+                                        json=temp_oferta)
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertTrue(data['message'])
+
+    def test_oferta_patch_fail(self):
+        self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
+        response = self.client.post('/oferta', headers=self.headers,
+                                    json=self.new_oferta)
+        data = json.loads(response.data)
+        oferta_id = data["id"]
+
+        temp_oferta = self.new_oferta
+        temp_oferta["price"] = "failure"
+        response = self.client.patch('/oferta/' + oferta_id, headers=self.headers,
+                                        json=temp_oferta)
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 500)
+        self.assertEqual(data['success'], False)
+        self.assertTrue(data['message'])
+                                    
 
     def tearDown(self):
         self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
