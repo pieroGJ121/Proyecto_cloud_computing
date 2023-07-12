@@ -283,6 +283,30 @@ class ProyectTests(unittest.TestCase):
         self.assertEqual(response.status_code, 500)
         self.assertEqual(data['success'], False)
         self.assertTrue(data['message'])
+
+    def test_oferta_delete_success(self):
+        self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
+        response = self.client.post('/oferta', headers=self.headers,
+                                    json=self.new_oferta)
+        data = json.loads(response.data)
+        oferta_id = data["id"]
+
+        response = self.client.delete('/oferta/' + oferta_id, headers=self.headers)
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertTrue(data['message'])
+
+    def test_oferta_delete_fail(self):
+        self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
+        response = self.client.delete('/oferta/1', headers=self.headers)
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(data['success'], False)
+        self.assertTrue(data['message'])
+
                                     
 
     def tearDown(self):
