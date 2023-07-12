@@ -28,6 +28,7 @@ class ProyectTests(unittest.TestCase):
             "game_id" : None,
         }
 
+
         response_user = self.client.post(
             '/create', json=self.new_usuario)
         data_user = json.loads(response_user.data)
@@ -51,7 +52,8 @@ class ProyectTests(unittest.TestCase):
         pass  #manuel
     def test_search_data_success(self):
         self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
-        response = self.client.get('/search/platforms', headers=self.headers)
+        response = self.client.get('/search/platforms',
+                                   headers=self.headers)
         data = json.loads(response.data)
 
         self.assertEqual(response.status_code, 200)
@@ -61,16 +63,22 @@ class ProyectTests(unittest.TestCase):
         response = self.client.get('/search/failure', headers=self.headers)
         data = json.loads(response.data)
 
-        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.status_code, 405)
         self.assertEqual(data['success'], False)
     def test_search_querry_success(self):
         pass
     def test_search_querry_fail(self):
+
+        self.incorrect_search_query = {
+            "genre": "; invalid because it does not exists",
+            "platform": "Todas"
+        }
         self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
-        response = self.client.get('/search/search_query', headers=self.headers)
+        response = self.client.get('/search/search_query?genre=; invalid because it does not exists&platform=Todas',
+                                   headers=self.headers)
         data = json.loads(response.data)
 
-        self.assertEqual(response.status_code, 205)
+        self.assertEqual(response.status_code, 500)
         self.assertEqual(data['success'], False)
     def test_compra_get_success(self):
         pass
