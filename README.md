@@ -50,7 +50,7 @@ de la Universidad de Ingeniería y Tecnología 💙🤍. Esperemos les guste. �
 ### Descripción
 
 Este proyecto consiste en el desarrollo de una aplicación virtual llamada GPT VIDEOGAMES,
-la cual consiste en vender videojuegos de manera virtual, ya sea por marcas, plataformas o categorías.
+la cual consiste en comprar y vender videojuegos de manera virtual, ya sea por marcas, plataformas o categorías.
 
 ### Objetivos Principales
 
