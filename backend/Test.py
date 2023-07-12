@@ -20,7 +20,7 @@ class ProyectTests(unittest.TestCase):
             "confirmationPassword" : "12345678",
         }
         self.new_oferta = {
-            "game_id" : "dsadsada",
+            "game_id" : 1942,
             "price" : 100,
             "platform" : "ps4"
         }
@@ -41,13 +41,22 @@ class ProyectTests(unittest.TestCase):
 
 
     def test_profile_get_success(self):
-        pass    #manuel
+        pass #manuel
+
+    def test_profile_get_fail(self):
+        self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
+        response = self.client.get('/profile/failure', headers=self.headers)
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(data['success'], False)
+
     def test_profile_patch_success(self):
         pass
     def test_profile_delete_success(self):
        pass #manuel
     def test_videogame_data_success(self):
-        pass #manuel
+        pass
     def test_videogame_data_fail(self):
         pass  #manuel
     def test_search_data_success(self):
