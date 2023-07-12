@@ -57,7 +57,13 @@ class ProyectTests(unittest.TestCase):
     def test_profile_delete_success(self):
        pass #manuel
     def test_videogame_data_success(self):
-        pass
+        self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
+        response = self.client.get('/videogame/1942', headers=self.headers)
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['success'], True)
+
     def test_videogame_data_fail(self):
         self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
         response = self.client.get('/videogame/213', headers=self.headers)
@@ -103,10 +109,14 @@ class ProyectTests(unittest.TestCase):
     def test_compra_post_success(self):
         pass
     def test_oferta_get_success(self):
-        pass    #manuel
+        pass
     def test_oferta_get_id_success(self):
-        game_id = None 
-        response = self.client.get('/oferta'+ str(game_id) , headers={
+        self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
+        response_game = self.client.get('/videogame/1942', headers=self.headers)
+        data_game = json.loads(response_game.data)
+        game_id = data_game['game']['api_id']
+
+        response = self.client.get('/oferta/'+ str(game_id) , headers={
             'X-ACCESS-TOKEN': self.user_valid_token})
         data = json.loads(response.data)
 
@@ -126,7 +136,8 @@ class ProyectTests(unittest.TestCase):
 
 
     def test_oferta_post_success(self):
-        pass   #manuel
+        pass
+
     def test_oferta_post_fail(self):
 
         response = self.client.post('/oferta' , headers={
