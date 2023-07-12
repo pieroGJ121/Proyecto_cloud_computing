@@ -54,7 +54,7 @@ class ProyectTests(unittest.TestCase):
         }
 
     def test_profile_get_success(self):
-        pass #manuel
+        pass
 
     def test_profile_get_fail(self):
         self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
@@ -87,7 +87,22 @@ class ProyectTests(unittest.TestCase):
         self.assertEqual(data['success'], False)
 
     def test_profile_delete_success(self):
-        pass # manuel
+        self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
+        response = self.client.delete('/profile',
+                                      headers=self.headers)
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['success'], True)
+    
+    def test_profile_delete_fail(self):
+        self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
+        response = self.client.delete('/profile/failure',
+                                      headers=self.headers)
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(data['success'], False)
 
     def test_videogame_data_success(self):
         self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
