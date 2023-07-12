@@ -18,8 +18,6 @@ from .functionalities.send_email import enviar_correo
 from flask_migrate import Migrate
 from datetime import datetime
 
-compra = False
-
 
 def create_app(test_config=None):
     app = Flask(__name__)
@@ -86,7 +84,7 @@ def create_app(test_config=None):
             compras_eliminar = Compra.query.filter_by(
                 user_id=current_user_id).all()
             for c in compras_eliminar:
-                compra.oferta.realizada = False
+                c.oferta.realizada = False
                 db.session.delete(c)
 
             ofertas_eliminar = Oferta.query.filter_by(
@@ -211,7 +209,7 @@ def create_app(test_config=None):
     @authorize
     def get_compra(identificador):
         current_user_id = request.headers["user-id"]
-        purchase = Compra.query.filter_by(id=identificador).first()
+        purchase = Compra.query.get(identificador)
         print(purchase)
         if purchase:
             if purchase.user_id == current_user_id:
@@ -227,10 +225,11 @@ def create_app(test_config=None):
     def add_compra():
         body = request.json
         current_user_id = request.headers["user-id"]
-        current_user = Usuario.query.filter_by(id=current_user_id).first()
+        current_user = Usuario.query.get(current_user_id)
 
         if "id" not in body:
-            return jsonify({'success': False, 'message': 'No se ha enviado el id del juego'}), 400
+            return jsonify({'success': False,
+                            'message': 'No se ha enviado el id de la oferta'}), 400
         else:
             try:
                 oferta_id = body["id"]
@@ -241,7 +240,7 @@ def create_app(test_config=None):
                 db.session.commit()
                 enviar_correo(current_user.email, new_purchase.get_data_with_game()['game']['name'], new_purchase.created_at.strftime(
                     "%d/%m/%Y, %H:%M:%S"), new_purchase.id, new_purchase.get_data_with_game()['game']['cover'], new_purchase.get_data_with_game()['oferta']['price'])
-                return jsonify({'success': True, 'compra': new_purchase.serialize(), 'juego': new_purchase.get_data_with_game()}), 200
+                return jsonify({'success': True, 'compra': new_purchase.serialize(), 'juego': new_purchase.get_data_with_game()}), 201
             except Exception as e:
                 db.session.rollback()
                 return jsonify({'success': False, 'message': 'No se ha podido realizar la compra'}), 500

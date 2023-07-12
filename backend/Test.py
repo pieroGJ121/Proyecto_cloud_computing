@@ -130,7 +130,32 @@ class ProyectTests(unittest.TestCase):
         pass
 
     def test_compra_get_id_success(self):
-        pass
+        self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
+        response = self.client.post('/oferta', headers=self.headers,
+                                    json=self.new_oferta)
+        data = json.loads(response.data)
+        oferta_id = data["id"]
+
+        new_compra = {"id": oferta_id}
+
+        response = self.client.post('/compra', headers=self.headers,
+                                    json=new_compra)
+        data = json.loads(response.data)
+        compra_id = data["compra"]["id"]
+
+        response = self.client.get('/compra/' + compra_id, headers=self.headers)
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['success'], True)
+
+    def test_compra_get_id_fail(self):
+        self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
+        response = self.client.get('/compra/failure', headers=self.headers)
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(data['success'], False)
 
     def test_compra_post_success(self):
         self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
