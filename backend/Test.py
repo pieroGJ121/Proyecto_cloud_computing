@@ -136,10 +136,22 @@ class ProyectTests(unittest.TestCase):
 
 
     def test_oferta_post_success(self):
-        pass
+        self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
+        response_game = self.client.get('/videogame/1942', headers=self.headers)
+        data_game = json.loads(response_game.data)
+        game_id = data_game['game']['api_id']
+        self.new_oferta['game_id'] = game_id
+
+        response = self.client.post('/oferta' , headers={
+            'X-ACCESS-TOKEN': self.user_valid_token}, json=self.new_oferta)
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 500)
+        self.assertEqual(data['success'], False)
+        self.assertTrue(data['message'])
 
     def test_oferta_post_fail(self):
-
+        
         response = self.client.post('/oferta' , headers={
             'X-ACCESS-TOKEN': self.user_valid_token}, json=self.new_oferta)
         data = json.loads(response.data)
