@@ -82,15 +82,19 @@ def create_app(test_config=None):
         current_user_id = request.headers["user-id"]
         current_user = Usuario.query.get(current_user_id)
         if current_user:
+
             compras_eliminar = Compra.query.filter_by(
-                usuario_id=current_user.id).all()
-            [db.session.delete(i) for i in compras_eliminar]
+                user_id=current_user_id).all()
+            for c in compras_eliminar:
+                compra.oferta.realizada = False
+                db.session.delete(c)
 
             ofertas_eliminar = Oferta.query.filter_by(
                 usuario_id=current_user.id).all()
-            [db.session.delete(i) for i in ofertas_eliminar]
+            for i in ofertas_eliminar:
+                db.session.delete(i)
 
-            db.session.delete(current_user)
+            current_user.delete()
             db.session.commit()
             return jsonify({'success': True,
                             'message': 'El usuario se ha eliminado correctamete.'}), 200
