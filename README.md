@@ -82,16 +82,25 @@ Base de Datos:
 
 ### Script
 
-Para cargar las bases de datos se ejecuta:
+Para cargar el backend se ejecuta:
 
 ```sh
-./load.sh
+./ejecutar.sh
 ```
 
-- Se debe estar dentro del repositorio, en el mismo nivel que app.py.
-- Dentro del script, primero se ejecuta python app.py, para crear las bases de datos. -
-- Luego de cargar, se debe cancelar con Ctr+c.
-- Después, se usa ejecuta el código de los sql scripts encontrados dentro de la carpete /sql. Estos llenan las tablas de la base de datos con los datos de los videojuegos.
+- Se debe estar dentro de la carpeta llamada backend, en el mismo nivel que la carpeta app.
+- Después, se usa ejecuta el código de los sql scripts encontrados dentro de la carpete /sql. Estos añaden la exensión uuid-ossp en la base de datos.
+- Finalmente, se inicia el servidor.
+- Debe existir una base de datos con el nombre de "project_dbp".
+
+Para cargar el frontend se ejecuta:
+
+```sh
+npm install
+npm run serve
+```
+
+- Se debe estar dentro de la carpeta llamada frontedn, en el mismo nivel que la carpeta src.
 
 ### API
 
