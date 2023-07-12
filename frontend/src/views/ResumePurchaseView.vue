@@ -68,7 +68,7 @@ export default {
     this.purchase_id = purchase.compra.id;
     this.purchase_vendor_name = purchase.compra.oferta.usuario.name;
     this.purchase_vendor_last_name = purchase.compra.oferta.usuario.lastname;
-    this.purchase_platform = purchase.compra.oferta.plataform;
+    this.purchase_platform = purchase.compra.oferta.platform;
     this.purchase_price = purchase.compra.oferta.price;
   },
   data() {
