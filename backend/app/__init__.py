@@ -130,6 +130,7 @@ def create_app(test_config=None):
     @app.route('/search/search_query', methods=['GET'])
     @authorize
     def do_search():
+        returned_code = 200
         try:
             selection = request.args.to_dict()
             fields = "fields name, first_release_date, cover.image_id, involved_companies;"
@@ -173,6 +174,7 @@ def create_app(test_config=None):
             print(e)
         finally:
             db.session.close()
+
         if returned_code == 500:
             return jsonify({'success': False,
                             'message': 'There is an error'}), returned_code
