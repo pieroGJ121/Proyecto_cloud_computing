@@ -43,27 +43,38 @@ def create_app(test_config=None):
     @app.route('/profile', methods=['PATCH'])
     @authorize
     def change_profile():
-        body = request.json
-        current_user_id = request.headers["user-id"]
-        current_user = Usuario.query.get(current_user_id)
-        nombre = body['name']
-        apellido = body['lastname']
-        bio = body['bio']
-        password = body['password']
+        error_lists = []
+        returned_code = 200
+        try:
+            current_user_id = request.headers["user-id"]
+            current_user = Usuario.query.get(current_user_id)
+            body = request.json
+            if "name" in body.keys():
+                current_user.firstname = body['name']
+            if "lastname" in body.keys():
+                current_user.lastname = body['lastname']
+            if "lastname" in body.keys():
+                current_user.bio = body['bio']
+            if "password" in body.keys():
+                password = body['password']
+                if len(password) < 8 and len(password) != 0:
+                    returned_code = 404
+                else:
+                    current_user.password = password
 
-        if len(password) < 8 and len(password) != 0:
-            return jsonify({"success": False, "message": "La contraseña debe tener al menos 8 caracteres"}), 200
+            db.session.commit()
+        except Exception as e:
+            print('e: ', e)
+            returned_code = 500
+        finally:
+            db.session.close()
 
-        if len(password) != 0:
-            current_user.password = password
-
-        current_user.firstname = nombre
-        current_user.lastname = apellido
-        current_user.bio = bio
-
-        db.session.commit()
-
-        return jsonify({'success': True, 'message': 'Usuario actualizado correctamente'}), 200
+        if returned_code == 404:
+            return jsonify({"success": False, "message": "La contraseña debe tener al menos 8 caracteres"}), returned_code
+        elif returned_code == 200:
+            return jsonify({'success': True, 'message': 'Usuario actualizado correctamente'}), returned_code
+        else:
+            abort(returned_code)
 
     @app.route('/profile', methods=['DELETE'])
     @authorize
