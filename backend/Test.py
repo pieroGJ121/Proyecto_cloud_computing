@@ -127,7 +127,12 @@ class ProyectTests(unittest.TestCase):
         self.assertEqual(data['success'], False)
 
     def test_compra_get_success(self):
-        pass
+        self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
+        response = self.client.get('/compra', headers=self.headers)
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['success'], True)
 
     def test_compra_get_id_success(self):
         self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
