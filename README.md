@@ -127,7 +127,6 @@ Para ejecutar el sistema se tiene que correr server.py
 [Modelo entidad-relación de la base de datos implementada](extra/Diagrama.png)
 ![diagrama de clases](https://github.com/Fabrizzio20k/Proyecto_DBP/blob/main/extra/Diagrama.png?raw=true)
 
-[Diseño Básico de la Página](extra/Diseño Básico de la Página.png)
 ![Diseño Básico de la Página](https://github.com/Fabrizzio20k/Proyecto_DBP/blob/main/extra/Dise%C3%B1o%20B%C3%A1sico%20de%20la%20P%C3%A1gina.png).
 
 
