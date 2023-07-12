@@ -50,7 +50,13 @@ class ProyectTests(unittest.TestCase):
     def test_videogame_data_fail(self):
         pass  #manuel
     def test_search_data_success(self):
-        pass
+        self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
+        response = self.client.get('/search/platforms', headers=self.headers)
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['success'], True)
+
     def test_search_data_fail(self):
         pass
     def test_search_querry_success(self):
