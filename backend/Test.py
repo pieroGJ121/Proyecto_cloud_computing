@@ -99,6 +99,7 @@ class ProyectTests(unittest.TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(data['success'], True)
+
     def test_search_data_fail(self):
         self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
         response = self.client.get('/search/failure', headers=self.headers)
@@ -106,14 +107,17 @@ class ProyectTests(unittest.TestCase):
 
         self.assertEqual(response.status_code, 405)
         self.assertEqual(data['success'], False)
-    def test_search_querry_success(self):
-        pass
-    def test_search_querry_fail(self):
 
-        self.incorrect_search_query = {
-            "genre": "; invalid because it does not exists",
-            "platform": "Todas"
-        }
+    def test_search_querry_success(self):
+        self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
+        response = self.client.get('/search/search_query?genre=Todas&platform=Todas&name=zelda',
+                                   headers=self.headers)
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['success'], True)
+
+    def test_search_querry_fail(self):
         self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
         response = self.client.get('/search/search_query?genre=; invalid because it does not exists&platform=Todas',
                                    headers=self.headers)
@@ -121,58 +125,58 @@ class ProyectTests(unittest.TestCase):
 
         self.assertEqual(response.status_code, 500)
         self.assertEqual(data['success'], False)
+
     def test_compra_get_success(self):
         pass
+
     def test_compra_get_id_success(self):
         pass
+
     def test_compra_post_success(self):
         pass
+
     def test_oferta_get_success(self):
         pass
+
     def test_oferta_get_id_success(self):
         self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
-        response_game = self.client.get('/videogame/1942', headers=self.headers)
-        data_game = json.loads(response_game.data)
-        game_id = data_game['game']['api_id']
+        response = self.client.post('/oferta', headers=self.headers,
+                                    json=self.new_oferta)
+        data = json.loads(response.data)
+        oferta_id = data["id"]
 
-        response = self.client.get('/oferta/'+ str(game_id) , headers={
-            'X-ACCESS-TOKEN': self.user_valid_token})
+        response = self.client.get('/oferta/' + oferta_id, headers=self.headers)
         data = json.loads(response.data)
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(data['success'], True)
-        self.assertTrue(data['message'])
 
     def test_oferta_get_id_fail(self):
         game_id = 1942
-        response = self.client.get('/oferta'+ str(game_id) , headers={
-            'X-ACCESS-TOKEN': self.user_valid_token})
+        self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
+        response = self.client.get('/oferta'+ str(game_id), headers=self.headers)
         data = json.loads(response.data)
 
         self.assertEqual(response.status_code, 404)
         self.assertEqual(data['success'], False)
         self.assertTrue(data['message'])
 
-
     def test_oferta_post_success(self):
         self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
-        response_game = self.client.get('/videogame/1942', headers=self.headers)
-        data_game = json.loads(response_game.data)
-        game_id = data_game['game']['api_id']
-        self.new_oferta['game_id'] = game_id
-
-        response = self.client.post('/oferta' , headers={
-            'X-ACCESS-TOKEN': self.user_valid_token}, json=self.new_oferta)
+        response = self.client.post('/oferta', headers=self.headers,
+                                    json=self.new_oferta)
         data = json.loads(response.data)
 
-        self.assertEqual(response.status_code, 500)
-        self.assertEqual(data['success'], False)
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(data['success'], True)
         self.assertTrue(data['message'])
 
     def test_oferta_post_fail(self):
-        
-        response = self.client.post('/oferta' , headers={
-            'X-ACCESS-TOKEN': self.user_valid_token}, json=self.new_oferta)
+        temp_oferta = self.new_oferta
+        temp_oferta["price"] = "failure"
+        self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
+        response = self.client.post('/oferta', headers=self.headers,
+                                    json=temp_oferta)
         data = json.loads(response.data)
 
         self.assertEqual(response.status_code, 500)
@@ -181,7 +185,10 @@ class ProyectTests(unittest.TestCase):
 
     def test_oferta_patch_success(self):
         pass    #manuel
+
     def test_oferta_delete_success(self):
         pass    #manuel
+
     def tearDown(self):
-        self.client.delete('/usuarios/' + self.user_id)
+        self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
+        self.client.delete('/profile', headers=self.headers)
