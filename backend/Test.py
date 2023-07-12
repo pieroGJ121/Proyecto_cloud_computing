@@ -20,6 +20,7 @@ class ProyectTests(unittest.TestCase):
             "confirmationPassword" : "12345678",
         }
         self.new_oferta = {
+            "user-id" : "1",
             "game_id" : 1942,
             "price" : 100,
             "platform" : "ps4"
@@ -58,7 +59,13 @@ class ProyectTests(unittest.TestCase):
     def test_videogame_data_success(self):
         pass
     def test_videogame_data_fail(self):
-        pass  #manuel
+        self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
+        response = self.client.get('/videogame/213', headers=self.headers)
+        data = json.loads(response.data)
+        if response.data == False:
+            self.assertEqual(response.status_code, 404)
+            self.assertEqual(data['success'], False)
+
     def test_search_data_success(self):
         self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
         response = self.client.get('/search/platforms',
@@ -98,7 +105,15 @@ class ProyectTests(unittest.TestCase):
     def test_oferta_get_success(self):
         pass    #manuel
     def test_oferta_get_id_success(self):
-        pass    #manuel
+        game_id = None 
+        response = self.client.get('/oferta'+ str(game_id) , headers={
+            'X-ACCESS-TOKEN': self.user_valid_token})
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['success'], True)
+        self.assertTrue(data['message'])
+
     def test_oferta_get_id_fail(self):
         game_id = 1942
         response = self.client.get('/oferta'+ str(game_id) , headers={
