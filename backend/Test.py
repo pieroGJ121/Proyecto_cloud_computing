@@ -99,8 +99,29 @@ class ProyectTests(unittest.TestCase):
         pass    #manuel
     def test_oferta_get_id_success(self):
         pass    #manuel
+    def test_oferta_get_id_fail(self):
+        game_id = 1942
+        response = self.client.get('/oferta'+ str(game_id) , headers={
+            'X-ACCESS-TOKEN': self.user_valid_token})
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(data['success'], False)
+        self.assertTrue(data['message'])
+
+
     def test_oferta_post_success(self):
-        pass    #manuel
+        pass   #manuel
+    def test_oferta_post_fail(self):
+
+        response = self.client.post('/oferta' , headers={
+            'X-ACCESS-TOKEN': self.user_valid_token}, json=self.new_oferta)
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 500)
+        self.assertEqual(data['success'], False)
+        self.assertTrue(data['message'])
+
     def test_oferta_patch_success(self):
         pass    #manuel
     def test_oferta_delete_success(self):
