@@ -19,6 +19,14 @@ class ProyectTests(unittest.TestCase):
             "password": "12345678",
             "confirmationPassword": "12345678",
         }
+        self.compra_usuario = {
+            "name": "Test",
+            "lastname": "s",
+            "bio": "Estudiante de la UTEC",
+            "email": "coompratest@utec.edu.pe",
+            "password": "qwertyuio",
+            "confirmationPassword": "qwertyuio",
+        }
         self.new_oferta = {
             "game_id": "1942",
             "price": 100,
@@ -33,6 +41,12 @@ class ProyectTests(unittest.TestCase):
         data_user = json.loads(response_user.data)
         self.user_valid_token = data_user['token']
         self.user_id = data_user['user_id']
+
+        response_user = self.client.post(
+            '/create', json=self.compra_usuario)
+        data_user = json.loads(response_user.data)
+        self.compra_user_valid_token = data_user['token']
+        self.compra_user_id = data_user['user_id']
 
         self.headers = {
             "content-type": 'application/json',
@@ -245,3 +259,7 @@ class ProyectTests(unittest.TestCase):
     def tearDown(self):
         self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
         self.client.delete('/profile', headers=self.headers)
+        temp_headers = self.headers
+        temp_headers["user_id"] = self.compra_user_id
+        temp_headers['X-ACCESS-TOKEN'] = self.compra_user_valid_token
+        self.client.delete('/profile', headers=temp_headers)
