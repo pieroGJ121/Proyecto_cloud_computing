@@ -17,7 +17,7 @@ class ProyectTests(unittest.TestCase):
             "bio" : "Estudiante de la UTEC",
             "email" : "manuel.silva@utec.edu.pe",
             "password" : "12345678",
-            "confirm_password" : "12345678", 
+            "confirmationPassword" : "12345678",
         }
         self.new_oferta = {
             "game_id" : "dsadsada",
