@@ -262,11 +262,12 @@ def create_app(test_config=None):
     @authorize
     def get_oferta(identificador):
         current_user_id = request.headers["user-id"]
-        current_user = Usuario.query.get(current_user_id)
-        oferta = Oferta.query.filter_by(id=identificador).first()
+        oferta = Oferta.query.get(identificador)
         if oferta:
             if oferta.usuario_id == current_user_id:
-                return jsonify({'success': True, 'oferta': oferta.serialize(), 'game': oferta.get_data_with_game()}), 200
+                return jsonify({'success': True,
+                                'oferta': oferta.serialize(),
+                                'game': oferta.get_data_with_game()}), 200
             else:
                 abort(403)
         else:
@@ -275,8 +276,9 @@ def create_app(test_config=None):
     @app.route('/oferta', methods=['POST'])
     @authorize
     def new_oferta():
-        returned_code = 200
+        returned_code = 201
         list_errors = []
+        oferta_id = ''
         try:
             current_user_id = request.headers["user-id"]
             body = request.json
@@ -308,6 +310,7 @@ def create_app(test_config=None):
 
                 db.session.add(oferta)
                 db.session.commit()
+                oferta_id = oferta.id
         except Exception as e:
             db.session.rollback()
             returned_code = 500
@@ -324,7 +327,9 @@ def create_app(test_config=None):
                             'message': 'Error!'}), returned_code
             # abort(returned_code)
         else:
-            return jsonify({'success': True, 'message': 'Oferta Created successfully!'}), returned_code
+            return jsonify({'success': True,
+                            'message': 'Oferta Created successfully!',
+                            "id": oferta_id}), returned_code
 
     @app.route('/oferta/<id>', methods=['PATCH'])
     @authorize
