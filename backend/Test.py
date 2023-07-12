@@ -1,8 +1,9 @@
 import unittest
 from config.qa  import config
-from app.models import Game , Usuario , Oferta , Compra
+from app.models import Game, Usuario, Oferta, Compra
 from app import create_app
 import json
+
 
 class ProyectTests(unittest.TestCase):
     def setUp(self):
@@ -10,25 +11,22 @@ class ProyectTests(unittest.TestCase):
         self.app = create_app({'database_path': database_path})
         self.client = self.app.test_client()
 
-
         self.new_usuario = {
-            "name" : "Manuel",
-            "lastname" : "Gonzalez",
-            "bio" : "Estudiante de la UTEC",
-            "email" : "manuel.silva@utec.edu.pe",
-            "password" : "12345678",
-            "confirmationPassword" : "12345678",
+            "name": "Manuel",
+            "lastname": "Gonzalez",
+            "bio": "Estudiante de la UTEC",
+            "email": "manuel.silva@utec.edu.pe",
+            "password": "12345678",
+            "confirmationPassword": "12345678",
         }
         self.new_oferta = {
-            "user-id" : "1",
-            "game_id" : 1942,
-            "price" : 100,
-            "platform" : "ps4"
+            "game_id": "1942",
+            "price": 100,
+            "platform": "ps4"
         }
         self.invalid_form = {
-            "game_id" : None,
+            "game_id": None,
         }
-
 
         response_user = self.client.post(
             '/create', json=self.new_usuario)
@@ -37,9 +35,9 @@ class ProyectTests(unittest.TestCase):
         self.user_id = data_user['user_id']
 
         self.headers = {
-            "content-type": 'application/json'
+            "content-type": 'application/json',
+            "user_id": self.user_id
         }
-
 
     def test_profile_get_success(self):
         pass #manuel
@@ -53,9 +51,30 @@ class ProyectTests(unittest.TestCase):
         self.assertEqual(data['success'], False)
 
     def test_profile_patch_success(self):
-        pass
+        self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
+        response = self.client.patch('/profile',
+                                     headers=self.headers,
+                                     json=self.new_usuario)
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data['success'], True)
+
+    def test_profile_patch_fail(self):
+        self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
+        temp_user = self.new_usuario
+        temp_user["password"] = "1234"
+        response = self.client.patch('/profile',
+                                     headers=self.headers,
+                                     json=temp_user)
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 404)
+        self.assertEqual(data['success'], False)
+
     def test_profile_delete_success(self):
-       pass #manuel
+        pass # manuel
+
     def test_videogame_data_success(self):
         self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
         response = self.client.get('/videogame/1942', headers=self.headers)
