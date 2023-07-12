@@ -130,44 +130,56 @@ def create_app(test_config=None):
     @app.route('/search/search_query', methods=['GET'])
     @authorize
     def do_search():
-        selection = request.args.to_dict()
-        fields = "fields name, first_release_date, cover.image_id, involved_companies;"
-        path = "games"
-        body = fields + " limit 500; "
-        where = ""
+        try:
+            selection = request.args.to_dict()
+            fields = "fields name, first_release_date, cover.image_id, involved_companies;"
+            path = "games"
+            body = fields + " limit 500; "
+            where = ""
 
-        if selection["genre"] != "Todas":
-            where = " where genre = " + selection["genre"]
+            if selection["genre"] != "Todas":
+                where = " where genre = " + selection["genre"]
 
-        if selection["platform"] != "Todas":
-            if where == "":
-                where = "where platforms = " + selection["platform"] + ";"
-            else:
-                where += " && platforms.name = " + selection["platform"] + ";"
+            if selection["platform"] != "Todas":
+                if where == "":
+                    where = "where platforms = " + selection["platform"] + ";"
+                else:
+                    where += " && platforms.name = " + selection["platform"] + ";"
 
-        body += where
-        if selection["name"] != "":
-            body += ' search "' + selection["name"] + '";'
+            body += where
+            if selection["name"] != "":
+                body += ' search "' + selection["name"] + '";'
 
-        results = do_request_api(body, path + "/count").json()["count"]
-        offset = 0
-        selected = []
-        while (results - offset) // 500 >= 0:
-            b = body + " offset " + str(offset) + ";"
-            selected.extend(do_request_api(b, path).json())
-            offset += 500
+            results = do_request_api(body, path + "/count").json()["count"]
+            offset = 0
+            selected = []
+            while (results - offset) // 500 >= 0:
+                b = body + " offset " + str(offset) + ";"
+                selected.extend(do_request_api(b, path).json())
+                offset += 500
 
-        valid = []
-        for i in selected:
-            if "first_release_date" in i.keys() and "cover" in i.keys() and "involved_companies" in i.keys():
-                current = {"release_year": datetime.utcfromtimestamp(i["first_release_date"]).strftime('%d-%m-%Y'),
-                           "name": i["name"],
-                           "api_id": i["id"],
-                           "cover": "https://images.igdb.com/igdb/image/upload/t_1080p/" + i["cover"]["image_id"] + ".jpg",
-                           }
-                valid.append(current)
+            valid = []
+            for i in selected:
+                if "first_release_date" in i.keys() and "cover" in i.keys() and "involved_companies" in i.keys():
+                    current = {"release_year": datetime.utcfromtimestamp(i["first_release_date"]).strftime('%d-%m-%Y'),
+                               "name": i["name"],
+                               "api_id": i["id"],
+                               "cover": "https://images.igdb.com/igdb/image/upload/t_1080p/" + i["cover"]["image_id"] + ".jpg",
+                               }
+                    valid.append(current)
+        except Exception as e:
+            db.session.rollback()
+            returned_code = 500
+            print(e)
+        finally:
+            db.session.close()
+        if returned_code == 500:
+            return jsonify({'success': False,
+                            'message': 'There is an error'}), returned_code
+        else:
+            return jsonify({'success': True, 'games': valid}), returned_code
 
-        return jsonify({'success': True, 'games': valid}), 200
+
 
     # Todo referente a la pagina de "purchases" va aqui
     @app.route('/compra', methods=['GET'])

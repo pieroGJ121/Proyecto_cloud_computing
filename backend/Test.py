@@ -61,18 +61,19 @@ class ProyectTests(unittest.TestCase):
         response = self.client.get('/search/failure', headers=self.headers)
         data = json.loads(response.data)
 
-        self.assertEqual(response.status_code, 205)
+        self.assertEqual(response.status_code, 200)
         self.assertEqual(data['success'], False)
-
-
-    def test_search_data_fail(self):
-        pass
     def test_search_querry_success(self):
         pass
     def test_search_querry_fail(self):
-        pass
+        self.headers['X-ACCESS-TOKEN'] = self.user_valid_token
+        response = self.client.get('/search/search_query', headers=self.headers)
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 205)
+        self.assertEqual(data['success'], False)
     def test_compra_get_success(self):
-        pass  
+        pass
     def test_compra_get_id_success(self):
         pass
     def test_compra_post_success(self):
