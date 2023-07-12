@@ -102,6 +102,16 @@ npm run serve
 
 - Se debe estar dentro de la carpeta llamada frontedn, en el mismo nivel que la carpeta src.
 
+### Testing
+
+Para realizar el testing del backend se ejecuta:
+
+```sh
+python -m unittest Test.py
+```
+
+- Se debe estar dentro de la carpeta llamada backend, en el mismo nivel que la carpeta app.
+
 ### API
 
 La API que se está utilizando se llama IGDB.com, el cual sirve para obtener información sobre videojuegos individuales y poder realizar búsquedas de videojuegos.
