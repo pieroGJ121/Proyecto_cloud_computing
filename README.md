@@ -67,6 +67,9 @@ La visión de esta página es ser una de las plataformas líderes en la industri
 Front-end:
 
 - Bootstrap: Bootstrap es un framework de desarrollo web gratuito y de código abierto. Está diseñado para facilitar el proceso de desarrollo de los sitios web responsivos y orientados a los dispositivos móviles, proporcionando una colección de sintaxis para diseños de plantillas.
+- Slidy: Libreria de JS para mostrar un slide responsivo de manera fácil.
+- SweetAlert2: Libreria de JS para mostrar alertas de forma más atractiva y con poco código.
+- Axios: Libreria de JS para hacer diferentes peticiones al backend.
 
 Back-end:
 
