@@ -56,7 +56,7 @@ la cual consiste en comprar y vender videojuegos de manera virtual, ya sea por m
 
 #### Misión
 
-Esta página tiene como misión llegar a ser de total comodidad para el cliente y cumplirlo ofreciendo videojuegos de alta calidad.
+Esta página tiene como misión llegar a ser de total comodidad para el cliente y cumplirlo ofreciendo videojuegos de verdaderos y de alta calidad.
 
 #### Visión
 
