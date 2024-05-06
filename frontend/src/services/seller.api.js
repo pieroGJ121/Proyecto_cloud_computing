@@ -1,7 +1,6 @@
 import Swal from "sweetalert2";
 import axios from "axios";
-
-const BASE_URL = "http://localhost:5002/";
+import { BASE_URL } from "./url.js";
 
 export const confirmarVenta = () => {
   return new Promise((resolve) => {

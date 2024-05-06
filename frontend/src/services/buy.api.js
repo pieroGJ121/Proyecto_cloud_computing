@@ -1,6 +1,8 @@
 import axios from "axios";
 import Swal from "sweetalert2";
-const BASE_URL = "http://localhost:5002/compra";
+import { BASE_URL } from "./url.js";
+
+const COMPRA_URL = `${BASE_URL}compra`;
 
 export const comprarJuego = async (id) => {
   const headers = {
@@ -15,7 +17,7 @@ export const comprarJuego = async (id) => {
     id: id,
   };
   try {
-    const { data } = await axios.post(BASE_URL, data_post, config);
+    const { data } = await axios.post(COMPRA_URL, data_post, config);
     return data;
   } catch (error) {
     console.log(error.response);

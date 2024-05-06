@@ -1,5 +1,7 @@
 import axios from "axios";
-const BASE_URL = "http://localhost:5002/compra";
+import { BASE_URL } from "./url.js";
+
+const COMPRA_URL = `${BASE_URL}compra`;
 
 export const getCompras = async () => {
   const headers = {
@@ -12,7 +14,7 @@ export const getCompras = async () => {
   };
 
   try {
-    const { data } = await axios.get(BASE_URL, config);
+    const { data } = await axios.get(COMPRA_URL, config);
     return data;
   } catch (error) {
     console.log(error);

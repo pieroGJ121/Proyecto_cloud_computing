@@ -1,5 +1,7 @@
 import axios from "axios";
-const BASE_URL = "http://localhost:5002/profile";
+import { BASE_URL } from "./url.js";
+
+const PROFILE_URL = `${BASE_URL}profile`;
 
 export const getUserData = async () => {
   const headers = {
@@ -11,7 +13,7 @@ export const getUserData = async () => {
     headers: headers,
   };
   try {
-    const { data } = await axios.get(BASE_URL, config);
+    const { data } = await axios.get(PROFILE_URL, config);
     if (data.success) {
       return data.user;
     }
@@ -44,7 +46,7 @@ export const updateUserData = async (user) => {
     password: user.password || "",
   };
   try {
-    const { data } = await axios.patch(BASE_URL, user_data, config);
+    const { data } = await axios.patch(PROFILE_URL, user_data, config);
     if (data.success) {
       message_error.style.display = "none";
       window.location.href = "/";
@@ -60,7 +62,7 @@ export const updateUserData = async (user) => {
 export const deleteUser = async (user) => {
   const message_error = document.getElementById("message_error");
   try {
-    const { data } = await axios.delete(BASE_URL, user);
+    const { data } = await axios.delete(PROFILE_URL, user);
     if (data.success) {
       message_error.style.display = "none";
       window.location.href = "/";

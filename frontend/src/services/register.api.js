@@ -1,6 +1,8 @@
 import axios from "axios";
 import Swal from "sweetalert2";
-const BASE_URL = "http://localhost:5002/create";
+import { BASE_URL } from "./url.js";
+
+const CREATE_URL = `${BASE_URL}create`;
 
 const confirmationRegister = () => {
   return new Promise((resolve) => {
@@ -21,7 +23,7 @@ const confirmationRegister = () => {
 
 export const register = async (user) => {
   try {
-    const { data } = await axios.post(BASE_URL, user);
+    const { data } = await axios.post(CREATE_URL, user);
     if (data.success) {
       const result = await confirmationRegister();
       if (result.isConfirmed) {

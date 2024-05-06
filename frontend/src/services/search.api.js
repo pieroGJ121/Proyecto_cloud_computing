@@ -1,12 +1,13 @@
 import axios from "axios";
+import { BASE_URL } from "./url.js";
 
-const BASE_URL = "http://localhost:5002/search/";
-const VIDEOGAME_URL = "http://localhost:5002/videogame/";
-const COMPRA_URL = "http://localhost:5002/compra/";
+const SEARCH_URL = `${BASE_URL}search/`;
+const VIDEOGAME_URL = `${BASE_URL}videogame/`;
+const COMPRA_URL = `${BASE_URL}compra/`;
 
 export const getGenres = async () => {
   try {
-    const { data } = await axios.get(BASE_URL + "genres", {
+    const { data } = await axios.get(SEARCH_URL + "genres", {
       headers: {
         "X-ACCESS-TOKEN": sessionStorage.getItem("token"),
       },
@@ -20,7 +21,7 @@ export const getGenres = async () => {
 
 export const getPlatforms = async () => {
   try {
-    const { data } = await axios.get(BASE_URL + "platforms", {
+    const { data } = await axios.get(SEARCH_URL + "platforms", {
       headers: {
         "X-ACCESS-TOKEN": sessionStorage.getItem("token"),
       },
@@ -36,7 +37,7 @@ export const getGames = async () => {
   const url = new URL(window.location.href);
   try {
     const { data: games = {} } = await axios.get(
-      BASE_URL + "search_query" + url.search,
+      SEARCH_URL + "search_query" + url.search,
       {
         headers: {
           "X-ACCESS-TOKEN": sessionStorage.getItem("token"),

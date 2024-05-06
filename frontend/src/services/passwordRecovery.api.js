@@ -1,5 +1,5 @@
 import axios from "axios";
-const BASE_URL = "http://localhost:5002/";
+import { BASE_URL } from "./url.js";
 
 export const validateData = async (user) => {
   const message_error = document.getElementById("message_error");
