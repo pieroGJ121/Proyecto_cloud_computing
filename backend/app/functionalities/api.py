@@ -6,8 +6,8 @@ from datetime import datetime
 
 def do_request_api(body, path):
     headers = {
-        "Client-ID": "inixjoprq3bs2tmtlolxsjyqbx5blx",
-        "Authorization": "Bearer mnjptwsceihsx8jhik5s2sebezz2i6",
+        "Client-ID": "pr04ecrkpf9xqs3k79jvubif7rsjq5",
+        "Authorization": "Bearer 7yezqyxid5s4dhbbceddb3bj5vlh0l",
         "Accept": "application/json",
     }
     url = "https://api.igdb.com/v4/" + path
