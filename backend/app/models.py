@@ -291,7 +291,7 @@ class Review(db.Model):
 
     game_api_id = db.Column(db.String(30), nullable=False)
 
-    title = db.Column(db.string(36), nullable=False)
+    title = db.Column(db.String(36), nullable=False)
 
     comment = db.Column(db.Text, nullable=False)
 
