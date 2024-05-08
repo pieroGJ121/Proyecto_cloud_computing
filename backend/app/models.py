@@ -245,6 +245,7 @@ class Rating(db.Model):
                    server_default=db.text("uuid_generate_v4()"))
 
     usuario_id = db.Column(db.String(36), nullable=False)
+
     game_api_id = db.Column(db.String(30), nullable=False)
 
     score = db.Column(db.Integer, nullable=False)
@@ -266,7 +267,7 @@ class Rating(db.Model):
     def serialize(self):
         return {
             'id': self.id,
-            'usuario': self.usuario.serialize(),
+            'usuario_id': self.usuario_id,
             'score': self.score,
             'created_at': self.created_at,
             'modified_at': self.modified_at,
@@ -313,7 +314,7 @@ class Review(db.Model):
     def serialize(self):
         return {
             'id': self.id,
-            'usuario': self.usuario.serialize(),
+            'usuario_id': self.usuario_id,
             'title': self.title,
             'comment': self.comment,
             'created_at': self.created_at,
