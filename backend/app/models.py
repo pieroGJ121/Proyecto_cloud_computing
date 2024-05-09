@@ -257,7 +257,7 @@ class Rating(db.Model):
 
     def __init__(self, usuario_id, game_api_id, score):
         self.usuario_id = usuario_id
-        self.game_id = game_api_id
+        self.game_api_id = game_api_id
         self.score = score
         self.created_at = datetime.utcnow()
 
@@ -275,8 +275,7 @@ class Rating(db.Model):
 
     def get_data_with_game(self):
         data = self.serialize()
-        game_data = self.game.serialize()
-        game_data = get_game_info_api(self.api_id)
+        game_data = get_game_info_api(self.game_api_id)
         data["game"] = game_data
         return data
 
@@ -302,7 +301,7 @@ class Review(db.Model):
 
     def __init__(self, usuario_id, game_api_id, title, comment):
         self.usuario_id = usuario_id
-        self.game_id = game_api_id
+        self.game_api_id = game_api_id
         self.title = title
         self.comment = comment
         self.created_at = datetime.utcnow()
@@ -323,7 +322,6 @@ class Review(db.Model):
 
     def get_data_with_game(self):
         data = self.serialize()
-        game_data = self.game.serialize()
-        game_data = get_game_info_api(self.api_id)
+        game_data = get_game_info_api(self.game_api_id)
         data["game"] = game_data
         return data
