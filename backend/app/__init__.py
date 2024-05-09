@@ -408,7 +408,7 @@ def create_app(test_config=None):
                         'ratings': ratings_serialized}), 200
 
 
-    @app.route('/rating/<identificador>', methods=['GET'])
+    @app.route('/rating/<id>', methods=['GET'])
     @authorize
     def get_rating(id):
         current_user_id = request.headers["user-id"]
