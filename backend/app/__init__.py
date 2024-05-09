@@ -547,7 +547,7 @@ def create_app(test_config=None):
                         'reviews': reviews_serialized}), 200
 
 
-    @app.route('/reviews/<identificador>', methods=['GET'])
+    @app.route('/review/<id>', methods=['GET'])
     @authorize
     def get_reviews(id):
         current_user_id = request.headers["user-id"]
