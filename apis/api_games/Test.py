@@ -7,7 +7,7 @@ import json
 class ProyectTests(unittest.TestCase):
     def setUp(self):
         # Probably doesn't work because the database path must be towards the
-        # user to mkae the authorize work
+        # user to make the authorize work
         database_path = config['DATABASE_URI']
         self.app = create_app({'database_path': database_path})
         self.client = self.app.test_client()

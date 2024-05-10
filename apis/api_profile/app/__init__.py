@@ -75,19 +75,8 @@ def create_app(test_config=None):
     def delete_profile():
         current_user_id = request.headers["user-id"]
         current_user = Usuario.query.get(current_user_id)
+        # To give the review and ratings, we must make new endpoints in the other apis
         if current_user:
-
-            compras_eliminar = Compra.query.filter_by(
-                user_id=current_user_id).all()
-            for c in compras_eliminar:
-                c.oferta.realizada = False
-                db.session.delete(c)
-
-            ofertas_eliminar = Oferta.query.filter_by(
-                usuario_id=current_user.id).all()
-            for i in ofertas_eliminar:
-                db.session.delete(i)
-
             current_user.delete()
             db.session.commit()
             return jsonify({'success': True,
