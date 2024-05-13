@@ -1,0 +1,23 @@
+version: "3.3"
+
+services:
+  api-games:
+    build: ./backend/api_games
+    image: proyectoccgrupo7/api-games
+    ports:
+      - 8020:8020
+  api-reviews:
+    build: ./backend/api_reviews
+    image: proyectoccgrupo7/api-reviews
+    ports:
+      - 8021:8020
+  api-ratings:
+    build: ./backend/api_ratings
+    image: proyectoccgrupo7/api-ratings
+    ports:
+      - 8022:8020
+  api-profiles:
+    build: ./backend/api_profiles
+    image: proyectoccgrupo7/api-profiles
+    ports:
+      - 8023:8020
