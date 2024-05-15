@@ -34,6 +34,8 @@ class Review(db.Model):
 
     title = db.Column(db.String(36), nullable=False)
 
+    platform = db.Column(db.String(36), nullable=False)
+
     comment = db.Column(db.Text, nullable=False)
 
     created_at = db.Column(
