@@ -85,10 +85,15 @@ def create_app(test_config=None):
             else:
                 comment = body["comment"]
 
+            if "platform" not in body:
+                list_errors.append("platform is required")
+            else:
+                platform = body["platform"]
+
             if len(list_errors) > 0:
                 returned_code = 400
             else:
-                review = Review(current_user_id, game_api_id, title, comment)
+                review = Review(current_user_id, game_api_id, title, comment, platform)
 
                 db.session.add(review)
                 db.session.commit()

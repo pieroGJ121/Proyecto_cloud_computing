@@ -45,11 +45,12 @@ class Review(db.Model):
         db.DateTime(timezone=True), nullable=True, server_default=db.text("now()")
     )
 
-    def __init__(self, usuario_id, game_api_id, title, comment):
+    def __init__(self, usuario_id, game_api_id, title, comment, platform):
         self.usuario_id = usuario_id
         self.game_api_id = game_api_id
         self.title = title
         self.comment = comment
+        self.platform = platform
         self.created_at = datetime.utcnow()
 
     def __repr__(self):
@@ -61,6 +62,7 @@ class Review(db.Model):
             "usuario_id": self.usuario_id,
             "title": self.title,
             "comment": self.comment,
+            "platform": self.platform,
             "created_at": self.created_at,
             "modified_at": self.modified_at,
         }
