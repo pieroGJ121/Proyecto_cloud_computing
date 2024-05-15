@@ -43,6 +43,24 @@ def create_app(test_config=None):
         else:
             abort(404)
 
+    @app.route("/rating/avg/<id>", methods=["GET"])
+    # @authorize
+    def get_avg_rating(id):
+
+        avg = db.session.query(func.avg(Rating.score).label("average")).filter(
+            Rating.game_api_id == id
+        )
+
+        return (
+            jsonify(
+                {
+                    "success": True,
+                    "avg": avg,
+                }
+            ),
+            200,
+        )
+
     @app.route("/rating", methods=["POST"])
     # @authorize
     def new_rating():
