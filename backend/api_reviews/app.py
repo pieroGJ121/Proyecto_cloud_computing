@@ -45,6 +45,21 @@ def create_app(test_config=None):
         else:
             abort(404)
 
+    @app.route("/review/game/<id>", methods=["GET"])
+    # @authorize
+    def get_game_reviews(id):
+        reviews = Review.query.filter_by(game_api_id=id).all()
+        reviews_serialized = [i.serialize() for i in reviews]
+        return (
+            jsonify(
+                {
+                    "success": True,
+                    "reviews": reviews_serialized,
+                }
+            ),
+            200,
+        )
+
     @app.route("/review", methods=["POST"])
     # @authorize
     def new_review():
