@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request, abort
 from authentication import authorize
+from sqlalchemy.sql import func
 from flask_cors import CORS
 from models import db, Rating, setup_db
 

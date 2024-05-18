@@ -1,0 +1,29 @@
+#+title: Docker Commands
+* Creación de base de datos
+Dentro de la Máquina virtual BD Proyecto con dirección ip elástica y con los
+puertos 8030 y 5432 abiertos, se ejecuta los siguientes comandos:
+
+docker volume create postgresql_data
+
+docker run -d --rm --name postgres_c -e POSTGRES_PASSWORD=utec -p 8030:5432 -v postgresql_data:/var/lib/postgresql/data postgres:16
+
+docker exec -it postgres_c psql -U postgres
+
+Subsecuentemente se crean las base de datos y se crea la extensión de uuid-ossp,
+usada para la generación de ids, en cada base de datos.
+
+CREATE TABLE api_profiles;
+
+CREATE TABLE api_reviews;
+CREATE TABLE api_ratings;
+
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+* Creación de imagen
+Para subir la imagen a docker, primero se crean los repositorios en hub docker.
+
+Luego se ejecuta docker-compose up -d para ejecutar la aplicación contenedor.
+Subsecuentemente, se ejecuta docker login -u proyectoccgrupo7 para subir las
+imágenes a los repositorios públicos creados . Se sube las imágnes con docker-compose down.
+* Despliegue de contenedores en máquinas de producción
+Para pasar el docker-compose.yml, se usa el comando wormhole. Una vez
+transferidos se modifican para quitar el build y se ejecuta docker-compose up -d para desplegar.
