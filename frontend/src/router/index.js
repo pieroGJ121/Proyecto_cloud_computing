@@ -6,18 +6,18 @@ import RecoverUserView from "../views/RecoverUserView.vue";
 import ProfileView from "../views/ProfileView.vue";
 import SearchView from "../views/SearchView.vue";
 import VideogameView from "../views/VideogameView.vue";
-import CheckoutView from "../views/CheckoutView.vue";
-import ResumePurchaseView from "../views/ResumePurchaseView.vue";
-import PurchasesView from "../views/PurchasesView.vue";
-import SellGameView from "../views/SellGameView.vue";
-import MarketplaceView from "../views/MarketplaceView.vue";
-import UpdateOfferView from "../views/UpdateOfferView.vue";
+import ReviewsView from "../views/ReviewsView.vue";
+import RatingsView from "../views/RatingsView.vue";
+import PostReviewView from "../views/PostReviewView.vue";
+import PostRatingView from "../views/PostRatingView.vue";
+import UpdateReviewView from "../views/UpdateReviewView.vue";
+import UpdateRatingView from "../views/UpdateRatingView.vue";
 
 const routes = [
   {
     path: "/",
     name: "index",
-    meta: { title: "Compra los mejores juegos aquí" },
+    meta: { title: "Mira las opiniones de los mejores juegos" },
     component: IndexView,
   },
   {
@@ -57,40 +57,40 @@ const routes = [
     component: VideogameView,
   },
   {
-    path: "/checkout",
-    name: "checkout",
-    meta: { title: "Compra casi lista..." },
-    component: CheckoutView,
+    path: "/ratings",
+    name: "ratings",
+    meta: { title: "Centro de ratings del usuario" },
+    component: RatingsView,
   },
   {
-    path: "/resume",
-    name: "resume",
-    meta: { title: "Gracias por su compra" },
-    component: ResumePurchaseView,
+    path: "/reviews",
+    name: "reviews",
+    meta: { title: "Centro de reviews del usuario" },
+    component: ReviewsView,
   },
   {
-    path: "/purchases",
-    name: "purchases",
-    meta: { title: "Tus juegos" },
-    component: PurchasesView,
+    path: "/new_rating",
+    name: "new_rating",
+    meta: { title: "Publica tu rating" },
+    component: PostRatingView,
   },
   {
-    path: "/sell",
-    name: "sell",
-    meta: { title: "Vende ahora y recibe hasta el 95% de la venta final" },
-    component: SellGameView,
+    path: "/new_review",
+    name: "new_review",
+    meta: { title: "Publica tu review" },
+    component: PostReviewView,
   },
   {
-    path: "/marketplace",
-    name: "marketplace",
-    meta: { title: "Centro de ventas del usuario" },
-    component: MarketplaceView,
+    path: "/change_rating",
+    name: "change_rating",
+    meta: { title: "Actualiza tu rating" },
+    component: UpdateRatingView,
   },
   {
-    path: "/offer",
-    name: "offer",
-    meta: { title: "Actualiza tu oferta" },
-    component: UpdateOfferView,
+    path: "/change_review",
+    name: "change_review",
+    meta: { title: "Actualiza tu review" },
+    component: UpdateReviewView,
   },
 ];
 

@@ -28,41 +28,37 @@
                 {{ game_platform }}
               </div>
             </div>
+            <div id="score_container">
+              <h4>Puntaje</h4>
+              <div id="score">{{ score }}</div>
+            </div>
+            <div class="sell-card-button">
+              <button @click="publishRating">Añade tu puntaje</button>
+            </div>
+
             <div id="offers_container">
-              <h4>Ofertas disponibles</h4>
+              <h4>Reseñas disponibles</h4>
+              <div class="sell-card-button">
+                <button @click="publishRating">Añade tu reseña</button>
+              </div>
               <div
                 class="offer-card"
-                v-for="offer in offers"
-                :key="offer.id"
-                @click="buyGame(offer.id)"
+                v-for="review in reviews"
+                :key="review.id"
               >
                 <div class="seller">
-                  Vendedor: {{ offer.usuario.name }}
-                  {{ offer.usuario.lastname }}
+                  {{ review.usuario.name }}
+                  {{ review.usuario.lastname }}
                 </div>
-                <div class="price">S/. {{ offer.price }}</div>
+                <div class="price">{{ review.title }}</div>
                 <div class="date-publish">
-                  Fecha de publicación: {{ formatDate(offer.modified_at) }}
-                </div>
-                <div class="platform-publish">
-                  Plataforma: {{ offer.platform }}
+                  {{ review.comment }}
                 </div>
               </div>
-              <div id="buy_message" v-if="this.offers.length === 0">
-                No hay ofertas disponibles para este título 😓
+              <div id="buy_message" v-if="this.reviews.length === 0">
+                No hay reseñas disponibles para este título
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div class="sell-card">
-        <div class="sell-card-overlay"></div>
-        <div class="sell-card-content">
-          <div class="sell-card-text">
-            <h3>¿Quieres vender este juego?</h3>
-          </div>
-          <div class="sell-card-button">
-            <button @click="sellProduct">¡Vender ahora!</button>
           </div>
         </div>
       </div>
@@ -74,7 +70,8 @@
 import LayoutComponent from "@/components/Layout.vue";
 import { getGameData } from "@/services/search.api";
 import { verifier_login } from "@/services/login.api";
-import { confirmarCompra } from "@/services/seller.api";
+import { getRatingGame } from "@/services/rating.api";
+import { getReviewsGame } from "@/services/review.api";
 
 export default {
   name: "VideogameView",
@@ -82,21 +79,15 @@ export default {
     LayoutComponent,
   },
   methods: {
-    async buyGame(id) {
-      const result = await confirmarCompra(id);
-      if (result.isConfirmed) {
-        window.location.href = "/checkout?id=" + id;
-      }
-    },
-    sellProduct() {
+    publishRating() {
       const urlParams = new URLSearchParams(window.location.search);
       const id = urlParams.get("id");
-      window.location.href = "/sell?id=" + id;
+      window.location.href = "/new_rating?id=" + id;
     },
-    formatDate(dateString) {
-      const fecha = new Date(dateString);
-      const options = { year: "numeric", month: "long", day: "numeric" };
-      return fecha.toLocaleDateString(undefined, options);
+    publishReview() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get("id");
+      window.location.href = "/new_review?id=" + id;
     },
   },
   data() {
@@ -109,7 +100,8 @@ export default {
       game_platform: "Getting data...",
       game_synopsis: "Getting data...",
       game_image: "Getting data...",
-      offers: [],
+      score: 0,
+      reviews: [],
     };
   },
   async mounted() {
@@ -128,16 +120,8 @@ export default {
     this.game_platform = this.game_platform.join(", ");
     this.game_synopsis = game.game.summary;
     this.game_image = game.game.cover;
-    let prev_offers = game.ofertas;
-    console.log(prev_offers);
-    for (let i = 0; i < prev_offers.length; i++) {
-      if (
-        (prev_offers[i].usuario.id !== sessionStorage.getItem("user_id")) &
-        !prev_offers[i].realizada
-      ) {
-        this.offers.push(prev_offers[i]);
-      }
-    }
+    this.reviews = getReviewsGame(this.game_id);
+    this.score = getRatingGame(this.game_id);
   },
 };
 </script>

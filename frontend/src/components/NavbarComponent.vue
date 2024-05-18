@@ -35,18 +35,13 @@
         >
           <div class="d-flex">
             <!-- Cart -->
-            <a class="text-reset me-3" href="/purchases">
+            <a class="text-reset me-3" href="/reviews">
               <span
                 ><i class="fa-solid fa-gamepad" style="color: #ffffff"></i
               ></span>
-              <span
-                class="badge rounded-pill badge-notification"
-                id="counter_purchases_cart"
-                >{{ Purchases.length > 9 ? "+9" : Purchases.length }}</span
-              >
             </a>
             <!-- Marketplace dashboard -->
-            <a class="text-reset me-3" href="/marketplace">
+            <a class="text-reset me-3" href="/ratings">
               <span
                 ><i class="fa-solid fa-shop" style="color: #ffffff"></i
               ></span>
@@ -88,20 +83,15 @@
   </div>
 </template>
 <script>
-import { getCompras } from "../services/userResources.api";
 import { logout } from "../services/login.api";
 export default {
   name: "NavbarComponent",
   data() {
     return {
       search: "",
-      Purchases: [],
     };
   },
-  async mounted() {
-    const data = await getCompras();
-    this.Purchases = data.games;
-  },
+  async mounted() {},
   methods: {
     searchGame() {
       if (this.search !== "") {
