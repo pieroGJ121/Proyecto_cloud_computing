@@ -1,0 +1,8 @@
+{
+  "name": "Antohny",
+  "lastname": "Man",
+  "bio": "Estudiante de la UTEC",
+  "email": "anthony@utec.edu.pe",
+  "password": "12345678",
+  "confirmationPassword": "12345678"
+}
