@@ -1,6 +1,8 @@
 import axios from "axios";
 import { BASE_URL } from "./url.js";
 
+let URL_port = `${BASE_URL}:8023/`;
+
 export const validateData = async (user) => {
   const message_error = document.getElementById("message_error");
   const password_changer = document.getElementById("password_changer");
@@ -12,7 +14,7 @@ export const validateData = async (user) => {
   const text_change = document.getElementById("text_change");
 
   try {
-    const { data } = await axios.post(BASE_URL + "usuarios/data", user);
+    const { data } = await axios.post(URL_port + "usuarios/data", user);
     if (data.success) {
       message_error.style.display = "none";
       password_changer.style.display = "block";
@@ -35,7 +37,7 @@ export const validateData = async (user) => {
 
 export const resetPassword = async (user) => {
   try {
-    const { data } = await axios.patch(BASE_URL + "usuarios/password", user);
+    const { data } = await axios.patch(URL_port + "usuarios/password", user);
     if (data.success) {
       window.location.href = "/login";
     } else {

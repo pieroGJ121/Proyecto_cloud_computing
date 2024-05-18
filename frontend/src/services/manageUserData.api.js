@@ -1,7 +1,9 @@
 import axios from "axios";
 import { BASE_URL } from "./url.js";
 
-const PROFILE_URL = `${BASE_URL}profile`;
+let URL_port = `${BASE_URL}:8023/`;
+
+const PROFILE_URL = `${URL_port}profile`;
 
 export const getUserData = async () => {
   const headers = {
