@@ -1,1 +1,2 @@
-export let BASE_URL = "http://127.0.0.1:5002/";
+export let BASE_URL =
+  "lib-prod-proyecto-2131190542.us-east-1.elb.amazonaws.com";
