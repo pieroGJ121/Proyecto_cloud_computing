@@ -10,14 +10,14 @@ services:
     build: ./backend/api_reviews
     image: proyectoccgrupo7/api-reviews
     ports:
-      - 8021:8020
+      - 8021:8021
   api-ratings:
     build: ./backend/api_ratings
     image: proyectoccgrupo7/api-ratings
     ports:
-      - 8022:8020
+      - 8022:8022
   api-profiles:
     build: ./backend/api_profiles
     image: proyectoccgrupo7/api-profiles
     ports:
-      - 8023:8020
+      - 8023:8023

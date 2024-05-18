@@ -232,4 +232,4 @@ def create_app(test_config=None):
 app = create_app()
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8020, debug=True)
+    app.run(host="0.0.0.0", port=8022, debug=True)

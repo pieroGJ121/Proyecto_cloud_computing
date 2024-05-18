@@ -1,7 +1,7 @@
 import axios from "axios";
 import { BASE_URL } from "./url.js";
 
-let URL_port = `${BASE_URL}:8023/`;
+let URL_port = `${BASE_URL}:8020/`;
 
 const SEARCH_URL = `${URL_port}search/`;
 const VIDEOGAME_URL = `${URL_port}videogame/`;
