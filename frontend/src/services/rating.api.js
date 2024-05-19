@@ -140,7 +140,7 @@ export const getRatings = async () => {
     headers: headers,
   };
   try {
-    const { data } = await axios.get(URL_port + "ratings", config);
+    const { data } = await axios.get(URL_port + "rating", config);
     return data;
   } catch (error) {
     console.log(error.response);
