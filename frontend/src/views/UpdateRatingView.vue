@@ -2,11 +2,11 @@
   <LayoutComponent>
     <template #Content>
       <div class="container_form_game_sell">
-        <h1>Actualiza tu oferta en pocco tiempo 😁</h1>
+        <h1>Modifica tu puntaje para calificar el juego</h1>
         <form
           id="game_form_game_sell"
           class="game_form_game_sell"
-          @submit.prevent.stop="updateOffer()"
+          @submit.prevent.stop="updateRating"
         >
           <div class="columna-sell">
             <div class="form_group_game_sell">
@@ -31,24 +31,9 @@
                 disabled
               />
             </div>
+
             <div class="form_group_game_sell">
-              <label for="platforms" class="label-sell">PLATAFORMAS</label>
-              <div class="custom-select-sell">
-                <select
-                  id="platforms_review"
-                  class="form_control_game_sell"
-                  v-model="platform_selected"
-                  required
-                  :disabled="platforms.length === 0"
-                >
-                  <option v-for="(platform, index) in platforms" :key="index">
-                    {{ platform }}
-                  </option>
-                </select>
-              </div>
-            </div>
-            <div class="form_group_game_sell">
-              <label for="score" class="label-sell">SCORE - S/</label>
+              <label for="score" class="label-sell">SCORE (0 to 10)</label>
               <input
                 type="number"
                 id="score"
@@ -119,7 +104,7 @@
           <div class="submit_button_sell">
             <div class="form_group_game_sell">
               <button type="submit" class="btn-sell zoom-effect">
-                Actualizar puntaje
+                Publicar ahora 😎
               </button>
             </div>
           </div>
@@ -149,12 +134,8 @@ export default {
     const id = urlParams.get("id");
     if (id) {
       const rating = await getRatingById(id);
-      this.game = rating.game.game;
-      this.platforms = rating.game.game.platforms;
-      this.platform_selected = rating.rating.platform;
-      this.title = rating.rating.title;
-      this.comment = rating.rating.comment;
-      this.rating_id = id;
+      this.game = rating.game;
+      this.score = rating.rating.score;
     }
   },
   data() {
@@ -162,14 +143,13 @@ export default {
       game: {
         name: "",
         genres: [],
-        platforms: [],
         cover: "",
         summary: "",
         involved_companies: [],
         release_year: "",
       },
-      score: "",
-      rating_id: "",
+      score: 0,
+      game_id: "",
     };
   },
   methods: {
