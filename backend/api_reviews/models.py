@@ -30,6 +30,8 @@ class Review(db.Model):
 
     usuario_id = db.Column(db.String(36), nullable=False)
 
+    usuario_name = db.Column(db.String(36), nullable=False)
+
     game_api_id = db.Column(db.String(30), nullable=False)
 
     title = db.Column(db.String(36), nullable=False)
@@ -45,8 +47,9 @@ class Review(db.Model):
         db.DateTime(timezone=True), nullable=True, server_default=db.text("now()")
     )
 
-    def __init__(self, usuario_id, game_api_id, title, comment, platform):
+    def __init__(self, usuario_id, game_api_id, title, comment, platform, usuario_name):
         self.usuario_id = usuario_id
+        self.usuario_name = usuario_name
         self.game_api_id = game_api_id
         self.title = title
         self.comment = comment
@@ -60,6 +63,7 @@ class Review(db.Model):
         return {
             "id": self.id,
             "usuario_id": self.usuario_id,
+            "usuario_name": self.usuario_name,
             "title": self.title,
             "comment": self.comment,
             "platform": self.platform,

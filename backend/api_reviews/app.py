@@ -70,6 +70,11 @@ def create_app(test_config=None):
             current_user_id = request.headers["user-id"]
             body = request.json
 
+            if "user_name" not in body:
+                list_errors.append("user_name is required")
+            else:
+                user_name = body["user_name"]
+
             if "game_id" not in body:
                 list_errors.append("game_id is required")
             else:
@@ -93,7 +98,9 @@ def create_app(test_config=None):
             if len(list_errors) > 0:
                 returned_code = 400
             else:
-                review = Review(current_user_id, game_api_id, title, comment, platform)
+                review = Review(
+                    current_user_id, game_api_id, title, comment, platform, user_name
+                )
 
                 db.session.add(review)
                 db.session.commit()
