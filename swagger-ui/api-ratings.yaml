@@ -1,0 +1,65 @@
+openapi: 3.0.0
+info:
+  title: API de ratings
+  description: API para gestionar registros de ratings.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8022
+    description: Servidor de desarrollo
+
+paths:
+  /rating:
+    get:
+      summary: Obtener los ratings del usuario
+      parameter:
+        - in: header
+          name: user-id
+          schema:
+            type: string
+            format: uuid
+          required: true
+      responses:
+        "200":
+          description: Un arreglo JSON del rating
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  ratings:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      usuario_id:
+                        type: string
+                      score:
+                        type: number
+                      created_at:
+                        type: string
+                      modified_at:
+                        type: integer
+    post:
+      summary: Crear un nuevo rating
+      parameter:
+        - in: header
+          name: user-id
+          schema:
+            type: string
+            format: uuid
+          required: true
+
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                game_id:
+                  type: string
+                score:
+                  type: number

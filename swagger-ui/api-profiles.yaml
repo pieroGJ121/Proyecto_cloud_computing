@@ -1,0 +1,109 @@
+openapi: 3.0.0
+info:
+  title: API de usuarios
+  description: API para gestionar registros de usuarios.
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8023
+    description: Servidor de desarrollo
+
+paths:
+  /profile:
+    get:
+      summary: Obtener la informacion del usuario
+      parameter:
+        - in: header
+          name: user-id
+          schema:
+            type: string
+            format: uuid
+          required: true
+      responses:
+        "200":
+          description: Un arreglo JSON del usuario
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      lastname:
+                        type: string
+                      email:
+                        type: string
+                      bio:
+                        type: integer
+                      created_at:
+                        type: string
+                      modified_at:
+                        type: integer
+    patch:
+      summary: Cambia al usuario
+      parameter:
+        - in: header
+          name: user-id
+          schema:
+            type: string
+            format: uuid
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                lastname:
+                  type: string
+                bio:
+                  type: string
+                password:
+                  type: string
+      responses:
+        "200":
+          description: Usuario modificado exitosamente
+
+  /create:
+    parameters:
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+    post:
+      summary: Actualizar un estudiante por ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                lastname:
+                  type: string
+                bio:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+                confirmationPassword:
+                  type: string
+      responses:
+        "200":
+          description: Estudiante actualizado exitosamente
+        "404":
+          description: Estudiante no encontrado
