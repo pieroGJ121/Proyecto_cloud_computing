@@ -95,7 +95,7 @@ const confirmationUpdateReview = () => {
   });
 };
 
-export const createReview = async (reviewData) => {
+export const createReview = async (reviewData, name) => {
   const headers = {
     "Content-Type": "application/json",
     "X-ACCESS-TOKEN": sessionStorage.getItem("token"),
@@ -104,8 +104,10 @@ export const createReview = async (reviewData) => {
   const config = {
     headers: headers,
   };
+  const data_send = reviewData;
+  data_send["user_name"] = name;
   try {
-    const { data } = await axios.post(URL_port + "review", reviewData, config);
+    const { data } = await axios.post(URL_port + "review", data_send, config);
     if (data.success) {
       const result = await confirmationReview();
       if (result.isConfirmed) {

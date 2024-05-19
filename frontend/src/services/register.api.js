@@ -2,8 +2,6 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { BASE_URL } from "./url.js";
 
-const CREATE_URL = `${BASE_URL}:8023/create`;
-
 const confirmationRegister = () => {
   return new Promise((resolve) => {
     Swal.fire({
@@ -23,7 +21,7 @@ const confirmationRegister = () => {
 
 export const register = async (user) => {
   try {
-    const { data } = await axios.post(CREATE_URL, user);
+    const { data } = await axios.post(BASE_URL + ":8023/create", user);
     if (data.success) {
       const result = await confirmationRegister();
       if (result.isConfirmed) {
