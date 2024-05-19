@@ -14,6 +14,8 @@ class ProyectTests(unittest.TestCase):
         self.client = self.app.test_client()
 
         self.new_review = {
+            "user_name": "John",
+            "platform": "ps4",
             "game_id": "1942",
             "title": "It's alright",
             "comment": "I am more elaborate",

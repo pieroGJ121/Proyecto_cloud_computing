@@ -53,14 +53,16 @@ def create_app(test_config=None):
             .filter(Rating.game_api_id == id)
             .all()
         )
+        amount = Rating.query.filter_by(game_api_id=id).count()
 
-        avg = round(avg[0][0], 2)
+        avg = 0 if (avg[0][0] is None) else round(avg[0][0], 2)
 
         return (
             jsonify(
                 {
                     "success": True,
                     "avg": avg,
+                    "amount": amount,
                 }
             ),
             200,
