@@ -2,11 +2,11 @@
   <LayoutComponent>
     <template #Content>
       <div class="container_form_game_sell">
-        <h1>Actualiza tu oferta en pocco tiempo 😁</h1>
+        <h1>Actualiza tu reseña en poco tiempo 😁</h1>
         <form
           id="game_form_game_sell"
           class="game_form_game_sell"
-          @submit.prevent.stop="updateOffer()"
+          @submit.prevent.stop="updateReview"
         >
           <div class="columna-sell">
             <div class="form_group_game_sell">
@@ -163,8 +163,8 @@ export default {
     const id = urlParams.get("id");
     if (id) {
       const review = await getReviewById(id);
-      this.game = review.game.game;
-      this.platforms = review.game.game.platforms;
+      this.game = review.game;
+      this.platforms = review.game.platforms;
       this.platform_selected = review.review.platform;
       this.title = review.review.title;
       this.comment = review.review.comment;
