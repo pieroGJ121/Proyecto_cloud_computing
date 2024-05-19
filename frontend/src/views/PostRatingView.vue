@@ -6,7 +6,7 @@
         <form
           id="game_form_game_sell"
           class="game_form_game_sell"
-          @submit.prevent.stop="createNewOffer"
+          @submit.prevent.stop="createNewRating"
         >
           <div class="columna-sell">
             <div class="form_group_game_sell">
@@ -146,7 +146,7 @@ export default {
         involved_companies: [],
         release_year: "",
       },
-      score: undefined,
+      score: 0,
       game_id: "",
     };
   },
