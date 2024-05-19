@@ -6,7 +6,7 @@
         <form
           id="game_form_game_sell"
           class="game_form_game_sell"
-          @submit.prevent.stop="createNewOffer"
+          @submit.prevent.stop="createNewReview"
         >
           <div class="columna-sell">
             <div class="form_group_game_sell">
@@ -35,7 +35,7 @@
               <label for="platforms" class="label-sell">PLATAFORMA</label>
               <div class="custom-select-sell">
                 <select
-                  id="platforms_sell"
+                  id="platforms_review"
                   class="form_control_game_sell"
                   v-model="platform_selected"
                   required
@@ -146,6 +146,7 @@
 <script>
 import LayoutComponent from "@/components/Layout.vue";
 import { verifier_login } from "@/services/login.api";
+import { getUserData } from "@/services/manageUserData.api";
 import { getGameData } from "@/services/search.api";
 import { createReview, confirmReview } from "@/services/review.api";
 
@@ -161,6 +162,7 @@ export default {
     if (id) {
       const { game } = await getGameData(id);
       this.game = game;
+      this.platforms = game.platforms;
       this.game_id = id;
     }
   },
