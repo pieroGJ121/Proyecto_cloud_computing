@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 FROM python:3-slim
-WORKDIR /programas/api-games
+WORKDIR /programas/api-profiles
 
 COPY request.txt request.txt
 
