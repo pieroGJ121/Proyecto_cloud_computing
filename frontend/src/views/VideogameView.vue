@@ -30,7 +30,7 @@
             </div>
             <div id="score_container">
               <h4>Puntaje</h4>
-              <div id="score">{{ score }}</div>
+              <div id="avg">{{ avg }} ({{ amount }} puntajes)</div>
             </div>
             <div class="sell-card-button">
               <button @click="publishRating">Añade tu puntaje</button>
@@ -39,7 +39,7 @@
             <div id="offers_container">
               <h4>Reseñas disponibles</h4>
               <div class="sell-card-button">
-                <button @click="publishRating">Añade tu reseña</button>
+                <button @click="publishReview">Añade tu reseña</button>
               </div>
               <div
                 class="offer-card"
@@ -47,8 +47,7 @@
                 :key="review.id"
               >
                 <div class="seller">
-                  {{ review.usuario.name }}
-                  {{ review.usuario.lastname }}
+                  {{ review.usuario_name }}
                 </div>
                 <div class="price">{{ review.title }}</div>
                 <div class="date-publish">
@@ -100,7 +99,8 @@ export default {
       game_platform: "Getting data...",
       game_synopsis: "Getting data...",
       game_image: "Getting data...",
-      score: 0,
+      avg: 0,
+      amount: 0,
       reviews: [],
     };
   },
@@ -120,8 +120,12 @@ export default {
     this.game_platform = this.game_platform.join(", ");
     this.game_synopsis = game.game.summary;
     this.game_image = game.game.cover;
-    this.reviews = getReviewsGame(this.game_id);
-    this.score = getRatingGame(this.game_id);
+    const reviews_temp = await getReviewsGame(this.game_id);
+    this.reviews = reviews_temp.reviews;
+    const score = await getRatingGame(this.game_id);
+    console.log(this.game_id);
+    this.amount = score.amount == 0 ? 0 : score.amount;
+    this.avg = score.avg;
   },
 };
 </script>
