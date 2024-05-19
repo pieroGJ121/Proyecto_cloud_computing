@@ -195,9 +195,10 @@ export default {
         comment: this.comment,
       };
       const result = await confirmReview();
+      let { name } = await getUserData();
 
       if (result.isConfirmed) {
-        await createReview(data);
+        await createReview(data, name);
       }
     },
   },
