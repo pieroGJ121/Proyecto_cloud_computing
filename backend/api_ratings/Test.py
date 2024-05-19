@@ -156,5 +156,15 @@ class ProyectTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(data["success"], True)
 
+    def test_rating_get_avg_0(self):
+        self.headers["X-ACCESS-TOKEN"] = self.user_valid_token
+
+        response = self.client.get("/rating/avg/1025", headers=self.headers)
+
+        data = json.loads(response.data)
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(data["success"], True)
+
     def tearDown(self):
         return
