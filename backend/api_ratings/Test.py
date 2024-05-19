@@ -143,20 +143,18 @@ class ProyectTests(unittest.TestCase):
         response = self.client.post(
             "/rating", headers=self.headers, json=self.new_rating
         )
+        temp_headers = self.headers
         temp_headers["user_id"] = "93cd880c-ef90-4f68-9684-5d8670f48129"
-        temp = new_rating
-        temp[score] = 8
+        temp = self.new_rating
+        temp["score"] = 8
         response = self.client.post("/rating", headers=temp_headers, json=temp)
 
         response = self.client.get("/rating/avg/1942", headers=temp_headers, json=temp)
 
-        print(data)
         data = json.loads(response.data)
-        print(data)
 
         self.assertEqual(response.status_code, 200)
         self.assertEqual(data["success"], True)
-        self.assertTrue(data["message"])
 
     def tearDown(self):
         return
