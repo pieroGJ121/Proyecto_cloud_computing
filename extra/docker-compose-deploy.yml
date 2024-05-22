@@ -17,3 +17,7 @@ services:
     image: proyectoccgrupo7/api-profiles
     ports:
       - 8023:8020
+  frontend:
+    image: proyectoccgrupo7/frontend
+    ports:
+      - 8040:3000
