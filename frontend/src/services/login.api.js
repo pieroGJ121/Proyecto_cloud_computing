@@ -1,8 +1,6 @@
 import axios from "axios";
 import { BASE_URL } from "./url.js";
 
-let URL_port = `${BASE_URL}:8023/`;
-
 export const verifier_login = async () => {
   if (sessionStorage.getItem("token") === null) {
     window.location.href = "/login";
@@ -11,7 +9,7 @@ export const verifier_login = async () => {
 
 export const login = async (user) => {
   try {
-    const { data } = await axios.post(URL_port + "login", user);
+    const { data } = await axios.post(BASE_URL + ":8023/login", user);
     if (data.success) {
       sessionStorage.setItem("token", data.token);
       sessionStorage.setItem("user_id", data.usuario_id);

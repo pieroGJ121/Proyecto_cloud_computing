@@ -10,7 +10,7 @@ def create_app(test_config=None):
     with app.app_context():
         setup_db(app, test_config["database_path"] if test_config else None)
         # Must change the path. Maybe make it general for everybody
-        CORS(app)
+        CORS(app, support_credentials=True)
 
     @app.route("/rating", methods=["GET"])
     # @authorize

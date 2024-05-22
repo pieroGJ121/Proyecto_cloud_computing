@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request, abort
-from authentication import authorize
 from flask_cors import CORS
+from authentication import authorize
 from models import db, Usuario, setup_db
 from datetime import datetime
 from functionalities.validate_email import validar_correo
@@ -13,7 +13,7 @@ def create_app(test_config=None):
     app = Flask(__name__)
     with app.app_context():
         setup_db(app, test_config["database_path"] if test_config else None)
-        CORS(app)
+        CORS(app, support_credentials=True)
 
     # Todo referente a la pagina de "profile" va aqui
     @app.route("/profile", methods=["GET"])
@@ -36,7 +36,7 @@ def create_app(test_config=None):
                 current_user.firstname = body["name"]
             if "lastname" in body.keys():
                 current_user.lastname = body["lastname"]
-            if "lastname" in body.keys():
+            if "bio" in body.keys():
                 current_user.bio = body["bio"]
             if "password" in body.keys():
                 password = body["password"]

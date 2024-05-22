@@ -8,7 +8,7 @@ from datetime import datetime
 def create_app(test_config=None):
     app = Flask(__name__)
     with app.app_context():
-        CORS(app)
+        CORS(app, support_credentials=True)
 
     @app.route("/videogame/<identificador>", methods=["GET"])
     # @authorize
