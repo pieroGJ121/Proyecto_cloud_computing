@@ -171,9 +171,6 @@ Para ejecutar el sistema se tiene que correr server.py
 [Modelo entidad-relación de la base de datos implementada](extra/diagrama_entidad_solucion.png)
 ![diagrama de clases](https://raw.githubusercontent.com/pieroGJ121/Proyecto_cloud_computing/main/extra/diagrama_entidad_solucion.png)
 
-[Diseño Básico de la Página](extra/Diseño_Básico_de_la_Página.png)
-![Diseño Básico de la Página](https://raw.githubusercontent.com/pieroGJ121/Proyecto_cloud_computing/main/extra/Dise%C3%B1o%20B%C3%A1sico%20de%20la%20P%C3%A1gina.png)
-
 [Automatización](extra/cont-start.sh)
 ```sh
 #!/usr/bin/env sh
