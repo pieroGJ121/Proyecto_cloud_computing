@@ -166,7 +166,7 @@ docker run -d -p 8022:8022 proyectoccgrupo7/api-ratings
 docker run -d -p 8023:8023 proyectoccgrupo7/api-profiles
 ```
 
-[Automatización](extra/docker-compose-deploy.yml)
+[Docker-compose-deploy](extra/docker-compose-deploy.yml)
 ```yml
 version: "3.3"
 
