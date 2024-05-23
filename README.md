@@ -25,7 +25,7 @@ de la Universidad de Ingeniería y Tecnología 💙🤍. Esperemos les guste. �
         <li><a href="#objetivo">Objetivo</a></li>
         <li><a href="#librerías-frameworks-y-plugins">Librerías, Frameworks y Plugins</a></li>
         <li><a href="#script">Script</a></li>
-        <li><a href="#api">API</a></li>
+        <li><a href="#apis">API</a></li>
         <li><a href="#hosts">Hosts</a></li>
         <li><a href="#manejo-de-errores-http">Manejo de Errores HTTP</a></li>
         <li><a href="#ejecución-del-sistema">Ejecución del Sistema</a></li>
@@ -89,7 +89,7 @@ Para cargar el backend se ejecuta:
 ./ejecutar.sh
 ```
 
-- Se debe estar dentro de la carpeta llamada backend, en el mismo nivel que la carpeta app.
+- Se debe estar dentro de la siguiente ruta: backend/api_profiles.
 - Después, se usa ejecuta el código de los sql scripts encontrados dentro de la carpete /sql. Estos añaden la exensión uuid-ossp en la base de datos.
 - Finalmente, se inicia el servidor.
 - Debe existir una base de datos con el nombre de "Proyecto_cloud_computing".
@@ -101,7 +101,7 @@ npm install
 npm run serve
 ```
 
-- Se debe estar dentro de la carpeta llamada frontedn, en el mismo nivel que la carpeta src.
+- Se debe estar dentro de la carpeta llamada frontend, en el mismo nivel que la carpeta src.
 
 ### Testing
 
@@ -113,10 +113,34 @@ python -m unittest Test.py
 
 - Se debe estar dentro de la carpeta llamada backend, en el mismo nivel que la carpeta app.
 
-### API
+### APIS
+Api Games:
 
 La API que se está utilizando se llama IGDB.com, el cual sirve para obtener información sobre videojuegos individuales y poder realizar búsquedas de videojuegos.
 
+Api Profiles:
+
+Profiles representa a los usuarios de la aplicación. Cada usuario tiene varios atributos clave que almacenan información personal.
+
+Diagrama:
+
+![Diseño Básico de la Página](https://raw.githubusercontent.com/pieroGJ121/Proyecto_cloud_computing/main/extra/Usuario.png)
+
+Api Ratings:
+
+Rating representa las valoraciones que los usuarios pueden hacer sobre los juegos.
+
+Diagrama:
+
+![Diseño Básico de la Página](https://raw.githubusercontent.com/pieroGJ121/Proyecto_cloud_computing/main/extra/Review.png)
+
+Api Reviews:
+
+Review representa las reseñas que los usuarios pueden hacer sobre los juegos en la aplicación.
+
+Diagrama:
+
+![Diseño Básico de la Página](https://raw.githubusercontent.com/pieroGJ121/Proyecto_cloud_computing/main/extra/Rating.png)
 ### Hosts
 
 Local host 5000
