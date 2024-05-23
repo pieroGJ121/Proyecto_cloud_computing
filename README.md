@@ -6,7 +6,7 @@
   <h1>👾 GPT VIDEOGAMES 👾</h1>
   
   <p>
-  Este proyecto ha sido desarrollado por estudiantes del curso de Desarrollo Basado en Plataformas
+  Este proyecto ha sido desarrollado por estudiantes del curso de Cloud Computing 
 de la Universidad de Ingeniería y Tecnología 💙🤍. Esperemos les guste. 🎮
     
   </p>
@@ -22,8 +22,8 @@ de la Universidad de Ingeniería y Tecnología 💙🤍. Esperemos les guste. �
       Acerca del proyecto
       <ul>
         <li><a href="#descripción">Descripción</a></li>
-        <li><a href="#objetivos-principales">Objetivos Principales</a></li>
-        <li><a href="#librerías-framworks-y-plugins">Librerías, Frameworks y Plugins</a></li>
+        <li><a href="#objetivo">Objetivo</a></li>
+        <li><a href="#librerías-frameworks-y-plugins">Librerías, Frameworks y Plugins</a></li>
         <li><a href="#script">Script</a></li>
         <li><a href="#api">API</a></li>
         <li><a href="#hosts">Hosts</a></li>
@@ -41,31 +41,29 @@ de la Universidad de Ingeniería y Tecnología 💙🤍. Esperemos les guste. �
 ## Integrantes
 
 - Piero Jesus Guerrero Jimenez
-- Fabrizzio Nicolay Vilchez Espinoza
-- Manuel Jesus Silva
-- Ariana Vega Huamán
+- Cesar Stefano Flores Uriarte
 
 ## Acerca del proyecto
 
 ### Descripción
 
-Este proyecto consiste en el desarrollo de una aplicación virtual llamada GPT VIDEOGAMES,
-la cual consiste en comprar y vender videojuegos de manera virtual, ya sea por marcas, plataformas o categorías.
+Este proyecto consiste en el desarrollo de un sitio web llamadp GPT videogames, la
+cual nos permite publicar reseñas sobre video juegos y además calificarlas con una puntuación
 
-### Objetivos Principales
+### Objetivo
 
-#### Misión
+Esta página tiene como misión llegar a ser de total comodidad para el cliente y un lugar
+donde puedas consultar opiniones acerca de videojuegos. De esta manera podrás visualizar y
+elegir un videojuego a tu propio criterio.
 
-Esta página tiene como misión llegar a ser de total comodidad para el cliente y cumplirlo ofreciendo videojuegos de verdaderos y de alta calidad.
-
-#### Visión
-
-La visión de esta página es ser una de las plataformas líderes en la industria de entretenimiento electrónico y afines en el Perú.
 
 ### Librerías, Frameworks y Plugins
 
 Front-end:
 
+- Vue.js es un framework de JavaScript de código abierto para construir 
+interfaces de usuario. Es conocido por su simplicidad y rendimiento, permitiendo 
+una integración fácil y un desarrollo basado en componentes. 
 - Bootstrap: Bootstrap es un framework de desarrollo web gratuito y de código abierto. Está diseñado para facilitar el proceso de desarrollo de los sitios web responsivos y orientados a los dispositivos móviles, proporcionando una colección de sintaxis para diseños de plantillas.
 - Slidy: Libreria de JS para mostrar un slide responsivo de manera fácil.
 - SweetAlert2: Libreria de JS para mostrar alertas de forma más atractiva y con poco código.
@@ -94,7 +92,7 @@ Para cargar el backend se ejecuta:
 - Se debe estar dentro de la carpeta llamada backend, en el mismo nivel que la carpeta app.
 - Después, se usa ejecuta el código de los sql scripts encontrados dentro de la carpete /sql. Estos añaden la exensión uuid-ossp en la base de datos.
 - Finalmente, se inicia el servidor.
-- Debe existir una base de datos con el nombre de "project_dbp".
+- Debe existir una base de datos con el nombre de "Proyecto_cloud_computing".
 
 Para cargar el frontend se ejecuta:
 
@@ -133,11 +131,11 @@ Local host 5000
   El servidor responde con código 400 (BAD_REQUEST) si se trata de ingresar un correo ya registrado, o con código, o con código 200 si el registro es exitoso.
 - Para la sección de busqueda:
   El servidor siempre responde con código 200, ya que el que encuentre resultados o no, no indica que la petición de busqueda no se haya realizado correctamente.
-- Para la sección de compra:
+- Para la sección de reseñas:
   El servidor siempre responde con código 200, ya que lo único que se hace es una inserción de datos dentro de la base de datos con datos verificados en pasos anteriores.
 - Para la sección de editar datos:
   El servidor siempre responde con código 200, ya que el único dato relevante para definir si hay un error o no al insertar datos en la base de datos es el correo, el cual ya esta restringido para edición desde el principio.
-- Para la sección de compras realizadas por el usuario:
+- Para la sección de reseñas realizadas por el usuario:
   El servidor siempre responde con código 200, ya que la petición de busqueda siempre se hace con los datos obtenido anteriormente, y lo único que varia es el contenido dentro del JSON que se devuelve.
 
 ### Ejecución del Sistema
@@ -147,13 +145,57 @@ Para ejecutar el sistema se tiene que correr server.py
 ### Recursos extra
 
 [Modelo entidad-relación de la base de datos implementada](extra/diagrama_entidad_solucion.png)
-![diagrama de clases](https://github.com/Fabrizzio20k/Proyecto_DBP/blob/main/extra/Diagrama.png?raw=true)
+![diagrama de clases](https://raw.githubusercontent.com/pieroGJ121/Proyecto_cloud_computing/main/extra/diagrama_entidad_solucion.png)
 
-![Diseño Básico de la Página](https://github.com/Fabrizzio20k/Proyecto_DBP/blob/main/extra/Dise%C3%B1o%20B%C3%A1sico%20de%20la%20P%C3%A1gina.png).
+[Diseño Básico de la Página](extra/Diseño_Básico_de_la_Página.png)
+![Diseño Básico de la Página](https://raw.githubusercontent.com/pieroGJ121/Proyecto_cloud_computing/main/extra/Dise%C3%B1o%20B%C3%A1sico%20de%20la%20P%C3%A1gina.png)
+
+[Automatización](extra/cont-start.sh)
+```sh
+#!/usr/bin/env sh
+docker pull proyectoccgrupo7/frontend:latest
+docker pull proyectoccgrupo7/api-games:latest
+docker pull proyectoccgrupo7/api-reviews:latest
+docker pull proyectoccgrupo7/api-ratings:latest
+docker pull proyectoccgrupo7/api-profiles:latest
+
+docker run -d -p 8030:3000 proyectoccgrupo7/frontend
+docker run -d -p 8020:8020 proyectoccgrupo7/api-games
+docker run -d -p 8021:8021 proyectoccgrupo7/api-reviews
+docker run -d -p 8022:8022 proyectoccgrupo7/api-ratings
+docker run -d -p 8023:8023 proyectoccgrupo7/api-profiles
+```
+
+[Automatización](extra/docker-compose-deploy.yml)
+```yml
+version: "3.3"
+
+services:
+  api-games:
+    image: proyectoccgrupo7/api-games
+    ports:
+      - 8020:8020
+  api-reviews:
+    image: proyectoccgrupo7/api-reviews
+    ports:
+      - 8021:8020
+  api-ratings:
+    image: proyectoccgrupo7/api-ratings
+    ports:
+      - 8022:8020
+  api-profiles:
+    image: proyectoccgrupo7/api-profiles
+    ports:
+      - 8023:8020
+  frontend:
+    image: proyectoccgrupo7/frontend
+    ports:
+      - 8040:3000
+```
 
 ### Equipo
 
-| Fabrizzio Vilchez                                          | Piero Guerrero                                                   | Manuel Silva                                               | Ariana Vega                                               |
-| ---------------------------------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------------------- | --------------------------------------------------------- |
-| ![](https://avatars.githubusercontent.com/u/115495332?v=4) | ![](https://avatars.githubusercontent.com/u/102132128?s=400&v=4) | ![](https://avatars.githubusercontent.com/u/78549698?v=4)  | ![](https://avatars.githubusercontent.com/u/88595171?v=4) |
-| [github.com/Fabrizzio20k](https://github.com/Fabrizzio20k) | [github.com/pieroGJ121](https://github.com/JLeandroJM).          | [github.com/Manueljsilva](https://github.com/Manueljsilva) | [github.com/ArianaVega](https://github.com/ArianaVega)    |
+|Piero Guerrero|Cesar Flores|
+|---------------------------------------------------------- | --------------------------------------------------------- |
+| ![](https://avatars.githubusercontent.com/u/104638037?v=4) | ![](https://avatars.githubusercontent.com/u/142551373?s=96&v=4) |
+| [github.com/pieroGJ121](https://github.com/pieroGJ121).    | [github.com/stefano565-Utec](https://github.com/stefano565-Utec)      |
